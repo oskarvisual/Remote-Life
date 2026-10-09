@@ -1,3 +1,19 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>Remote Life</title></head>
-<body><main id="app"><div id="game"></div><div id="hud"></div><div id="notifications"></div><div id="computer" hidden></div><section id="start-menu" hidden></section></main><script type="module" src="/src/main.js"></script></body></html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remote Life</title>
+  </head>
+  <body>
+    <main id="app">
+      <div id="game"></div>
+      <div id="hud"></div>
+      <div id="notifications" aria-live="polite"></div>
+      <div id="computer" hidden></div>
+      <dialog id="start-menu" class="game-dialog"></dialog>
+      <dialog id="game-over-modal" class="game-dialog"></dialog>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

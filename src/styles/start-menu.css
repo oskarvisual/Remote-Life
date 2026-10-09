@@ -1,7 +1,90 @@
-#computer[hidden],#start-menu[hidden]{display:none}
-#start-menu{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;background:#11101ad9}
-.start-card{width:min(94vw,560px);background:#e7d9b4;color:#202630;border:5px solid #203442;box-shadow:10px 10px 0 #e27258;padding:30px}
-.eyebrow{margin:0;color:#a84348;font:10px 'Press Start 2P'}
-.start-card h1{font:32px/1.15 'Press Start 2P';letter-spacing:-2px;margin:20px 0 15px}.start-card>p{margin:8px 0 20px}
-.difficulty-list{display:grid;gap:10px}.difficulty-list button{text-align:left;padding:13px;background:#80a6a3;border:3px solid #203442;box-shadow:4px 4px 0 #203442;color:#172430;font:inherit;cursor:pointer}.difficulty-list button:hover{background:#f39b68;transform:translate(2px,2px);box-shadow:2px 2px 0 #203442}.difficulty-list b{font:16px 'Press Start 2P';display:block}.difficulty-list small{display:block;font-size:17px;margin-top:5px}.start-foot{color:#625e58;font-size:16px;margin-bottom:0!important}
-@media(max-width:650px){.start-card{padding:22px}.start-card h1{font-size:25px}}
+#computer[hidden] {
+  display: none !important;
+}
+
+.start-card {
+  width: min(94vw, 560px);
+  background: #e7d9b4;
+  color: #202630;
+  border: 5px solid #203442;
+  box-shadow: 10px 10px 0 #e27258;
+  padding: 30px;
+  margin: auto;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #a84348;
+  font: 10px 'Press Start 2P';
+}
+
+.start-card h1 {
+  font: 32px / 1.15 'Press Start 2P';
+  letter-spacing: -2px;
+  margin: 20px 0 15px;
+}
+
+.start-card > p {
+  margin: 8px 0 20px;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.difficulty-list {
+  display: grid;
+  gap: 10px;
+}
+
+.difficulty-list button {
+  text-align: left;
+  padding: 13px;
+  background: #80a6a3;
+  border: 3px solid #203442;
+  box-shadow: 4px 4px 0 #203442;
+  color: #172430;
+  font: inherit;
+  cursor: pointer;
+}
+
+.difficulty-list button:hover {
+  background: #f39b68;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #203442;
+}
+
+.difficulty-list b {
+  font: 16px 'Press Start 2P';
+  display: block;
+}
+
+.difficulty-list small {
+  display: block;
+  font-size: 17px;
+  margin-top: 5px;
+}
+
+.start-foot {
+  color: #625e58;
+  font-size: 16px !important;
+  margin-top: 15px;
+  margin-bottom: 0 !important;
+}
+
+.game-over-card.defeat-card {
+  border-color: #8b0000;
+  box-shadow: 10px 10px 0 #8b0000;
+}
+
+.game-over-card.victory-card {
+  border-color: #27ae60;
+  box-shadow: 10px 10px 0 #27ae60;
+}
+
+@media (max-width: 650px) {
+  .start-card {
+    padding: 22px;
+  }
+  .start-card h1 {
+    font-size: 25px;
+  }
+}

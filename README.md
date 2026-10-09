@@ -1,27 +1,64 @@
 # Remote Life
 
-Playable pixel-art browser prototype for surviving remote work, family demands, money, and stress.
+Juego de simulación en pixel-art para navegador sobre sobrevivir al teletrabajo, las demandas familiares, el dinero, el alquiler y el estrés.
 
-## Run locally
+## Ejecución local
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the URL Vite prints (normally `http://localhost:5173`).
+Abre la URL que Vite muestra en la consola (por defecto `http://localhost:5173`).
 
-On first launch, choose **Easy**, **Medium**, or **Hard**. This selection is stored in browser LocalStorage; clear site data to choose again.
+### Scripts disponibles
 
-## Controls
+- `npm test` o `npm run test` — Ejecuta la suite de pruebas unitarias con **Vitest**.
+- `npm run check` — Ejecuta verificación completa (typecheck + linter + formateo + tests).
+- `npm run build` — Compila el proyecto con TypeScript y empaqueta con Vite para producción.
+- `npm run lint` — Ejecuta ESLint en todo el código fuente.
+- `npm run format` — Formatea el código con Prettier.
 
-- **A / D** or **Arrow keys** — walk around the apartment.
-- **E** — interact with the bed, computer, or crib.
-- At the computer, use the mouse to do tasks, read email, open Calendar, join a meeting, and answer its question.
-- Close the desktop to return to the apartment and care for the baby.
+---
 
-## Prototype flow
+## Controles
 
-The game begins at 09:00. A task arrives after a few seconds, then a meeting invitation. The meeting becomes available at 09:42 and the baby begins crying shortly after. Time never pauses: leaving the computer lowers meeting attention, while ignoring the baby increases stress.
+- **A / D** o **Flechas izquierda / derecha** — Caminar por el apartamento.
+- **E** — Interactuar según la estación:
+  - **BED**: Descansar / siesta (recupera energía y reduce estrés).
+  - **FRIDGE**: Comer comida del refrigerador (satisface el hambre).
+  - **DESK**: Abrir la computadora del trabajo (`REMOTE//OS`).
+  - **BABY CRIB**: Cuidar y calmar al bebé.
+- En la computadora:
+  - **WORK**: Completar tareas de clientes con clicks en _DO WORK_.
+  - **EMAIL**: Leer avisos y acceder rápidamente a apps.
+  - **CALENDAR**: Consultar la reunión del día (10:30 en el reloj del juego).
+  - **JOBS**: Aceptar encargos freelance para ganar dinero adicional.
+  - **MARKET**: Comprar víveres para la nevera, café, app de meditación o juguetes.
+  - **BANK**: Monitorear fondos y cuenta regresiva del alquiler ($700 cada 7 días).
+  - **Reunión en vivo**: Mueve el mouse en la ventana para mantener la atención del equipo y responde la pregunta del lead.
 
-Rules live in modular systems under `src/game/systems`; visual apartment code remains in the Phaser scene, while the simulated computer is standard HTML/CSS in `src/ui`. Balance constants, including the 10-minute in-game day, are in `src/game/config/balance.js`.
+---
+
+## Arquitectura del Proyecto
+
+El código está estructurado en TypeScript utilizando **Programación Orientada a Objetos** limpia y altamente extensible:
+
+```
+src/
+├── game/
+│   ├── activities/      # Clases de actividades (NapActivity, CareActivity, EatActivity...)
+│   ├── config/          # Ajustes de balance, dificultad, contenidos y textos de fin de juego
+│   ├── core/            # Núcleo desacoplado: GameState, EventBus tipado, GameSystem base, Time, Random
+│   ├── scenes/          # Escena visual en Phaser (ApartmentScene)
+│   ├── systems/         # Sistemas modulares (Clock, Task, Meeting, Baby, Needs, Economy, Market, Jobs...)
+│   └── GameSession.ts   # Orquestador del juego (Composition Root desacoplado del DOM/Phaser)
+├── ui/                  # Componentes de interfaz reactiva usando lit-html y <dialog> nativo
+│   ├── Component.ts     # Clase base para componentes con suscripción a eventos
+│   ├── Computer.ts      # Computadora de escritorio y videollamada interactiva
+│   ├── HUD.ts           # Estadísticas vitales, reloj y avisos
+│   ├── Notifications.ts # Toasts de notificaciones
+│   ├── StartMenu.ts     # Menú modal de dificultad
+│   └── GameOverModal.ts # Modal de victoria o fin de juego con reinicio
+└── main.ts              # Inicialización y ciclo de vida de la aplicación
+```
