@@ -1,0 +1,8 @@
+import { BALANCE } from '../config/balance.js'; import { emit } from '../core/EventBus.js';
+const templates = [['Write component','Code'], ['Fix checkout bug','Bug'], ['Reply to client','Email'], ['Design landing page','Design'], ['Review pull request','Review']];
+export class TaskSystem {
+  constructor(state) { this.state = state; this.last = 0; }
+  create(urgent = false) { const [title,type] = templates[Math.floor(Math.random()*templates.length)], difficulty = BALANCE.difficulties[this.state.difficulty]; const task = { id: crypto.randomUUID(), title, type, progress: 0, required: urgent ? 7 : 5, remaining: (urgent ? 45 : BALANCE.taskDeadline) * difficulty.taskDeadline, reward: urgent ? 180 : BALANCE.taskReward, penalty: urgent ? 12 : 8 }; this.state.tasks.push(task); this.state.emails.unshift({subject: `New task: ${title}`, body: `Client needs this ${urgent ? 'urgently' : 'today'}.`, unread: true}); emit('task:new', task); emit('state:changed'); return task; }
+  tick(delta) { const secs = delta/1000; this.state.tasks.slice().forEach(task => { task.remaining -= secs; if (task.remaining <= 0) { this.state.tasks = this.state.tasks.filter(t=>t!==task); this.state.adjust('reputation', -task.penalty); this.state.adjust('stress', 8); emit('task:failed', task); } }); }
+  progress(id) { const task = this.state.tasks.find(t=>t.id===id); if (!task) return; task.progress++; this.state.adjust('energy', -1.8); this.state.adjust('stress', -.7); if (task.progress >= task.required) { this.state.tasks = this.state.tasks.filter(t=>t!==task); this.state.player.money += task.reward; this.state.adjust('reputation', 3); emit('task:done',task); } emit('state:changed'); }
+}
