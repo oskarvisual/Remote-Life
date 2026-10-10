@@ -1,4 +1,11 @@
-import { CareActivity, EatActivity, NapActivity } from './activities/Activity';
+import {
+  CareActivity,
+  DrinkActivity,
+  EatActivity,
+  NapActivity,
+  ShowerActivity,
+  ToiletActivity,
+} from './activities/Activity';
 import { BALANCE } from './config/balance';
 import type { DifficultyId } from './config/difficulties';
 import { EventBus } from './core/EventBus';
@@ -72,7 +79,10 @@ export class GameSession {
     this.activities
       .register(new NapActivity())
       .register(new CareActivity(this.baby))
-      .register(new EatActivity());
+      .register(new EatActivity())
+      .register(new DrinkActivity())
+      .register(new ToiletActivity())
+      .register(new ShowerActivity());
 
     this.schedule
       .register('task', () => this.tasks.spawn())

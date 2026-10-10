@@ -16,16 +16,30 @@ export const BALANCE = {
   player: {
     walkSpeed: 105,
     startFood: 74,
+    startHydration: 82,
     startReputation: 72,
     startMeals: 2,
+    startBladder: 15,
+    startDirt: 10,
   },
 
   needs: {
     foodDrainPerHour: 5,
+    hydrationDrainPerHour: 6.5,
     energyDrainPerHour: 2,
     starvingThreshold: 20,
     starvingStressPerHour: 6,
+    thirstyThreshold: 25,
+    thirstyStressPerHour: 0.5,
     exhaustedStressPerHour: 4,
+    bladderGainPerHour: 6,
+    bladderUrgentThreshold: 60,
+    bladderCriticalThreshold: 85,
+    bladderCriticalStressPerHour: 0.5,
+    dirtGainPerHour: 4.5,
+    dirtSmellThreshold: 40,
+    dirtFliesThreshold: 75,
+    dirtFliesStressPerHour: 0.5,
   },
 
   tasks: {
@@ -92,6 +106,9 @@ export const BALANCE = {
     nap: { minutes: 10, energy: 16, stress: -6 },
     care: { minutes: 5, energy: -7, stress: -8 },
     eat: { minutes: 5, food: 35, stress: -2 },
+    drink: { minutes: 3, hydration: 45, energy: 3, stress: -3 },
+    toilet: { minutes: 4, stress: -5 },
+    shower: { minutes: 6, energy: 4, stress: -8 },
   },
 
   /** Daily script. `action` must match a handler registered in GameSession. */

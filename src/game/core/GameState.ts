@@ -20,7 +20,10 @@ export interface PlayerInit {
   stress: number;
   energy: number;
   food: number;
+  hydration?: number;
   reputation: number;
+  bladder?: number;
+  dirt?: number;
 }
 
 /** The player's wallet, stats (0–100) and current mode. */
@@ -35,7 +38,10 @@ export class PlayerState {
       stress: clampStat(init.stress),
       energy: clampStat(init.energy),
       food: clampStat(init.food),
+      hydration: clampStat(init.hydration ?? BALANCE.player.startHydration),
       reputation: clampStat(init.reputation),
+      bladder: clampStat(init.bladder ?? BALANCE.player.startBladder),
+      dirt: clampStat(init.dirt ?? BALANCE.player.startDirt),
     };
   }
 
@@ -47,6 +53,22 @@ export class PlayerState {
   adjust(key: StatKey, amount: number): number {
     this.stats[key] = clampStat(this.stats[key] + amount);
     return this.stats[key];
+  }
+
+  /** Hygiene level: 1 = clean, 2 = smelly (>=40), 3 = flies swarming (>=75). */
+  get dirtLevel(): 1 | 2 | 3 {
+    const dirt = this.stats.dirt;
+    if (dirt >= BALANCE.needs.dirtFliesThreshold) return 3;
+    if (dirt >= BALANCE.needs.dirtSmellThreshold) return 2;
+    return 1;
+  }
+
+  /** Bladder urgency level: 1 = normal, 2 = urgent (>=60), 3 = critical emergency (>=85). */
+  get bladderLevel(): 1 | 2 | 3 {
+    const bladder = this.stats.bladder;
+    if (bladder >= BALANCE.needs.bladderCriticalThreshold) return 3;
+    if (bladder >= BALANCE.needs.bladderUrgentThreshold) return 2;
+    return 1;
   }
 
   get isIdle(): boolean {
@@ -105,7 +127,18 @@ export class GameState {
       food: BALANCE.player.startFood,
       reputation: BALANCE.player.startReputation,
     });
-    this.baby = { needs: BALANCE.baby.startNeeds, crying: false, critical: false };
+    this.baby = {
+      needs: BALANCE.baby.startNeeds,
+      crying: false,
+      critical: false,
+      location: 'crib',
+      demand: 'none',
+      carriedAsleep: false,
+      cribSleeping: false,
+      kitchenFire: false,
+      modemUnplugged: false,
+      pcUnplugged: false,
+    };
     this.fridge = { meals: BALANCE.player.startMeals };
   }
 
@@ -119,7 +152,7 @@ export class GameState {
   }
 
   get internetUnstable(): boolean {
-    return this.now < this.internetUnstableUntil;
+    return this.baby.modemUnplugged || this.now < this.internetUnstableUntil;
   }
 
   get isRunning(): boolean {

@@ -30,6 +30,16 @@ export class Computer extends UIComponent {
     this.container.addEventListener('mousemove', () => {
       this.session.meeting.registerActivity(performance.now());
     });
+
+    // Allow closing the computer with Escape key
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && !this.container.hidden) {
+        event.preventDefault();
+        this.close();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    this.subscriptions.push(() => window.removeEventListener('keydown', onKeyDown));
   }
 
   open(): void {
@@ -60,7 +70,7 @@ export class Computer extends UIComponent {
         <header>
           <div class="brand">REMOTE//OS <small>WORKSTATION_01</small></div>
           <button class="close" type="button" @click=${() => this.close()}>
-            RETURN TO APARTMENT ×
+            RETURN TO APARTMENT [ESC] ×
           </button>
         </header>
 

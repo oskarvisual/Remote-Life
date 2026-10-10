@@ -23,7 +23,12 @@ export interface GameEvents {
   'baby:attended': void;
 
   'needs:starving': void;
+  'needs:thirsty': void;
   'needs:exhausted': void;
+  'needs:bladder-urgent': void;
+  'needs:bladder-critical': void;
+  'needs:smelly': void;
+  'needs:flies': void;
 
   'internet:problem': { until: number };
   'internet:restored': void;

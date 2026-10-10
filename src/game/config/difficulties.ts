@@ -16,8 +16,9 @@ export interface DifficultySettings {
 export const DIFFICULTIES: Readonly<Record<DifficultyId, DifficultySettings>> = {
   easy: {
     id: 'easy',
-    label: 'EASY',
-    description: 'More energy, relaxed deadlines.',
+    label: 'EASY · LEVEL 3',
+    description:
+      'Spacious penthouse with balcony, multiple rooms, triple-monitor pro setup, and luxury bed.',
     money: 650,
     stress: 14,
     energy: 92,
@@ -26,8 +27,9 @@ export const DIFFICULTIES: Readonly<Record<DifficultyId, DifficultySettings>> = 
   },
   medium: {
     id: 'medium',
-    label: 'MEDIUM',
-    description: 'The intended Remote Life experience.',
+    label: 'MEDIUM · LEVEL 2',
+    description:
+      '2-bedroom apartment with bathroom, kitchen-diner, modern laptop desk, and office chair.',
     money: 480,
     stress: 22,
     energy: 82,
@@ -36,8 +38,9 @@ export const DIFFICULTIES: Readonly<Record<DifficultyId, DifficultySettings>> = 
   },
   hard: {
     id: 'hard',
-    label: 'HARD',
-    description: 'Tighter deadlines. Little room for mistakes.',
+    label: 'HARD · LEVEL 1',
+    description:
+      'Cramped studio and bathroom, barrel desk, Amazon shipping box chair, and folding cot.',
     money: 320,
     stress: 36,
     energy: 70,

@@ -1,10 +1,12 @@
 /** Shared data shapes for the game simulation (no behaviour, no Phaser, no DOM). */
 
-export type StatKey = 'stress' | 'energy' | 'food' | 'reputation';
+export type StatKey =
+  'stress' | 'energy' | 'food' | 'hydration' | 'reputation' | 'bladder' | 'dirt';
 
-export type PlayerMode = 'idle' | 'computer' | 'napping' | 'caring' | 'eating';
+export type PlayerMode =
+  'idle' | 'computer' | 'napping' | 'caring' | 'eating' | 'drinking' | 'toilet' | 'showering';
 
-export type ActivityId = 'nap' | 'care' | 'eat';
+export type ActivityId = 'nap' | 'care' | 'eat' | 'drink' | 'toilet' | 'shower';
 
 export type SessionStatus = 'running' | 'paused' | 'over';
 
@@ -74,10 +76,20 @@ export interface MeetingState {
   result: 'success' | 'failed' | null;
 }
 
+export type BabyLocation = 'crib' | 'bed' | 'carried' | 'loose';
+export type BabyDemand = 'none' | 'feed' | 'crawl' | 'sleep';
+
 export interface BabyState {
   needs: number;
   crying: boolean;
   critical: boolean;
+  location: BabyLocation;
+  demand: BabyDemand;
+  carriedAsleep: boolean;
+  cribSleeping: boolean;
+  kitchenFire: boolean;
+  modemUnplugged: boolean;
+  pcUnplugged: boolean;
 }
 
 export interface JobOffer {

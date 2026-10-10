@@ -1,0 +1,36 @@
+{
+  "group_id": "ac93cf81-2fc8-4bae-af9d-9dce428434c3",
+  "states": [
+    {
+      "character": {
+        "id": "527ab73b-e172-4471-9f8f-371547919d86",
+        "name": "sitting",
+        "prompt": "16-bit pixel art side-view sprite sheet of an average male software developer, messy brown hair, round glasses, casual gray hoodie, dark blue sweatpants, cozy house slippers, tired look, clean silhouette, 24x32 pixels, retro indie game character, transparent background     ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T14:39:51.135855+00:00"
+      },
+      "folder": "sitting",
+      "frames": {
+        "rotations": {
+          "south": "sitting/rotations/south.png",
+          "south-east": "sitting/rotations/south-east.png",
+          "east": "sitting/rotations/east.png",
+          "north-east": "sitting/rotations/north-east.png",
+          "north": "sitting/rotations/north.png",
+          "north-west": "sitting/rotations/north-west.png",
+          "west": "sitting/rotations/west.png",
+          "south-west": "sitting/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-10T14:45:38.081606"
+}

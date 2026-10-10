@@ -1,0 +1,22 @@
+{
+  "group_id": "30f7a9a2-dc50-4f7e-89af-ec83516c7639",
+  "objects": [
+    {
+      "id": "df610945-f762-4626-9da0-71d4c73c864d",
+      "name": "base",
+      "prompt": "Pixel art gaming chair, rear view, viewed directly from behind. Show only the back side of the gaming chair, as if the viewer is standing behind the chair looking toward its backrest. The seat/front side must NOT be visible. Centered, perfectly symmetrical, straight-on camera angle, full chair visible including the back of the backrest, rear armrests, chair base, casters and wheels. Classic gaming/racing chair shape, detailed pixel art, transparent background, no person, no text, no environment.",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/Pixel_art_gaming_chair_rear_v.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T05:38:16.514261"
+}

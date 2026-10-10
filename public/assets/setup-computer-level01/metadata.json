@@ -1,0 +1,22 @@
+{
+  "group_id": "6a5df3b9-f00e-4d92-aed1-fa536e895941",
+  "objects": [
+    {
+      "id": "4b604138-82e0-45b5-9ef3-6cdaaa4fe484",
+      "name": "base",
+      "prompt": "Pixel art computer desk setup, front view, straight-on camera angle. A very cheap improvised desk made from an old rusty metal barrel found in the trash, repurposed as a makeshift computer desk. On top is an old basic Windows desktop PC setup with a small outdated monitor, cheap keyboard and mouse. Visible desktop PC tower next to the barrel, old and slightly worn. Messy cables, low-budget improvised appearance, slightly beat-up equipment.  Centered composition, full setup visible from the front, isolated object, detailed retro pixel art, consistent proportions, transparent background.  IMPORTANT: NO CHAIR, NO STOOL, NO SEATING, NO PERSON. Only the desk/barrel and computer equipment.",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/Pixel_art_computer_desk_setup.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T05:46:44.478176"
+}

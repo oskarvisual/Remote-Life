@@ -1,0 +1,181 @@
+{
+  "group_id": "ac93cf81-2fc8-4bae-af9d-9dce428434c3",
+  "states": [
+    {
+      "character": {
+        "id": "c8d26d85-cd95-4ba9-8317-d4b6a7972fbf",
+        "name": "Idle",
+        "prompt": "16-bit pixel art side-view sprite sheet of an average male software developer, messy brown hair, round glasses, casual gray hoodie, dark blue sweatpants, cozy house slippers, tired look, clean silhouette, 24x32 pixels, retro indie game character, transparent background     ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-09T21:30:18.385194+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "south-east": "Idle/rotations/south-east.png",
+          "east": "Idle/rotations/east.png",
+          "north-east": "Idle/rotations/north-east.png",
+          "north": "Idle/rotations/north.png",
+          "north-west": "Idle/rotations/north-west.png",
+          "west": "Idle/rotations/west.png",
+          "south-west": "Idle/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "2b0d6a0e-bf44-4603-bf85-366397fa4a5f",
+        "name": "seated and typing\u2014ju",
+        "prompt": "16-bit pixel art side-view sprite sheet of an average male software developer, messy brown hair, round glasses, casual gray hoodie, dark blue sweatpants, cozy house slippers, tired look, clean silhouette, 24x32 pixels, retro indie game character, transparent background     ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-09T22:00:40.992428+00:00"
+      },
+      "folder": "seated_and_typingju",
+      "frames": {
+        "rotations": {
+          "south": "seated_and_typingju/rotations/south.png",
+          "south-east": "seated_and_typingju/rotations/south-east.png",
+          "east": "seated_and_typingju/rotations/east.png",
+          "north-east": "seated_and_typingju/rotations/north-east.png",
+          "north": "seated_and_typingju/rotations/north.png",
+          "north-west": "seated_and_typingju/rotations/north-west.png",
+          "west": "seated_and_typingju/rotations/west.png",
+          "south-west": "seated_and_typingju/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "74ab9eef-591b-4455-8525-882920ef712f",
+        "name": "walking",
+        "prompt": "16-bit pixel art side-view sprite sheet of an average male software developer, messy brown hair, round glasses, casual gray hoodie, dark blue sweatpants, cozy house slippers, tired look, clean silhouette, 24x32 pixels, retro indie game character, transparent background     ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T02:34:56.577836+00:00"
+      },
+      "folder": "walking",
+      "frames": {
+        "rotations": {
+          "south": "walking/rotations/south.png",
+          "south-east": "walking/rotations/south-east.png",
+          "east": "walking/rotations/east.png",
+          "north-east": "walking/rotations/north-east.png",
+          "north": "walking/rotations/north.png",
+          "north-west": "walking/rotations/north-west.png",
+          "west": "walking/rotations/west.png",
+          "south-west": "walking/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "5ca59848-178a-4f60-b8e4-6daa46b35e96",
+        "name": "walking using the le",
+        "prompt": "16-bit pixel art side-view sprite sheet of an average male software developer, messy brown hair, round glasses, casual gray hoodie, dark blue sweatpants, cozy house slippers, tired look, clean silhouette, 24x32 pixels, retro indie game character, transparent background     ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T03:21:12.601888+00:00"
+      },
+      "folder": "walking_using_the_le",
+      "frames": {
+        "rotations": {
+          "south": "walking_using_the_le/rotations/south.png",
+          "south-east": "walking_using_the_le/rotations/south-east.png",
+          "east": "walking_using_the_le/rotations/east.png",
+          "north-east": "walking_using_the_le/rotations/north-east.png",
+          "north": "walking_using_the_le/rotations/north.png",
+          "north-west": "walking_using_the_le/rotations/north-west.png",
+          "west": "walking_using_the_le/rotations/west.png",
+          "south-west": "walking_using_the_le/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "b6c30668-1ea2-47a1-b0e5-9641c91e5157",
+        "name": "drinking water while",
+        "prompt": "16-bit pixel art side-view sprite sheet of an average male software developer, messy brown hair, round glasses, casual gray hoodie, dark blue sweatpants, cozy house slippers, tired look, clean silhouette, 24x32 pixels, retro indie game character, transparent background     ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T03:21:33.700206+00:00"
+      },
+      "folder": "drinking_water_while",
+      "frames": {
+        "rotations": {
+          "south": "drinking_water_while/rotations/south.png",
+          "south-east": "drinking_water_while/rotations/south-east.png",
+          "east": "drinking_water_while/rotations/east.png",
+          "north-east": "drinking_water_while/rotations/north-east.png",
+          "north": "drinking_water_while/rotations/north.png",
+          "north-west": "drinking_water_while/rotations/north-west.png",
+          "west": "drinking_water_while/rotations/west.png",
+          "south-west": "drinking_water_while/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "84e8b640-e9be-4213-af80-21dc3239ca6d",
+        "name": "eating instant soup",
+        "prompt": "16-bit pixel art side-view sprite sheet of an average male software developer, messy brown hair, round glasses, casual gray hoodie, dark blue sweatpants, cozy house slippers, tired look, clean silhouette, 24x32 pixels, retro indie game character, transparent background     ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T03:21:57.989479+00:00"
+      },
+      "folder": "eating_instant_soup",
+      "frames": {
+        "rotations": {
+          "south": "eating_instant_soup/rotations/south.png",
+          "south-east": "eating_instant_soup/rotations/south-east.png",
+          "east": "eating_instant_soup/rotations/east.png",
+          "north-east": "eating_instant_soup/rotations/north-east.png",
+          "north": "eating_instant_soup/rotations/north.png",
+          "north-west": "eating_instant_soup/rotations/north-west.png",
+          "west": "eating_instant_soup/rotations/west.png",
+          "south-west": "eating_instant_soup/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-10T05:36:13.856043"
+}

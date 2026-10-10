@@ -67,6 +67,33 @@ describe('NeedsSystem', () => {
     advanceMinutes(session, 60);
     expect(session.state.player.get('food')).toBeCloseTo(food - 5, 0);
   });
+
+  it('increases bladder urgency over time and resets when using the toilet', () => {
+    const session = createSession('medium', noSchedule);
+    session.state.player.adjust('bladder', 75);
+    expect(session.state.player.bladderLevel).toBe(3);
+    expect(session.activities.start('toilet')).toBe('started');
+    expect(session.state.player.mode).toBe('toilet');
+    advanceMinutes(session, 5);
+    expect(session.state.player.mode).toBe('idle');
+    expect(session.state.player.get('bladder')).toBeLessThan(5);
+    expect(session.state.player.bladderLevel).toBe(1);
+  });
+
+  it('progresses dirt through level 2 (odor) and level 3 (flies) and resets on shower', () => {
+    const session = createSession('medium', noSchedule);
+    expect(session.state.player.dirtLevel).toBe(1);
+    session.state.player.adjust('dirt', 40);
+    expect(session.state.player.dirtLevel).toBe(2);
+    session.state.player.adjust('dirt', 35);
+    expect(session.state.player.dirtLevel).toBe(3);
+
+    expect(session.activities.start('shower')).toBe('started');
+    expect(session.state.player.mode).toBe('showering');
+    advanceMinutes(session, 7);
+    expect(session.state.player.mode).toBe('idle');
+    expect(session.state.player.dirtLevel).toBe(1);
+  });
 });
 
 describe('MarketSystem', () => {

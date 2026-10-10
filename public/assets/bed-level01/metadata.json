@@ -1,0 +1,22 @@
+{
+  "group_id": "9c8c6453-b59a-419e-ab0c-5e6fdb38f530",
+  "objects": [
+    {
+      "id": "c10e6e79-dc4c-4a43-bd81-9c08ad4fb9ef",
+      "name": "base",
+      "prompt": "bed",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/bed.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T05:37:46.674667"
+}

@@ -1,0 +1,22 @@
+{
+  "group_id": "1c980bb0-12b3-43a7-bebb-da73c9c178c5",
+  "objects": [
+    {
+      "id": "c40d9d5e-90f2-40d2-8bf2-90e31917b03f",
+      "name": "base",
+      "prompt": "Pixel art office chair, rear view, viewed directly from behind. Show only the back side of the office chair, as if the viewer is standing behind the chair looking toward its backrest. The seat/front side must NOT be visible. Centered, perfectly symmetrical, straight-on camera angle, full chair visible including the back of the backrest, rear armrests, chair base, casters and wheels. Classic office chair shape, detailed pixel art, transparent background, no person, no text, no environment.",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/Pixel_art_office_chair_rear_v.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T05:38:44.577465"
+}

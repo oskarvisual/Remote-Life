@@ -1,0 +1,22 @@
+{
+  "group_id": "676f2a3e-cd77-4123-99ff-6347d78ef489",
+  "objects": [
+    {
+      "id": "8deab147-71b4-45c7-b93b-45a51e3413b5",
+      "name": "base",
+      "prompt": "empty baby crib",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/empty_baby_crib.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T15:57:24.952697"
+}

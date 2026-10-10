@@ -1,0 +1,29 @@
+{
+  "group_id": "b391b3e9-ebe3-4188-bba2-ee1c9f69c4a6",
+  "objects": [
+    {
+      "id": "b4f4d4dc-89a1-444e-b4d3-6c7fbaf7f716",
+      "name": "base",
+      "prompt": "dining chair",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 8,
+      "view": "low top-down",
+      "rotations": {
+        "south": "rotations/south.png",
+        "south-east": "rotations/south-east.png",
+        "east": "rotations/east.png",
+        "north-east": "rotations/north-east.png",
+        "north": "rotations/north.png",
+        "north-west": "rotations/north-west.png",
+        "west": "rotations/west.png",
+        "south-west": "rotations/south-west.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T05:36:26.547059"
+}

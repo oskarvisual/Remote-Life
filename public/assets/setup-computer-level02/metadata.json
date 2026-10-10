@@ -1,0 +1,22 @@
+{
+  "group_id": "a67de8d5-cde7-4674-8acf-8d28cd0c8fc0",
+  "objects": [
+    {
+      "id": "4ea1ec5c-affa-46f0-9a2d-066da33095ce",
+      "name": "base",
+      "prompt": "Pixel art modern desk setup, front view, straight-on camera angle. A clean, normal-quality wooden computer desk with a beautiful modern MacBook open and centered on top. Minimal desk accessories, wireless mouse, small desk lamp and a few tasteful accessories. Clean cable management, organized workspace, modern and comfortable professional developer setup. Noticeably nicer and more refined than a cheap starter setup, but not luxurious.  Centered composition, full desk visible from the front, isolated object, detailed retro pixel art, consistent proportions, transparent background.  IMPORTANT: NO CHAIR, NO STOOL, NO SEATING, NO PERSON. Only the desk and computer equipment.",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/Pixel_art_modern_desk_setup_f.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T06:08:39.121951"
+}

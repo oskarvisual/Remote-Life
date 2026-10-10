@@ -37,6 +37,13 @@ export class ActivitySystem extends GameSystem {
     const activity = this.activities.get(id);
     if (!activity) return 'unknown';
     if (!this.state.player.isIdle) return 'busy';
+    if (this.state.baby.location === 'carried' && id !== 'nap') {
+      this.notify(
+        '👶 You are holding the baby! Put the baby in the crib or bed (or sleep together) before doing anything else.',
+        'warn',
+      );
+      return 'blocked';
+    }
     const reason = activity.blockedReason(this.ctx);
     if (reason) {
       this.notify(reason, 'warn');
@@ -52,6 +59,13 @@ export class ActivitySystem extends GameSystem {
 
   sitAtComputer(): boolean {
     if (!this.state.player.isIdle) return false;
+    if (this.state.baby.location === 'carried') {
+      this.notify(
+        '👶 You cannot use the PC while holding the baby! Place the baby in the crib or bed first.',
+        'warn',
+      );
+      return false;
+    }
     this.state.player.mode = 'computer';
     this.changed();
     return true;

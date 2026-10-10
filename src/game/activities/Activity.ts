@@ -4,8 +4,8 @@ import type { ActivityId, PlayerMode } from '../core/models';
 import type { BabySystem } from '../systems/BabySystem';
 
 /**
- * A timed player action (nap, care for baby, eat...). While it runs the player
- * is busy and cannot start anything else. Extend this class to add new actions.
+ * A timed player action (nap, care for baby, eat, toilet, shower...). While it runs
+ * the player is busy and cannot start anything else. Extend this class to add new actions.
  */
 export abstract class Activity {
   abstract readonly id: ActivityId;
@@ -36,13 +36,22 @@ export class NapActivity extends Activity {
   onComplete({ state }: SystemContext): void {
     state.player.adjust('energy', BALANCE.activities.nap.energy);
     state.player.adjust('stress', BALANCE.activities.nap.stress);
+    if (state.baby.location === 'carried') {
+      state.baby.location = 'bed';
+      state.baby.carriedAsleep = false;
+      state.baby.cribSleeping = true;
+      state.baby.demand = 'none';
+      state.baby.crying = false;
+      state.baby.critical = false;
+      state.baby.needs = BALANCE.baby.attendRestores;
+    }
   }
 }
 
 export class CareActivity extends Activity {
   readonly id = 'care';
   readonly mode = 'caring';
-  readonly label = 'CARE FOR BABY';
+  readonly label = 'FEED BABY';
   readonly minutes = BALANCE.activities.care.minutes;
 
   constructor(private readonly baby: BabySystem) {
@@ -73,5 +82,45 @@ export class EatActivity extends Activity {
   onComplete({ state }: SystemContext): void {
     state.player.adjust('food', BALANCE.activities.eat.food);
     state.player.adjust('stress', BALANCE.activities.eat.stress);
+    state.player.adjust('bladder', 10);
+  }
+}
+
+export class DrinkActivity extends Activity {
+  readonly id = 'drink';
+  readonly mode = 'drinking';
+  readonly label = 'DRINK WATER';
+  readonly minutes = BALANCE.activities.drink.minutes;
+
+  onComplete({ state }: SystemContext): void {
+    state.player.adjust('hydration', BALANCE.activities.drink.hydration);
+    state.player.adjust('energy', BALANCE.activities.drink.energy);
+    state.player.adjust('stress', BALANCE.activities.drink.stress);
+    state.player.adjust('bladder', 18);
+  }
+}
+
+export class ToiletActivity extends Activity {
+  readonly id = 'toilet';
+  readonly mode = 'toilet';
+  readonly label = 'USE TOILET';
+  readonly minutes = BALANCE.activities.toilet.minutes;
+
+  onComplete({ state }: SystemContext): void {
+    state.player.adjust('bladder', -100);
+    state.player.adjust('stress', BALANCE.activities.toilet.stress);
+  }
+}
+
+export class ShowerActivity extends Activity {
+  readonly id = 'shower';
+  readonly mode = 'showering';
+  readonly label = 'TAKE SHOWER';
+  readonly minutes = BALANCE.activities.shower.minutes;
+
+  onComplete({ state }: SystemContext): void {
+    state.player.adjust('dirt', -100);
+    state.player.adjust('energy', BALANCE.activities.shower.energy);
+    state.player.adjust('stress', BALANCE.activities.shower.stress);
   }
 }

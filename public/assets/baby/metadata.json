@@ -1,0 +1,181 @@
+{
+  "group_id": "c81f9e5d-90c8-4e08-a834-39029a83dc6a",
+  "states": [
+    {
+      "character": {
+        "id": "e1d2752f-0555-4df6-b237-ee4c536226fd",
+        "name": "Idle",
+        "prompt": "16-bit pixel art baby sprite for a retro indie game, matching the exact same pixel-art style, pixel density, outlines, shading and proportions of the existing game assets.\n\nCute baby approximately 1 year old, small round head, short tiny hair, expressive eyes, chubby cheeks, small body, wearing a simple onesie and socks.\n\nThe baby is sitting normally on the floor, facing slightly toward the camera in a readable 2D side-view game perspective. Legs naturally positioned in front, hands relaxed beside the body, calm neutral happy expression.\n\nFull body completely visible, centered sprite, clean readable silhouette, consistent pixel clusters, limited 16-bit color palette.\n\nTransparent background. No furniture, no toys, no objects, no text, no shadows extending outside the sprite. Single baby only.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T16:40:20.887872+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "south-east": "Idle/rotations/south-east.png",
+          "east": "Idle/rotations/east.png",
+          "north-east": "Idle/rotations/north-east.png",
+          "north": "Idle/rotations/north.png",
+          "north-west": "Idle/rotations/north-west.png",
+          "west": "Idle/rotations/west.png",
+          "south-west": "Idle/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "34592aa5-d129-4d08-bd9e-db2b55241b21",
+        "name": "16-bit pixel art sle",
+        "prompt": "16-bit pixel art baby sprite for a retro indie game, matching the exact same pixel-art style, pixel density, outlines, shading and proportions of the existing game assets.\n\nCute baby approximately 1 year old, small round head, short tiny hair, expressive eyes, chubby cheeks, small body, wearing a simple onesie and socks.\n\nThe baby is sitting normally on the floor, facing slightly toward the camera in a readable 2D side-view game perspective. Legs naturally positioned in front, hands relaxed beside the body, calm neutral happy expression.\n\nFull body completely visible, centered sprite, clean readable silhouette, consistent pixel clusters, limited 16-bit color palette.\n\nTransparent background. No furniture, no toys, no objects, no text, no shadows extending outside the sprite. Single baby only.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T17:16:00.680118+00:00"
+      },
+      "folder": "16-bit_pixel_art_sle",
+      "frames": {
+        "rotations": {
+          "south": "16-bit_pixel_art_sle/rotations/south.png",
+          "south-east": "16-bit_pixel_art_sle/rotations/south-east.png",
+          "east": "16-bit_pixel_art_sle/rotations/east.png",
+          "north-east": "16-bit_pixel_art_sle/rotations/north-east.png",
+          "north": "16-bit_pixel_art_sle/rotations/north.png",
+          "north-west": "16-bit_pixel_art_sle/rotations/north-west.png",
+          "west": "16-bit_pixel_art_sle/rotations/west.png",
+          "south-west": "16-bit_pixel_art_sle/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "28813c8b-c59e-427c-971e-547f1804009c",
+        "name": "16-bit pixel art cra",
+        "prompt": "16-bit pixel art baby sprite for a retro indie game, matching the exact same pixel-art style, pixel density, outlines, shading and proportions of the existing game assets.\n\nCute baby approximately 1 year old, small round head, short tiny hair, expressive eyes, chubby cheeks, small body, wearing a simple onesie and socks.\n\nThe baby is sitting normally on the floor, facing slightly toward the camera in a readable 2D side-view game perspective. Legs naturally positioned in front, hands relaxed beside the body, calm neutral happy expression.\n\nFull body completely visible, centered sprite, clean readable silhouette, consistent pixel clusters, limited 16-bit color palette.\n\nTransparent background. No furniture, no toys, no objects, no text, no shadows extending outside the sprite. Single baby only.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T17:16:14.404343+00:00"
+      },
+      "folder": "16-bit_pixel_art_cra",
+      "frames": {
+        "rotations": {
+          "south": "16-bit_pixel_art_cra/rotations/south.png",
+          "south-east": "16-bit_pixel_art_cra/rotations/south-east.png",
+          "east": "16-bit_pixel_art_cra/rotations/east.png",
+          "north-east": "16-bit_pixel_art_cra/rotations/north-east.png",
+          "north": "16-bit_pixel_art_cra/rotations/north.png",
+          "north-west": "16-bit_pixel_art_cra/rotations/north-west.png",
+          "west": "16-bit_pixel_art_cra/rotations/west.png",
+          "south-west": "16-bit_pixel_art_cra/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "8bbcfe6c-3de6-4c90-bf30-90088ab86fd3",
+        "name": "16-bit pixel art bab",
+        "prompt": "16-bit pixel art baby sprite for a retro indie game, matching the exact same pixel-art style, pixel density, outlines, shading and proportions of the existing game assets.\n\nCute baby approximately 1 year old, small round head, short tiny hair, expressive eyes, chubby cheeks, small body, wearing a simple onesie and socks.\n\nThe baby is sitting normally on the floor, facing slightly toward the camera in a readable 2D side-view game perspective. Legs naturally positioned in front, hands relaxed beside the body, calm neutral happy expression.\n\nFull body completely visible, centered sprite, clean readable silhouette, consistent pixel clusters, limited 16-bit color palette.\n\nTransparent background. No furniture, no toys, no objects, no text, no shadows extending outside the sprite. Single baby only.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T17:16:21.871476+00:00"
+      },
+      "folder": "16-bit_pixel_art_bab",
+      "frames": {
+        "rotations": {
+          "south": "16-bit_pixel_art_bab/rotations/south.png",
+          "south-east": "16-bit_pixel_art_bab/rotations/south-east.png",
+          "east": "16-bit_pixel_art_bab/rotations/east.png",
+          "north-east": "16-bit_pixel_art_bab/rotations/north-east.png",
+          "north": "16-bit_pixel_art_bab/rotations/north.png",
+          "north-west": "16-bit_pixel_art_bab/rotations/north-west.png",
+          "west": "16-bit_pixel_art_bab/rotations/west.png",
+          "south-west": "16-bit_pixel_art_bab/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "047cca37-8430-4daa-8139-2763d3139a3c",
+        "name": "16-bit pixel art cry",
+        "prompt": "16-bit pixel art baby sprite for a retro indie game, matching the exact same pixel-art style, pixel density, outlines, shading and proportions of the existing game assets.\n\nCute baby approximately 1 year old, small round head, short tiny hair, expressive eyes, chubby cheeks, small body, wearing a simple onesie and socks.\n\nThe baby is sitting normally on the floor, facing slightly toward the camera in a readable 2D side-view game perspective. Legs naturally positioned in front, hands relaxed beside the body, calm neutral happy expression.\n\nFull body completely visible, centered sprite, clean readable silhouette, consistent pixel clusters, limited 16-bit color palette.\n\nTransparent background. No furniture, no toys, no objects, no text, no shadows extending outside the sprite. Single baby only.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T17:23:21.741436+00:00"
+      },
+      "folder": "16-bit_pixel_art_cry",
+      "frames": {
+        "rotations": {
+          "south": "16-bit_pixel_art_cry/rotations/south.png",
+          "south-east": "16-bit_pixel_art_cry/rotations/south-east.png",
+          "east": "16-bit_pixel_art_cry/rotations/east.png",
+          "north-east": "16-bit_pixel_art_cry/rotations/north-east.png",
+          "north": "16-bit_pixel_art_cry/rotations/north.png",
+          "north-west": "16-bit_pixel_art_cry/rotations/north-west.png",
+          "west": "16-bit_pixel_art_cry/rotations/west.png",
+          "south-west": "16-bit_pixel_art_cry/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "e7528ec2-4131-47f3-adf7-278f11c39154",
+        "name": "6-bit pixel art baby",
+        "prompt": "16-bit pixel art baby sprite for a retro indie game, matching the exact same pixel-art style, pixel density, outlines, shading and proportions of the existing game assets.\n\nCute baby approximately 1 year old, small round head, short tiny hair, expressive eyes, chubby cheeks, small body, wearing a simple onesie and socks.\n\nThe baby is sitting normally on the floor, facing slightly toward the camera in a readable 2D side-view game perspective. Legs naturally positioned in front, hands relaxed beside the body, calm neutral happy expression.\n\nFull body completely visible, centered sprite, clean readable silhouette, consistent pixel clusters, limited 16-bit color palette.\n\nTransparent background. No furniture, no toys, no objects, no text, no shadows extending outside the sprite. Single baby only.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T17:23:32.365809+00:00"
+      },
+      "folder": "6-bit_pixel_art_baby",
+      "frames": {
+        "rotations": {
+          "south": "6-bit_pixel_art_baby/rotations/south.png",
+          "south-east": "6-bit_pixel_art_baby/rotations/south-east.png",
+          "east": "6-bit_pixel_art_baby/rotations/east.png",
+          "north-east": "6-bit_pixel_art_baby/rotations/north-east.png",
+          "north": "6-bit_pixel_art_baby/rotations/north.png",
+          "north-west": "6-bit_pixel_art_baby/rotations/north-west.png",
+          "west": "6-bit_pixel_art_baby/rotations/west.png",
+          "south-west": "6-bit_pixel_art_baby/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-10T17:38:48.836264"
+}

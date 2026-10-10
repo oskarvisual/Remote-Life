@@ -8,7 +8,7 @@ import { Computer } from './ui/Computer';
 import { GameOverModal } from './ui/GameOverModal';
 import { HUD } from './ui/HUD';
 import { Notifications } from './ui/Notifications';
-import { loadProfile, StartMenu } from './ui/StartMenu';
+import { loadProfile, saveProfile, StartMenu } from './ui/StartMenu';
 
 let phaserGame: Phaser.Game | null = null;
 let currentSession: GameSession | null = null;
@@ -98,6 +98,19 @@ function showStartMenu(): void {
 }
 
 function init(): void {
+  window.addEventListener('keydown', (event) => {
+    const keyMap: Record<string, DifficultyId> = {
+      '1': 'hard',
+      '2': 'medium',
+      '3': 'easy',
+    };
+    const nextDiff = keyMap[event.key];
+    if (nextDiff && currentSession?.state.player.mode !== 'computer') {
+      saveProfile({ difficulty: nextDiff });
+      startGame(nextDiff);
+    }
+  });
+
   const profile = loadProfile();
   if (profile?.difficulty) {
     startGame(profile.difficulty);

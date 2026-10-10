@@ -1,0 +1,22 @@
+{
+  "group_id": "d9a51c2f-a280-4e9e-a8f9-4339947ebf78",
+  "objects": [
+    {
+      "id": "68d45af4-9637-4602-91d8-29d3f78f49c1",
+      "name": "base",
+      "prompt": "Pixel art ultimate professional developer desk setup, front view, straight-on camera angle. A large premium modern desk with three high-end monitors arranged side by side, one centered and two on the sides. A Mac Studio clearly visible on the desk, premium mechanical keyboard, mouse, professional speakers, monitor arms, excellent cable management and subtle high-end desk accessories. Powerful, sophisticated workstation for an elite software developer, clean and luxurious without looking futuristic.\n\nCentered composition, full desk visible from the front, isolated object, detailed retro pixel art, consistent proportions and scale with the previous desk setups, transparent background.\n\nIMPORTANT: NO CHAIR, NO STOOL, NO SEATING, NO PERSON. Only the desk and computer equipment.\n\nLa progresi\u00f3n quedar\u00eda muy clara visualmente: basura/improvisado \u2192 developer normal \u2192 workstation pro. Para tu juego, mantendr\u00eda adem\u00e1s el mismo ancho aproximado del sprite en los tres, aunque el tercero puede ser un poco m\u00e1s ancho por los 3 monitores.",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/Pixel_art_ultimate_professiona.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-10T05:47:19.845064"
+}
