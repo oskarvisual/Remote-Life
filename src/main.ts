@@ -8,6 +8,7 @@ import { Computer } from './ui/Computer';
 import { FridgeModal } from './ui/FridgeModal';
 import { GameOverModal } from './ui/GameOverModal';
 import { HUD } from './ui/HUD';
+import { MobileNotice } from './ui/MobileNotice';
 import { Notifications } from './ui/Notifications';
 import { loadProfile, saveProfile, StartMenu } from './ui/StartMenu';
 
@@ -106,7 +107,23 @@ function showStartMenu(): void {
   }
 }
 
+function isMobileViewport(): boolean {
+  return window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
+}
+
+function showMobileNotice(): void {
+  const mobileNoticeDialog = document.querySelector<HTMLDialogElement>('#mobile-notice');
+  if (mobileNoticeDialog) {
+    new MobileNotice(mobileNoticeDialog).show();
+  }
+}
+
 function init(): void {
+  if (isMobileViewport()) {
+    showMobileNotice();
+    return;
+  }
+
   window.addEventListener('keydown', (event) => {
     const keyMap: Record<string, DifficultyId> = {
       '1': 'hard',

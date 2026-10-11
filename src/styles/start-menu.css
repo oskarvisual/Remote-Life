@@ -71,6 +71,19 @@
   margin-bottom: 0 !important;
 }
 
+.mobile-notice-card {
+  max-width: 460px;
+  text-align: center;
+}
+
+.mobile-notice-card .eyebrow {
+  line-height: 1.5;
+}
+
+.mobile-notice-card h1 {
+  color: #a84348;
+}
+
 .game-over-card.defeat-card {
   border-color: #8b0000;
   box-shadow: 10px 10px 0 #8b0000;
