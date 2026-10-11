@@ -1,158 +1,158 @@
 # 💻🔥 Remote Life — _Survive the Wi-Fi (or Die Trying)_
 
-> **“En Remote Life, como en la vida misma, cuando algo sale bien… otras tres cosas salen mal.”**
-> ¿Pensabas que trabajar desde casa era estar en pijama tomando café? **Error.** Aquí no puedes descansar —porque descansar, solo se descansa cuando uno se muere—. Atiende a tu esposa antes de que te grite, dale el biberón al bebé antes de que trepe a la cocina y prenda fuego al departamento, limpia el baño antes de que se llene de bolsas de basura, lávate las manos, responde al _Team Lead_ en plena videollamada y entrega tus tickets a tiempo… o prepárate para ser despedido, desalojado o divorciado por culpa del estrés.
+> **“In Remote Life, just like in real life, whenever one thing goes right… three others go wrong.”**
+> Think working from home means pajamas and coffee? **Wrong.** You cannot rest here—because you only truly rest when you are dead. Take care of your wife before she starts yelling, feed the baby before they climb into the kitchen and set the apartment on fire, clean the bathroom before it fills with trash bags, wash your hands, answer the Team Lead during a video call, and deliver your tickets on time… or get ready to be fired, evicted, or divorced from stress.
 
-![Menú principal de Remote Life](./public/screenshots/remote-live-screenshot01.png)
-
----
-
-## 🎮 ¿De qué trata _Remote Life_?
-
-**Remote Life** es un caótico simulador de supervivencia en **pixel-art 2D** para navegador donde encarnas a un desarrollador remoto tratando de sobrevivir a su semana laboral sin perder el trabajo, la cordura, la familia ni el techo donde vive.
-
-Cada minuto cuenta y el caos nunca pide permiso:
-
-- 💻 **Trabaja o muere de hambre**: Acepta encargos freelance en `REMOTE//OS`, cierra tickets antes del _deadline_, mantén tu reputación alta y sobrevive a la reunión diaria de las **10:30 AM** sin quedarte dormido frente a la cámara.
-- 👶 **Un bebé con vocación de pirómano**: Si el bebé llora, tu estrés sube. Si lo ignoras demasiado, se escapa de la cuna y empieza a gatear por el departamento para **desenchufar tu PC**, **apagar el router Wi-Fi**, **caerse de la mesa del comedor** o **prender fuego a la cocina** (que pasa de una llamita a incendiar toda la cocina y terminar en _Game Over_).
-- 👩 **Matrimonio bajo presión**: Tu esposa tiene su propia rutina y necesidades. Si la nevera está vacía y tiene hambre, o si el bebé no para de llorar, **empezarán a gritarse con burbujas de cómic** por todo el departamento disparando tu estrés al máximo.
-- 🧹 **Higiene, desorden y dignidad**: Usa el inodoro y **lávate las manos en el lavadero** (si no lo haces, te ensuciarás rapidísimo hasta que te rodeen las moscas 🪰). Limpia las habitaciones, el baño y la cocina antes de que los tachos rebalsen, aparezca popó en el baño o se acumulen bolsas de basura por toda la casa.
-- 🏢 **Economía, mudanzas y _Setup_**: ¿No llegas a pagar el alquiler? Vende el sofá o el televisor para sobrevivir una semana más, o entra a la pestaña **TRADE** del mercado para mudarte a un departamento más barato (¡aunque sea feo y te dé más estrés!) o mejorar tu escritorio y tu silla por separado.
+![Remote Life main menu](./public/screenshots/remote-live-screenshot01.png)
 
 ---
 
-## 📸 Galería del Caos (_Screenshots_)
+## 🎮 What Is _Remote Life_?
 
-### 🏠 Tu departamento, tu oficina, tu prisión
+**Remote Life** is a chaotic 2D pixel-art browser survival simulator where you play a remote developer trying to make it through the work week without losing your job, sanity, family, or home.
 
-Elige entre tres niveles de presión (**EASY**, **MEDIUM** o **HARD**), desde un estudio apretado con escritorio de barril y una caja de cartón por silla, hasta un _penthouse_ con triple monitor y vista a la ciudad.
+Every minute counts, and chaos never asks for permission:
 
-![Vista del apartamento y estación de trabajo](./public/screenshots/remote-live-screenshot02.png)
-
-### 🍼 El bebé tiene hambre… y tú tienes una entrega en 10 minutos
-
-Aliméntalo con leche de fórmula, sácalo a gatear cuando quiera jugar o cárgalo en brazos hasta que se duerma antes de regresarlo a la cuna.
-
-![Cuidado del bebé en la cuna](./public/screenshots/remote-live-screenshot06.png)
-
-### 🚨 ¡Cuando todo sale mal al mismo tiempo!
-
-Te estás duchando porque hueles mal, tu esposa te grita desde la sala, el bebé se escapó de la cuna y te está **desenchufando la PC**…
-
-![Bebé desenchufando la PC mientras discutes con tu esposa](./public/screenshots/remote-live-screenshot07.png)
-
-### 🔥 ¡Fuego en la cocina en plena _Daily Sprint Sync_!
-
-Si no apagas el fuego cuando empieza pequeño (`fire_small`), crecerá a llamas gigantes (`fire_big`), consumirá toda la cocina y perderás la partida.
-
-![Incendio en la estufa de la cocina](./public/screenshots/remote-live-screenshot08.png)
-
-### 🧼 Higiene y limpieza doméstica
-
-Después de usar el inodoro, pasa por el lavadero a lavarte las manos y mantén limpios los tachos de basura de la cocina y el baño.
-
-![Alerta de lavarse las manos en el baño](./public/screenshots/remote-live-screenshot05.png)
-
-### 🧊 Gestiona las provisiones de tu refrigeradora
-
-Abre la nevera para elegir entre comida casera, hamburguesas, sopa ramen, ensaladas, botellas de agua, _cold brew_ o leche para el bebé.
-
-![Inventario interactivo de la refrigeradora](./public/screenshots/remote-live-screenshot04.png)
-
-### 💳 `REMOTE//OS` — Trabajo, Mercado, Trade y Banco
-
-Desde tu computadora gestionas tus tareas (`WORK`), correos (`EMAIL`), reuniones (`CALENDAR`), trabajos extra (`JOBS`), compras/intercambios/ventas (`MARKET`) y el pago del alquiler (`BANK`).
-
-![Sistema operativo REMOTE//OS y cuenta bancaria](./public/screenshots/remote-live-screenshot03.png)
+- 💻 **Work or starve**: Take freelance assignments in `REMOTE//OS`, finish tickets before their deadlines, keep your reputation high, and survive the daily **10:30 AM** meeting without falling asleep on camera.
+- 👶 **A baby with a pyromaniac streak**: When the baby cries, your stress rises. Ignore them for too long and they escape the crib to crawl around the apartment, **unplug your PC**, **turn off the Wi-Fi router**, **fall from the dining table**, or **set the kitchen on fire**—from a small flame to a full kitchen blaze and a _Game Over_.
+- 👩 **Marriage under pressure**: Your wife has her own routine and needs. If the fridge is empty and she is hungry, or the baby will not stop crying, **comic-style speech bubbles and yelling** will fill the apartment, driving your stress to the limit.
+- 🧹 **Hygiene, mess, and dignity**: Use the toilet and **wash your hands at the sink**—otherwise you will get dirty very quickly until flies surround you 🪰. Clean the rooms, bathroom, and kitchen before trash bins overflow, poop appears in the bathroom, or garbage bags pile up throughout the home.
+- 🏢 **Money, moving, and your setup**: Cannot afford rent? Sell the sofa or TV to survive one more week, or open the market's **TRADE** tab to move to a cheaper apartment—even if it is ugly and raises your stress—or upgrade your desk and chair separately.
 
 ---
 
-## 🕹️ Controles
+## 📸 Gallery of Chaos (_Screenshots_)
 
-| Tecla                         | Acción                                                                                         |
-| :---------------------------- | :--------------------------------------------------------------------------------------------- |
-| **`A` / `D`** o **`←` / `→`** | Caminar por el departamento                                                                    |
-| **`E`**                       | Interactuar con la zona actual (Escritorio, Cuna, Cama, Nevera, TV, Inodoro, Lavadero, Ducha)  |
-| **`F`**                       | Cargar al bebé en brazos / Acostarlo en la cuna o cama / Dejarlo gatear en el piso             |
-| **`C`**                       | Limpiar la habitación actual (Dormitorio/Sala, Baño o Cocina)                                  |
-| **`R`**                       | Beber agua rápidamente frente a la refrigeradora                                               |
-| **`TAB`**                     | Abrir / cerrar el panel detallado de estadísticas familiares (**YOU**, **WIFE**, **BABY**)     |
-| **`ESC`**                     | Cerrar la computadora (`REMOTE//OS`) o la ventana de la refrigeradora                          |
-| **`1` / `2` / `3`**           | Cambiar rápidamente entre dificultad **HARD**, **MEDIUM** y **EASY** (fuera de la computadora) |
+### 🏠 Your apartment, your office, your prison
+
+Choose between three pressure levels—**EASY**, **MEDIUM**, or **HARD**—from a cramped studio with a barrel desk and cardboard-box chair to a triple-monitor penthouse with a city view.
+
+![Apartment and workstation view](./public/screenshots/remote-live-screenshot02.png)
+
+### 🍼 The baby is hungry… and you have a delivery due in 10 minutes
+
+Feed them formula, let them crawl when they want to play, or hold them until they fall asleep before putting them back in the crib.
+
+![Baby care at the crib](./public/screenshots/remote-live-screenshot06.png)
+
+### 🚨 When everything goes wrong at once!
+
+You are taking a shower because you smell bad, your wife is yelling from the living room, the baby escaped the crib, and they are **unplugging your PC**…
+
+![Baby unplugging the PC while you argue with your wife](./public/screenshots/remote-live-screenshot07.png)
+
+### 🔥 A kitchen fire during the _Daily Sprint Sync_!
+
+If you do not extinguish the fire while it is small (`fire_small`), it grows into giant flames (`fire_big`), consumes the kitchen, and ends your run.
+
+![Fire on the kitchen stove](./public/screenshots/remote-live-screenshot08.png)
+
+### 🧼 Hygiene and home cleaning
+
+After using the toilet, wash your hands at the sink and keep the kitchen and bathroom trash bins clean.
+
+![Hand-washing alert in the bathroom](./public/screenshots/remote-live-screenshot05.png)
+
+### 🧊 Manage your refrigerator supplies
+
+Open the fridge to choose from home-cooked meals, burgers, ramen soup, salads, water bottles, cold brew, or baby milk.
+
+![Interactive refrigerator inventory](./public/screenshots/remote-live-screenshot04.png)
+
+### 💳 `REMOTE//OS` — Work, Market, Trade, and Bank
+
+Use your computer to manage tasks (`WORK`), email (`EMAIL`), meetings (`CALENDAR`), side jobs (`JOBS`), purchases/trades/sales (`MARKET`), and rent payments (`BANK`).
+
+![REMOTE//OS and bank account](./public/screenshots/remote-live-screenshot03.png)
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🕹️ Controls
 
-- **[Phaser 3](https://phaser.io/) (`v3.90`)** — Motor 2D HTML5 para el renderizado pixel-art del departamento, animaciones por capas de profundidad, iluminación dinámica Día / Tarde / Noche y efectos visuales.
-- **[TypeScript](https://www.typescriptlang.org/) (`v5.9`)** — Tipado estricto de extremo a extremo para el núcleo de simulación, eventos y componentes UI.
-- **[lit-html](https://lit.dev/docs/libraries/standalone-templates/) (`v3.3`)** — Renderizado declarativo y ultraligero para el HUD, la interfaz de `REMOTE//OS`, el inventario de la refrigeradora y los modales nativos `<dialog>`.
-- **[Vite](https://vite.dev/) (`v6.0`)** — Servidor de desarrollo instantáneo con HMR y empaquetado optimizado para producción (con _chunking_ dedicado para Phaser).
-- **[Vitest](https://vitest.dev/) (`v3.2`)** — Suite de pruebas unitarias _headless_ (47 tests automatizados) que valida toda la simulación sin depender del DOM ni de Phaser.
-- **ESLint 9 + Prettier 3** — Linter y formateador de código automatizados como _quality gate_.
+| Key                            | Action                                                                               |
+| :----------------------------- | :----------------------------------------------------------------------------------- |
+| **`A` / `D`** or **`←` / `→`** | Walk through the apartment                                                           |
+| **`E`**                        | Interact with the current area: desk, crib, bed, fridge, TV, toilet, sink, or shower |
+| **`F`**                        | Hold the baby / place them in the crib or bed / let them crawl on the floor          |
+| **`C`**                        | Clean the current room: bedroom/living room, bathroom, or kitchen                    |
+| **`R`**                        | Quickly drink water in front of the refrigerator                                     |
+| **`TAB`**                      | Open or close the detailed family-stat panel: **YOU**, **WIFE**, **BABY**            |
+| **`ESC`**                      | Close the `REMOTE//OS` computer or refrigerator window                               |
+| **`1` / `2` / `3`**            | Quickly switch to **HARD**, **MEDIUM**, or **EASY** difficulty outside the computer  |
 
 ---
 
-## 📂 Estructura de Archivos y Arquitectura
+## 🛠️ Technology
 
-El proyecto aplica una **separación estricta entre Simulación y Vista**: toda la lógica del juego vive en sistemas puros dentro de `src/game/` (sin importar `phaser` ni tocar `window`/`document`), lo que permite simular partidas completas en milisegundos dentro de **Vitest**.
+- **[Phaser 3](https://phaser.io/) (`v3.90`)** — HTML5 2D engine for pixel-art apartment rendering, layered animations, dynamic day/afternoon/night lighting, and visual effects.
+- **[TypeScript](https://www.typescriptlang.org/) (`v5.9`)** — Strict end-to-end typing for the simulation core, events, and UI components.
+- **[lit-html](https://lit.dev/docs/libraries/standalone-templates/) (`v3.3`)** — Lightweight declarative rendering for the HUD, `REMOTE//OS` interface, fridge inventory, and native `<dialog>` modals.
+- **[Vite](https://vite.dev/) (`v6.0`)** — Instant development server with HMR and optimized production builds, including a dedicated Phaser chunk.
+- **[Vitest](https://vitest.dev/) (`v3.2`)** — Headless unit-test suite that validates the entire simulation without depending on the DOM or Phaser.
+- **ESLint 9 + Prettier 3** — Automated linting and formatting quality gate.
+
+---
+
+## 📂 File Structure and Architecture
+
+The project applies a **strict Simulation/View separation**: all game logic runs in pure systems under `src/game/`, without importing `phaser` or touching `window`/`document`. This makes it possible to simulate complete runs in milliseconds with **Vitest**.
 
 ```text
 Remote-Life/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml           # CI/CD: Tests + Build + Deploy automático a GitHub Pages en cada push a main
+│       └── deploy.yml           # CI/CD: test, build, and deploy to GitHub Pages on every push to main
 ├── public/
-│   ├── assets/                  # Sprites pixel-art (personajes, niveles, muebles en 3 gamas, fuego, basura)
-│   └── screenshots/             # Capturas de pantalla oficiales del juego
+│   ├── assets/                  # Pixel-art sprites: characters, apartment levels, furniture tiers, fire, and trash
+│   └── screenshots/             # Official game screenshots
 ├── src/
 │   ├── game/
-│   │   ├── activities/          # Actividades con duración (Nap, Care, Eat, Drink, Toilet, WashHands, Clean, WatchTv)
-│   │   ├── config/              # Balance numérico (balance.ts), catálogo de tienda/trade (content.ts), dificultades y finales
-│   │   ├── core/                # Estado central (GameState), bus de eventos tipado (EventBus), modelos y reloj
-│   │   ├── scenes/              # Escena visual en Phaser 3 (ApartmentScene.ts)
-│   │   ├── systems/             # Sistemas de simulación (Clock, Task, Meeting, Baby, Wife, Needs, Economy, Market, Jobs...)
-│   │   └── GameSession.ts       # Composition Root que conecta todos los sistemas de una partida
-│   ├── styles/                  # Estilos CSS retro/pixel-art para HUD, REMOTE//OS, nevera y menús
-│   ├── ui/                      # Componentes reactivos con lit-html (HUD, Computer, FridgeModal, StartMenu, GameOverModal)
-│   └── main.ts                  # Punto de entrada: monta la UI y arranca Phaser 3
-├── tests/                       # Pruebas unitarias headless con Vitest (reloj, economía, reuniones, tareas, familia, fuego)
-├── index.html                   # Contenedor principal (#hud, #game, #computer, #fridge, <dialog>)
-├── vite.config.ts               # Configuración de Vite (base './' compatible con GitHub Pages) y Vitest
-└── package.json                 # Scripts y dependencias del proyecto
+│   │   ├── activities/          # Timed activities: Nap, Care, Eat, Drink, Toilet, WashHands, Clean, WatchTv
+│   │   ├── config/              # Numeric balance (balance.ts), store/trade catalog (content.ts), difficulties, and outcomes
+│   │   ├── core/                # Central state (GameState), typed event bus (EventBus), models, and clock
+│   │   ├── scenes/              # Phaser 3 visual scene (ApartmentScene.ts)
+│   │   ├── systems/             # Simulation systems: Clock, Task, Meeting, Baby, Wife, Needs, Economy, Market, Jobs, and more
+│   │   └── GameSession.ts       # Composition root that connects every system in one play session
+│   ├── styles/                  # Retro pixel-art CSS for the HUD, REMOTE//OS, fridge, and menus
+│   ├── ui/                      # Reactive lit-html components: HUD, Computer, FridgeModal, StartMenu, GameOverModal
+│   └── main.ts                  # Entry point that mounts the UI and starts Phaser 3
+├── tests/                       # Headless Vitest unit tests for clock, economy, meetings, tasks, family, and fire
+├── index.html                   # Main container: #hud, #game, #computer, #fridge, and <dialog>
+├── vite.config.ts               # Vite config with GitHub Pages-compatible relative base and Vitest setup
+└── package.json                 # Scripts and dependencies
 ```
 
 ---
 
-## 🚀 Ejecución Local
+## 🚀 Run Locally
 
-1. **Instala las dependencias**:
+1. **Install dependencies**:
 
    ```bash
    npm install
    ```
 
-2. **Inicia el servidor de desarrollo**:
+2. **Start the development server**:
 
    ```bash
    npm run dev
    ```
 
-   Abre la URL que muestra Vite en tu navegador (por defecto `http://localhost:5173`).
+   Open the URL shown by Vite in your browser—by default, `http://localhost:5173`.
 
-### Scripts disponibles
+### Available scripts
 
-| Comando           | Descripción                                                                         |
-| :---------------- | :---------------------------------------------------------------------------------- |
-| `npm run dev`     | Inicia el servidor de desarrollo local con Vite                                     |
-| `npm run build`   | Verifica tipos con TypeScript y genera el bundle de producción en `./dist`          |
-| `npm run preview` | Sirve localmente el bundle compilado de `./dist`                                    |
-| `npm test`        | Ejecuta los 47 tests unitarios con **Vitest**                                       |
-| `npm run check`   | Ejecuta el _quality gate_ completo (`typecheck` + `lint` + `format:check` + `test`) |
-| `npm run format`  | Formatea todo el repositorio con Prettier                                           |
+| Command           | Description                                                                 |
+| :---------------- | :-------------------------------------------------------------------------- |
+| `npm run dev`     | Starts the Vite development server                                          |
+| `npm run build`   | Type-checks with TypeScript and generates the production bundle in `./dist` |
+| `npm run preview` | Serves the compiled `./dist` bundle locally                                 |
+| `npm test`        | Runs the Vitest unit-test suite                                             |
+| `npm run check`   | Runs the complete quality gate: typecheck, lint, format check, and tests    |
+| `npm run format`  | Formats the repository with Prettier                                        |
 
 ---
 
-## 🌐 Publicación Automática en GitHub Pages
+## 🌐 Automatic GitHub Pages Deployment
 
-El proyecto ya incluye el flujo de trabajo [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) y rutas relativas (`base: './'` en [`vite.config.ts`](./vite.config.ts)) para que **cada `push` a la rama `main` publique automáticamente el juego en GitHub Pages** (tanto si el repositorio se llama `Remote-Life` como `remote-live`).
+The project includes [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) and relative paths (`base: './'` in [`vite.config.ts`](./vite.config.ts)), so **every push to the `main` branch automatically publishes the game to GitHub Pages**—whether the repository is named `Remote-Life` or `remote-live`.
