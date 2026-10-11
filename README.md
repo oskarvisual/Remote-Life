@@ -3,6 +3,8 @@
 > **“In Remote Life, just like in real life, whenever one thing goes right… three others go wrong.”**
 > Think working from home means pajamas and coffee? **Wrong.** You cannot rest here—because you only truly rest when you are dead. Take care of your wife before she starts yelling, feed the baby before they climb into the kitchen and set the apartment on fire, clean the bathroom before it fills with trash bags, wash your hands, answer the Team Lead during a video call, and deliver your tickets on time… or get ready to be fired, evicted, or divorced from stress.
 
+[🎮 Play Remote Life](https://oskarvisual.github.io/Remote-Life/)
+
 ![Remote Life main menu](./public/screenshots/remote-live-screenshot01.png)
 
 ---
