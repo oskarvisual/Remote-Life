@@ -13,9 +13,12 @@ export class GameOverSystem extends GameSystem {
   }
 
   override update(): void {
-    const { player } = this.state;
+    const { player, baby } = this.state;
     if (player.get('stress') >= 100) this.end('burnout');
     else if (player.get('reputation') <= 0) this.end('fired');
+    else if (baby.kitchenFire && baby.fireElapsedSeconds >= BALANCE.baby.fireGameOverMinutes * 60) {
+      this.end('kitchen-fire');
+    }
   }
 
   end(reason: OutcomeReason): void {

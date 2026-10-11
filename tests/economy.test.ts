@@ -19,7 +19,7 @@ describe('EconomySystem', () => {
     expect(session.economy.daysUntilRent).toBe(7);
   });
 
-  it('charges rent on day 8 and wins the week', () => {
+  it('allows manual rent payment in the Bank app and wins the week on day 8', () => {
     const session = createSession('medium', noSchedule);
     keepAlive(session);
     session.state.player.money = 1000;
@@ -27,16 +27,31 @@ describe('EconomySystem', () => {
     session.events.on('game:over', (o) => (outcome = o));
     advanceMinutes(session, 7 * 24 * 60);
     expect(session.state.day).toBe(8);
+    expect(session.state.rentDue).toBe(true);
+    expect(session.state.evictionDaysLeft).toBe(5);
+    expect(session.economy.payRent()).toBe('ok');
     expect(session.state.player.money).toBe(300);
     expect(outcome).toEqual({ victory: true, reason: 'week-survived' });
     expect(session.state.status).toBe('over');
   });
 
-  it('evicts the player when rent cannot be paid', () => {
+  it('starts a 5-day eviction countdown when rent is unpaid and evicts after 5 days', () => {
     const session = createSession('medium', noSchedule);
     keepAlive(session);
     session.state.player.money = 100;
+    // Advance to Day 8 (rent due date: 5 days until eviction)
     advanceMinutes(session, 7 * 24 * 60);
+    expect(session.state.rentDue).toBe(true);
+    expect(session.state.evictionDaysLeft).toBe(5);
+    expect(session.state.status).toBe('running');
+
+    // Advance 4 more days (Days 9, 10, 11, 12 -> 1 day left)
+    advanceMinutes(session, 4 * 24 * 60);
+    expect(session.state.evictionDaysLeft).toBe(1);
+    expect(session.state.status).toBe('running');
+
+    // Advance 1 more day (Day 13 -> evicted!)
+    advanceMinutes(session, 1 * 24 * 60);
     expect(session.state.outcome?.reason).toBe('evicted');
   });
 });

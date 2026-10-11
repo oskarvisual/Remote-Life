@@ -42,10 +42,19 @@ canvas {
   left: 20px;
   right: 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
   pointer-events: none;
   text-shadow: 2px 2px #25181d;
-  z-index: 5;
+  z-index: 8;
+}
+
+.hud-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .time {
@@ -78,13 +87,20 @@ canvas {
   background: #24212b;
   padding: 7px 10px;
   border: 2px solid #f6d58b;
+  pointer-events: auto;
 }
 
 .stats span {
   font-size: 15px;
 }
 
-.stat-item.alert {
+.stat-item.alert em,
+.detail-stat-row.alert .detail-bar em {
+  background: #ff6b6b;
+}
+
+.stat-item.alert,
+.detail-stat-row.alert {
   color: #ff6b6b;
   font-weight: bold;
 }
@@ -108,7 +124,8 @@ canvas {
 
 .stats em,
 .attention em,
-.progress span {
+.progress span,
+.detail-bar em {
   display: block;
   height: 100%;
   background: #84d68c;
@@ -127,6 +144,117 @@ canvas {
   background: #191720;
   padding: 2px 6px;
   border: 1px solid #4a4458;
+}
+
+.alert-badge {
+  border-color: #ff6b6b;
+  color: #ffb8b8;
+  background: #471d27;
+  animation: blink 1.2s infinite;
+}
+
+.stats-toggle-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  background: #f6d58b;
+  color: #191720;
+  border: 2px solid #fff4d4;
+  padding: 6px 8px;
+  cursor: pointer;
+  pointer-events: auto;
+  text-shadow: none;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.stats-toggle-btn:hover,
+.stats-toggle-btn.active {
+  background: #ff986a;
+  color: #14151b;
+}
+
+.family-stats-panel {
+  align-self: flex-end;
+  width: min(100%, 880px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background: #1c1924f5;
+  border: 3px solid #f6d58b;
+  padding: 12px;
+  pointer-events: auto;
+  box-shadow: 0 12px 32px #000b;
+}
+
+.family-card {
+  background: #262230;
+  border: 2px solid #4a4458;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.family-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid #4a4458;
+  padding-bottom: 5px;
+}
+
+.family-card-header strong {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: #ffdc74;
+}
+
+.status-pill {
+  font-family: 'VT323', monospace;
+  font-size: 15px;
+  background: #14151b;
+  color: #91d6d2;
+  padding: 1px 6px;
+  border: 1px solid #477385;
+}
+
+.family-sub {
+  font-size: 15px;
+  color: #c9bfab;
+  margin-bottom: 2px;
+}
+
+.detail-stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-stat-row {
+  display: grid;
+  grid-template-columns: 92px 1fr 36px;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+}
+
+.detail-stat-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #f2aa6a;
+}
+
+.detail-bar {
+  display: block;
+  width: 100%;
+  height: 8px;
+  background: #14151b;
+  border: 1px solid #fff4d4;
+}
+
+.detail-stat-val {
+  text-align: right;
+  font-size: 16px;
 }
 
 .hint {
@@ -187,7 +315,14 @@ canvas {
   }
 }
 
-#computer {
+#computer[hidden],
+#fridge[hidden],
+[hidden] {
+  display: none !important;
+}
+
+#computer,
+#fridge {
   position: fixed;
   inset: 0;
   background: #10101bdd;
@@ -206,6 +341,138 @@ canvas {
   box-shadow: 10px 10px 0 #e07256;
   display: flex;
   flex-direction: column;
+}
+
+.fridge-window {
+  width: min(100%, 860px);
+  max-height: min(88vh, 620px);
+  background: #141b24;
+  color: #fff4d4;
+  border: 5px solid #4aa3b5;
+  box-shadow: 10px 10px 0 #1f4e5f;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.fridge-window header {
+  background: #0d131a;
+  color: #f5e4b8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 4px solid #4aa3b5;
+}
+
+.fridge-window header strong {
+  display: block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 13px;
+  color: #72efdd;
+}
+
+.fridge-window header small {
+  display: block;
+  font-size: 17px;
+  color: #b8dce4;
+  margin-top: 4px;
+}
+
+.fridge-window button {
+  font: inherit;
+  cursor: pointer;
+  border: 3px solid #4aa3b5;
+  background: #f7d687;
+  color: #101621;
+  padding: 6px 12px;
+  font-weight: bold;
+  box-shadow: 3px 3px 0 #090d12;
+}
+
+.fridge-window button:hover:not(:disabled) {
+  background: #ff986a;
+}
+
+.fridge-window button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: #3a4654;
+  color: #a9b4c2;
+  border-color: #4a5768;
+}
+
+.fridge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  padding: 18px;
+  overflow-y: auto;
+}
+
+.fridge-item-card {
+  background: #0b0e14;
+  color: #fff4d4;
+  border: 3px solid #3c6e82;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 4px 4px 0 #05070a;
+}
+
+.fridge-item-card.out-of-stock {
+  opacity: 0.55;
+  background: #12151c;
+  border-style: dashed;
+  border-color: #5c3b47;
+}
+
+.fridge-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.fridge-item-top > div {
+  flex: 1;
+}
+
+.fridge-item-top b {
+  display: block;
+  font-size: 21px;
+  color: #ffdc74;
+  margin-bottom: 3px;
+}
+
+.fridge-item-top small {
+  display: block;
+  font-size: 16px;
+  color: #d0e2ea;
+  line-height: 1.25;
+}
+
+.fridge-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.stock-count {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  background: #193829;
+  color: #80ed99;
+  border: 2px solid #52b788;
+  padding: 5px 7px;
+}
+
+.stock-count.zero {
+  background: #3d1822;
+  color: #ff8fa3;
+  border-color: #c9184a;
 }
 
 .desktop header {
@@ -352,9 +619,55 @@ h2 {
   margin: 3px 0 8px;
 }
 
+.market-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.market-header-row h2 {
+  margin: 0;
+}
+
+.market-mode-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.market-subnav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: #cbd5cb;
+  border: 2px solid #394d62;
+}
+
+.fridge-summary-strip {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: #dff2f5;
+  border: 2px solid #396273;
+  padding: 6px 10px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.fridge-pill {
+  background: #ffffff;
+  border: 1px solid #598392;
+  padding: 2px 6px;
+}
+
 .market-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 12px;
 }
 
@@ -363,11 +676,138 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 10px;
+}
+
+.market-card-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.market-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.market-thumb-box {
+  width: 68px;
+  height: 68px;
+  flex-shrink: 0;
+  background: #171c26;
+  border: 2px solid #394d62;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.market-thumb-box.wide {
+  width: 96px;
+  height: 68px;
+}
+
+.market-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.market-thumb-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.market-card.owned-card {
+  background: #e6ecd9;
+  border-color: #4f7754;
+}
+
+.market-card.locked-card {
+  background: #e5e1d8;
+  border-color: #7f7970;
+  opacity: 0.88;
+}
+
+.market-lock-note {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 6px;
+  background: #fff3cd;
+  border: 1px solid #d39e00;
+  color: #664d03;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.market-lock-note.owned-note {
+  background: #d1e7dd;
+  border-color: #2f7a52;
+  color: #14452b;
+}
+
+.slot-tag {
+  display: inline-block;
+  font-family: 'Press Start 2P';
+  font-size: 8px;
+  background: #263a48;
+  color: #f7e4bb;
+  padding: 4px 6px;
+  margin-bottom: 6px;
+}
+
+.tier-tag.tier-1 {
+  background: #6c584c;
+}
+
+.tier-tag.tier-2 {
+  background: #2b59c3;
+}
+
+.tier-tag.tier-3 {
+  background: #9b2226;
+}
+
+.sell-btn {
+  background: #80ed99 !important;
 }
 
 .bank-details p {
   margin: 8px 0;
-  font-size: 22px;
+  font-size: 20px;
+}
+
+.bank-rent-card {
+  background: #f8edcf;
+  border: 3px solid #394d62;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.eviction-alert-box {
+  background: #ffe3e3;
+  border: 3px solid #c92a2a;
+  color: #7c1922;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.rent-warning-box {
+  background: #fff3bf;
+  border: 3px solid #e67700;
+  color: #5c3c00;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.pay-rent-btn {
+  margin-top: 10px;
+  font-family: 'Press Start 2P' !important;
+  font-size: 12px !important;
+  padding: 12px 16px !important;
+  background: #74c69d !important;
 }
 
 .danger-text {
@@ -407,17 +847,21 @@ h2 {
 
 .video {
   display: flex;
-  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
   background: #111722;
-  padding: 12px;
+  padding: 14px;
 }
 
 .face {
-  height: 78px;
-  flex: 1;
+  width: 112px;
+  height: 112px;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 112px;
   background: #d58b64;
   color: #241d25;
-  font-size: 43px;
+  font-size: 46px;
   display: grid;
   place-items: center;
   position: relative;
@@ -426,11 +870,11 @@ h2 {
 
 .face small {
   position: absolute;
-  bottom: 1px;
+  bottom: 2px;
   font: 8px 'Press Start 2P';
   background: #1b2634;
   color: #fff;
-  padding: 4px;
+  padding: 4px 6px;
 }
 
 .face.you {

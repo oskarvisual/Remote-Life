@@ -70,7 +70,12 @@ export class TaskSystem extends GameSystem {
     }
     task.progress += this.state.internetUnstable ? this.config.unstableProgress : 1;
     player.adjust('energy', -this.config.workEnergyCost);
-    player.adjust('stress', -this.config.workStressRelief);
+
+    const deskTier = this.state.equipment.desk ?? 1;
+    const chairTier = this.state.equipment.chair ?? 1;
+    // Level 1 setup adds stress per work click (+0.5 each), Level 2 is standard (0), Level 3 relieves extra stress (-0.35 each)
+    const setupStressDelta = (2 - deskTier) * 0.5 + (2 - chairTier) * 0.5;
+    player.adjust('stress', -this.config.workStressRelief + setupStressDelta);
 
     let result: WorkResult = 'progress';
     if (task.progress >= task.required) {

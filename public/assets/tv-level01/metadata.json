@@ -1,0 +1,22 @@
+{
+  "group_id": "07f9e5d0-631c-46b1-80fb-c023afc79e32",
+  "objects": [
+    {
+      "id": "bce9a864-359a-451e-a1b6-71ad91b65726",
+      "name": "base",
+      "prompt": "television from behind we only see the back part of tv",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/television_from_behind_we_only.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T02:42:19.623781"
+}

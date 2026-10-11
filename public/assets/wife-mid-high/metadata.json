@@ -1,0 +1,181 @@
+{
+  "group_id": "e085c06b-992a-457b-ade2-af928a17e634",
+  "states": [
+    {
+      "character": {
+        "id": "b035a36a-a7ff-49bf-9249-c1f5f370a18a",
+        "name": "Idle",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-09T21:49:32.295761+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "south-east": "Idle/rotations/south-east.png",
+          "east": "Idle/rotations/east.png",
+          "north-east": "Idle/rotations/north-east.png",
+          "north": "Idle/rotations/north.png",
+          "north-west": "Idle/rotations/north-west.png",
+          "west": "Idle/rotations/west.png",
+          "south-west": "Idle/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "5cf9ff2f-3ee3-4c58-ba30-1610bf213990",
+        "name": "walking",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T20:49:14.152047+00:00"
+      },
+      "folder": "walking",
+      "frames": {
+        "rotations": {
+          "south": "walking/rotations/south.png",
+          "south-east": "walking/rotations/south-east.png",
+          "east": "walking/rotations/east.png",
+          "north-east": "walking/rotations/north-east.png",
+          "north": "walking/rotations/north.png",
+          "north-west": "walking/rotations/north-west.png",
+          "west": "walking/rotations/west.png",
+          "south-west": "walking/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "4be9d8e0-3e3f-42dc-91ac-6cef981877fa",
+        "name": "walking using the le",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T20:52:05.398368+00:00"
+      },
+      "folder": "walking_using_the_le",
+      "frames": {
+        "rotations": {
+          "south": "walking_using_the_le/rotations/south.png",
+          "south-east": "walking_using_the_le/rotations/south-east.png",
+          "east": "walking_using_the_le/rotations/east.png",
+          "north-east": "walking_using_the_le/rotations/north-east.png",
+          "north": "walking_using_the_le/rotations/north.png",
+          "north-west": "walking_using_the_le/rotations/north-west.png",
+          "west": "walking_using_the_le/rotations/west.png",
+          "south-west": "walking_using_the_le/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "43f3b06f-1526-4f03-a2af-7cc6fa85de32",
+        "name": "sitting",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T20:52:26.857114+00:00"
+      },
+      "folder": "sitting",
+      "frames": {
+        "rotations": {
+          "south": "sitting/rotations/south.png",
+          "south-east": "sitting/rotations/south-east.png",
+          "east": "sitting/rotations/east.png",
+          "north-east": "sitting/rotations/north-east.png",
+          "north": "sitting/rotations/north.png",
+          "north-west": "sitting/rotations/north-west.png",
+          "west": "sitting/rotations/west.png",
+          "south-west": "sitting/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "2c625981-4f61-4ed4-aa6b-d55b49df3f34",
+        "name": "sleeping witho bg gr",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-10T21:12:27.264284+00:00"
+      },
+      "folder": "sleeping_witho_bg_gr",
+      "frames": {
+        "rotations": {
+          "south": "sleeping_witho_bg_gr/rotations/south.png",
+          "south-east": "sleeping_witho_bg_gr/rotations/south-east.png",
+          "east": "sleeping_witho_bg_gr/rotations/east.png",
+          "north-east": "sleeping_witho_bg_gr/rotations/north-east.png",
+          "north": "sleeping_witho_bg_gr/rotations/north.png",
+          "north-west": "sleeping_witho_bg_gr/rotations/north-west.png",
+          "west": "sleeping_witho_bg_gr/rotations/west.png",
+          "south-west": "sleeping_witho_bg_gr/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    },
+    {
+      "character": {
+        "id": "5b495d15-531f-4f07-b5a0-d0b4894a07ed",
+        "name": "She is taking a show",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-11T00:12:47.881870+00:00"
+      },
+      "folder": "She_is_taking_a_show",
+      "frames": {
+        "rotations": {
+          "south": "She_is_taking_a_show/rotations/south.png",
+          "south-east": "She_is_taking_a_show/rotations/south-east.png",
+          "east": "She_is_taking_a_show/rotations/east.png",
+          "north-east": "She_is_taking_a_show/rotations/north-east.png",
+          "north": "She_is_taking_a_show/rotations/north.png",
+          "north-west": "She_is_taking_a_show/rotations/north-west.png",
+          "west": "She_is_taking_a_show/rotations/west.png",
+          "south-west": "She_is_taking_a_show/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-11T00:14:50.724744"
+}

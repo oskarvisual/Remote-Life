@@ -1,0 +1,22 @@
+{
+  "group_id": "4427128e-6448-4d0a-89fd-bd2e6bc32624",
+  "objects": [
+    {
+      "id": "3e4c4526-327e-4271-9403-70e1003e6b72",
+      "name": "base",
+      "prompt": "stove",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/stove.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T03:45:55.382536"
+}

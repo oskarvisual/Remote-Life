@@ -16,7 +16,7 @@ export interface DifficultySettings {
 export const DIFFICULTIES: Readonly<Record<DifficultyId, DifficultySettings>> = {
   easy: {
     id: 'easy',
-    label: 'EASY · LEVEL 3',
+    label: 'EASY',
     description:
       'Spacious penthouse with balcony, multiple rooms, triple-monitor pro setup, and luxury bed.',
     money: 650,
@@ -27,7 +27,7 @@ export const DIFFICULTIES: Readonly<Record<DifficultyId, DifficultySettings>> = 
   },
   medium: {
     id: 'medium',
-    label: 'MEDIUM · LEVEL 2',
+    label: 'MEDIUM',
     description:
       '2-bedroom apartment with bathroom, kitchen-diner, modern laptop desk, and office chair.',
     money: 480,
@@ -38,7 +38,7 @@ export const DIFFICULTIES: Readonly<Record<DifficultyId, DifficultySettings>> = 
   },
   hard: {
     id: 'hard',
-    label: 'HARD · LEVEL 1',
+    label: 'HARD',
     description:
       'Cramped studio and bathroom, barrel desk, Amazon shipping box chair, and folding cot.',
     money: 320,

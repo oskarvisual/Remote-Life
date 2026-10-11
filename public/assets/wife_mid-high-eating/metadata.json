@@ -1,0 +1,36 @@
+{
+  "group_id": "e085c06b-992a-457b-ade2-af928a17e634",
+  "states": [
+    {
+      "character": {
+        "id": "27c51f70-7e47-4fa7-bf0b-cd3f41884ddc",
+        "name": "eating ramen soup",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-11T02:28:01.860442+00:00"
+      },
+      "folder": "eating_ramen_soup",
+      "frames": {
+        "rotations": {
+          "south": "eating_ramen_soup/rotations/south.png",
+          "south-east": "eating_ramen_soup/rotations/south-east.png",
+          "east": "eating_ramen_soup/rotations/east.png",
+          "north-east": "eating_ramen_soup/rotations/north-east.png",
+          "north": "eating_ramen_soup/rotations/north.png",
+          "north-west": "eating_ramen_soup/rotations/north-west.png",
+          "west": "eating_ramen_soup/rotations/west.png",
+          "south-west": "eating_ramen_soup/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-11T02:33:50.245592"
+}

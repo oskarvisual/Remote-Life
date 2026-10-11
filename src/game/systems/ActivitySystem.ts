@@ -1,6 +1,7 @@
-import type { Activity } from '../activities/Activity';
+import type { Activity, DrinkActivity, EatActivity } from '../activities/Activity';
+import { FRIDGE_ITEMS } from '../config/content';
 import { GameSystem } from '../core/GameSystem';
-import type { ActivityId } from '../core/models';
+import type { ActivityId, FridgeItemKey } from '../core/models';
 import { minutes } from '../core/time';
 
 export type StartResult = 'started' | 'busy' | 'blocked' | 'unknown';
@@ -33,6 +34,27 @@ export class ActivitySystem extends GameSystem {
     return Math.min(1, 1 - (this.current.endsAt - this.state.now) / total);
   }
 
+  /** Consumes a specific food or drink item from the refrigerator inventory. */
+  consumeFromFridge(key: FridgeItemKey): StartResult {
+    const spec = FRIDGE_ITEMS.find((i) => i.key === key);
+    if (!spec) return 'unknown';
+
+    if (spec.kind === 'baby') {
+      this.notify('🍼 Walk over to the baby and press [E] to feed a Baby Milk bottle!', 'info');
+      return 'blocked';
+    }
+
+    if (spec.kind === 'eat') {
+      const eatAct = this.activities.get('eat') as EatActivity | undefined;
+      if (eatAct) eatAct.selectedKey = key;
+      return this.start('eat');
+    }
+
+    const drinkAct = this.activities.get('drink') as DrinkActivity | undefined;
+    if (drinkAct) drinkAct.selectedKey = key;
+    return this.start('drink');
+  }
+
   start(id: ActivityId): StartResult {
     const activity = this.activities.get(id);
     if (!activity) return 'unknown';
@@ -59,6 +81,10 @@ export class ActivitySystem extends GameSystem {
 
   sitAtComputer(): boolean {
     if (!this.state.player.isIdle) return false;
+    if (this.state.equipment.desk === null) {
+      this.notify('💻 You sold your PC Workstation! You cannot use the computer.', 'warn');
+      return false;
+    }
     if (this.state.baby.location === 'carried') {
       this.notify(
         '👶 You cannot use the PC while holding the baby! Place the baby in the crib or bed first.',

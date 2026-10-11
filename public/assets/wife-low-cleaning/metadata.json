@@ -1,0 +1,36 @@
+{
+  "group_id": "2ddbefbe-ca47-44f3-a49b-f8805777f458",
+  "states": [
+    {
+      "character": {
+        "id": "43bc2437-3f8e-4b9d-9265-f7ed421bb192",
+        "name": "cleaning",
+        "prompt": "16-bit pixel art female character sprite for a retro indie simulation game, matching the exact same pixel-art style, pixel density, outlines, shading and proportions as an existing 48x48 pixel male character sprite.  Create an overweight middle-aged housewife, approximately 40\u201345 years old, with a very large, heavy body, wide hips, thick arms, round belly, full cheeks and a noticeable double chin.  She has messy dark brown hair tied into a loose, untidy bun, slightly tired eyes, thick eyebrows and a permanently grumpy, unimpressed facial expression.  Clothing: She wears a loose, oversized, faded floral house robe (bata de casa) that reaches just below her knees. The robe is slightly worn and wrinkled, with a simple floral pattern. On her feet, she wears cheap rubber house sandals with visible toes.  Personality expressed through appearance: She looks lazy, demanding, impatient and constantly annoyed. Her posture is relaxed but slightly slouched, with one hand resting on her hip and the other hanging at her side.  Pose: Full-body standing idle pose, facing sideways toward the right, suitable for a 2D side-scrolling game. Both feet visible, character fully contained within the sprite boundaries.  Art style: Authentic 16-bit SNES-inspired pixel art, crisp deliberate pixels, limited color palette, expressive facial features, slightly exaggerated cartoon proportions, clean readable silhouette, consistent pixel clusters.  Technical requirements: Single character sprite, approximately 48x48 pixels, transparent background, no environment, no furniture, no objects, no text, no UI, no additional characters.  IMPORTANT: This must look like a playable 2D video game character sprite, NOT a realistic illustration, NOT 3D, NOT anime, NOT smooth digital art.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-11T04:00:54.375088+00:00"
+      },
+      "folder": "cleaning",
+      "frames": {
+        "rotations": {
+          "south": "cleaning/rotations/south.png",
+          "south-east": "cleaning/rotations/south-east.png",
+          "east": "cleaning/rotations/east.png",
+          "north-east": "cleaning/rotations/north-east.png",
+          "north": "cleaning/rotations/north.png",
+          "north-west": "cleaning/rotations/north-west.png",
+          "west": "cleaning/rotations/west.png",
+          "south-west": "cleaning/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-11T04:05:14.252089"
+}

@@ -1,0 +1,36 @@
+{
+  "group_id": "e085c06b-992a-457b-ade2-af928a17e634",
+  "states": [
+    {
+      "character": {
+        "id": "e4106aee-1a55-4039-8639-ba363fa21637",
+        "name": "drinking a water bot",
+        "prompt": "16-bit pixel art side-view sprite sheet of a young casual woman, loose ponytail with black hair, oversized cream knit sweater, comfy green lounge pants, socks, relaxed posture, clean silhouette, 24x32 pixels, cohesive 16-bit palette, retro indie game character, transparent background\n\n\n  ",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "side",
+        "created_at": "2026-10-11T02:28:30.481019+00:00"
+      },
+      "folder": "drinking_a_water_bot",
+      "frames": {
+        "rotations": {
+          "south": "drinking_a_water_bot/rotations/south.png",
+          "south-east": "drinking_a_water_bot/rotations/south-east.png",
+          "east": "drinking_a_water_bot/rotations/east.png",
+          "north-east": "drinking_a_water_bot/rotations/north-east.png",
+          "north": "drinking_a_water_bot/rotations/north.png",
+          "north-west": "drinking_a_water_bot/rotations/north-west.png",
+          "west": "drinking_a_water_bot/rotations/west.png",
+          "south-west": "drinking_a_water_bot/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-11T02:33:52.881653"
+}

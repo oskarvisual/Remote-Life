@@ -1,0 +1,22 @@
+{
+  "group_id": "dec74988-ec60-4d90-b510-be778dfa4a00",
+  "objects": [
+    {
+      "id": "e176a9b5-4c52-472a-9ef2-71fb7c8d0f53",
+      "name": "base",
+      "prompt": "small cabinet with modem-router",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/small_cabinet_with_modem-route.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T02:47:24.237463"
+}

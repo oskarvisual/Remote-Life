@@ -1,0 +1,22 @@
+{
+  "group_id": "ed1a06c2-b576-4b25-9dbb-9db351e82b99",
+  "objects": [
+    {
+      "id": "ec13b66f-f2af-48f2-b0c6-3fcdc613ae68",
+      "name": "base",
+      "prompt": "poop",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/poop.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T03:54:46.593018"
+}

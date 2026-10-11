@@ -1,0 +1,22 @@
+{
+  "group_id": "72ff54db-4666-49b6-a878-c205ec61fe5a",
+  "objects": [
+    {
+      "id": "1d7665cf-e11b-4cc9-9d1c-ca4514a42613",
+      "name": "base",
+      "prompt": "refrigerator",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/refrigerator.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T02:48:39.139493"
+}

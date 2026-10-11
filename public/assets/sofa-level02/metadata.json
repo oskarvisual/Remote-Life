@@ -1,0 +1,22 @@
+{
+  "group_id": "fed8ea3a-93d0-4ec1-a485-94cf99b7c8bd",
+  "objects": [
+    {
+      "id": "e3c9080a-e43f-4943-a48b-b6b119d1e2b2",
+      "name": "base",
+      "prompt": "  three-seater sofa",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/three-seater_sofa.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T02:42:22.547967"
+}

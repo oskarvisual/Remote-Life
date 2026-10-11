@@ -1,0 +1,22 @@
+{
+  "group_id": "cd2e1e14-4c0c-492a-a557-cf3e7ba495cd",
+  "objects": [
+    {
+      "id": "b264cc6a-508b-4837-865d-595009c98396",
+      "name": "base",
+      "prompt": "fire",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/fire.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T04:11:25.166369"
+}

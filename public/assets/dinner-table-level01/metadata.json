@@ -1,0 +1,22 @@
+{
+  "group_id": "eb7530e2-31bd-4b02-b2e0-d1d078d5b9c1",
+  "objects": [
+    {
+      "id": "c99d4fbf-d3bc-4eac-a8df-1f926b0e5018",
+      "name": "base",
+      "prompt": "dinner table",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/dinner_table.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T03:43:17.921240"
+}

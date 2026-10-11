@@ -18,6 +18,11 @@ export const OUTCOMES: Readonly<Record<OutcomeReason, OutcomeText>> = {
     title: 'EVICTED',
     message: 'You could not pay the rent. Time to find a cheaper apartment.',
   },
+  'kitchen-fire': {
+    title: 'KITCHEN BURNED DOWN',
+    message:
+      'You did not extinguish the stove fire in time and the entire kitchen went up in flames.',
+  },
   'week-survived': {
     title: 'WEEK SURVIVED',
     message: 'Rent paid, baby happy, client satisfied. You beat remote life — for now.',

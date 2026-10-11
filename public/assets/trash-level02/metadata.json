@@ -1,0 +1,22 @@
+{
+  "group_id": "4189d0f2-5ef4-4c53-bb05-d9e1b1bf18b5",
+  "objects": [
+    {
+      "id": "b4b3a7a2-a14c-4d2e-9a2d-1c959ec70869",
+      "name": "base",
+      "prompt": "metal trash can",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/metal_trash_can.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T03:55:09.006852"
+}

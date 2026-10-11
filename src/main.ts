@@ -5,6 +5,7 @@ import { ApartmentScene } from './game/scenes/ApartmentScene';
 import './styles/main.css';
 import './styles/start-menu.css';
 import { Computer } from './ui/Computer';
+import { FridgeModal } from './ui/FridgeModal';
 import { GameOverModal } from './ui/GameOverModal';
 import { HUD } from './ui/HUD';
 import { Notifications } from './ui/Notifications';
@@ -15,6 +16,7 @@ let currentSession: GameSession | null = null;
 let currentHud: HUD | null = null;
 let currentNotifications: Notifications | null = null;
 let currentComputer: Computer | null = null;
+let currentFridgeModal: FridgeModal | null = null;
 let currentGameOverModal: GameOverModal | null = null;
 
 function startGame(difficulty: DifficultyId): void {
@@ -31,6 +33,9 @@ function startGame(difficulty: DifficultyId): void {
   if (currentComputer) {
     currentComputer.destroy();
   }
+  if (currentFridgeModal) {
+    currentFridgeModal.destroy();
+  }
 
   // 2. Initialize new GameSession
   currentSession = new GameSession(difficulty);
@@ -39,6 +44,7 @@ function startGame(difficulty: DifficultyId): void {
   const hudContainer = document.querySelector<HTMLElement>('#hud');
   const notificationsContainer = document.querySelector<HTMLElement>('#notifications');
   const computerContainer = document.querySelector<HTMLElement>('#computer');
+  const fridgeContainer = document.querySelector<HTMLElement>('#fridge');
   const gameOverDialog = document.querySelector<HTMLDialogElement>('#game-over-modal');
 
   if (hudContainer) {
@@ -49,6 +55,9 @@ function startGame(difficulty: DifficultyId): void {
   }
   if (computerContainer) {
     currentComputer = new Computer(computerContainer, currentSession);
+  }
+  if (fridgeContainer) {
+    currentFridgeModal = new FridgeModal(fridgeContainer, currentSession);
   }
   if (gameOverDialog) {
     currentGameOverModal = new GameOverModal(gameOverDialog, () => {

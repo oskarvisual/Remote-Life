@@ -1,4 +1,13 @@
-import type { ActivityId, Email, GameOutcome, MeetingState, NoticeKind, Task } from './models';
+import type {
+  ActivityId,
+  Email,
+  EquipmentSlot,
+  GameOutcome,
+  ItemTier,
+  MeetingState,
+  NoticeKind,
+  Task,
+} from './models';
 
 /** Every event that can travel through a session's EventBus, with its payload type. */
 export interface GameEvents {
@@ -39,9 +48,13 @@ export interface GameEvents {
   'rent:paid': { amount: number; day: number };
   'rent:missed': { amount: number; day: number };
   'market:purchase': { itemId: string };
+  'equipment:changed': { slot: EquipmentSlot; level: ItemTier | null };
+  'apartment:changed': { tier: ItemTier };
 
   'computer:open': void;
   'computer:close': void;
+  'fridge:open': void;
+  'fridge:close': void;
 
   'game:over': GameOutcome;
 }

@@ -3,21 +3,14 @@ import { BALANCE } from '../config/balance';
 import type { DifficultyId } from '../config/difficulties';
 import type { GameSession } from '../GameSession';
 
+import type { CleanZoneId, ItemTier } from '../core/models';
+
 interface InteractiveZone {
   name: string;
   x: number;
   width: number;
   actionText: string;
   onInteract: () => void;
-}
-
-interface MissingPlaceholder {
-  x: number;
-  width: number;
-  height: number;
-  label: string;
-  fillColor: number;
-  borderColor: number;
 }
 
 type MischiefTarget = 'kitchen' | 'modem' | 'desk' | 'table';
@@ -40,12 +33,15 @@ interface LevelLayout {
   fridgeX: number;
   cribX: number;
   toiletX: number;
+  sinkX: number;
   showerX: number;
+  bathroomTrashX: number;
+  kitchenTrashX: number;
   modemX: number;
   kitchenX: number;
   tableX: number;
-  diningChairX?: number;
-  missingPlaceholders: MissingPlaceholder[];
+  tvX: number;
+  doorX: number;
 }
 
 const SPRITE_SCALE = 1.8;
@@ -65,52 +61,23 @@ const LEVEL_LAYOUTS: Readonly<Record<DifficultyId, LevelLayout>> = {
     worldWidth: 750,
     floorY: 248,
     wallFloorY: 234,
-    minWalkX: 55,
+    minWalkX: 48,
     maxWalkX: 715,
     startX: 290,
-    bedX: 105,
-    tableX: 172,
-    cribX: 235,
-    kitchenX: 295,
-    fridgeX: 348,
-    modemX: 405,
-    deskX: 468,
+    bedX: 76,
+    tvX: 162,
+    tableX: 162,
+    cribX: 242,
+    kitchenX: 306,
+    kitchenTrashX: 338,
+    fridgeX: 372,
+    modemX: 418,
+    deskX: 472,
+    doorX: 522,
     toiletX: 576,
+    bathroomTrashX: 604,
+    sinkX: 632,
     showerX: 688,
-    missingPlaceholders: [
-      {
-        x: 172,
-        width: 42,
-        height: 34,
-        label: 'MISSING:\nTABLE',
-        fillColor: 0x6d4c3d,
-        borderColor: 0xf4a261,
-      },
-      {
-        x: 295,
-        width: 44,
-        height: 44,
-        label: 'MISSING:\nSTOVE',
-        fillColor: 0x4a5759,
-        borderColor: 0xa8dadc,
-      },
-      {
-        x: 348,
-        width: 40,
-        height: 74,
-        label: 'MISSING:\nFRIDGE',
-        fillColor: 0x5c768d,
-        borderColor: 0x91d6d2,
-      },
-      {
-        x: 405,
-        width: 34,
-        height: 32,
-        label: 'MISSING:\nWIFI MODEM',
-        fillColor: 0x2b3a4a,
-        borderColor: 0x56cfe1,
-      },
-    ],
   },
 
   // Level 2 (Medium): 2 bedrooms, bathroom, kitchen, living & dining room
@@ -124,53 +91,23 @@ const LEVEL_LAYOUTS: Readonly<Record<DifficultyId, LevelLayout>> = {
     worldWidth: 1281,
     floorY: 246,
     wallFloorY: 232,
-    minWalkX: 50,
+    minWalkX: 48,
     maxWalkX: 1240,
-    startX: 810,
-    bedX: 145,
+    startX: 836,
+    bedX: 74,
     cribX: 415,
     toiletX: 608,
+    bathroomTrashX: 638,
+    sinkX: 668,
     showerX: 730,
-    modemX: 802,
-    deskX: 865,
-    diningChairX: 965,
-    tableX: 1005,
-    kitchenX: 1115,
+    modemX: 882,
+    deskX: 826,
+    tvX: 948,
+    tableX: 1044,
+    kitchenX: 1128,
+    kitchenTrashX: 1164,
     fridgeX: 1200,
-    missingPlaceholders: [
-      {
-        x: 802,
-        width: 38,
-        height: 34,
-        label: 'MISSING:\nWIFI MODEM',
-        fillColor: 0x2b3a4a,
-        borderColor: 0x56cfe1,
-      },
-      {
-        x: 1005,
-        width: 58,
-        height: 38,
-        label: 'MISSING:\nDINING TABLE',
-        fillColor: 0x6d4c3d,
-        borderColor: 0xf4a261,
-      },
-      {
-        x: 1115,
-        width: 66,
-        height: 46,
-        label: 'MISSING:\nSTOVE',
-        fillColor: 0x4a5759,
-        borderColor: 0xa8dadc,
-      },
-      {
-        x: 1200,
-        width: 42,
-        height: 76,
-        label: 'MISSING:\nFRIDGE',
-        fillColor: 0x5c768d,
-        borderColor: 0x91d6d2,
-      },
-    ],
+    doorX: 1242,
   },
 
   // Level 3 (Easy): Multi-room penthouse with balcony
@@ -184,61 +121,23 @@ const LEVEL_LAYOUTS: Readonly<Record<DifficultyId, LevelLayout>> = {
     worldWidth: 1621,
     floorY: 246,
     wallFloorY: 232,
-    minWalkX: 50,
+    minWalkX: 48,
     maxWalkX: 1590,
     startX: 760,
-    bedX: 135,
+    bedX: 74,
     cribX: 375,
     toiletX: 545,
+    bathroomTrashX: 572,
+    sinkX: 600,
     showerX: 655,
     modemX: 745,
     deskX: 810,
     kitchenX: 1005,
+    kitchenTrashX: 1048,
     fridgeX: 1090,
-    diningChairX: 1210,
-    tableX: 1250,
-    missingPlaceholders: [
-      {
-        x: 745,
-        width: 38,
-        height: 34,
-        label: 'MISSING:\nWIFI MODEM',
-        fillColor: 0x2b3a4a,
-        borderColor: 0x56cfe1,
-      },
-      {
-        x: 1005,
-        width: 68,
-        height: 46,
-        label: 'MISSING:\nSTOVE',
-        fillColor: 0x4a5759,
-        borderColor: 0xa8dadc,
-      },
-      {
-        x: 1090,
-        width: 42,
-        height: 76,
-        label: 'MISSING:\nFRIDGE',
-        fillColor: 0x5c768d,
-        borderColor: 0x91d6d2,
-      },
-      {
-        x: 1250,
-        width: 58,
-        height: 38,
-        label: 'MISSING:\nDINING TABLE',
-        fillColor: 0x6d4c3d,
-        borderColor: 0xf4a261,
-      },
-      {
-        x: 1390,
-        width: 84,
-        height: 42,
-        label: 'MISSING:\nSOFA / LOUNGE',
-        fillColor: 0x5f4bb6,
-        borderColor: 0xcbd5e1,
-      },
-    ],
+    tableX: 1240,
+    doorX: 1320,
+    tvX: 1390,
   },
 };
 
@@ -251,15 +150,42 @@ export class ApartmentScene extends Phaser.Scene {
   private keyE!: Phaser.Input.Keyboard.Key;
   private keyF!: Phaser.Input.Keyboard.Key;
   private keyR!: Phaser.Input.Keyboard.Key;
+  private keyC!: Phaser.Input.Keyboard.Key;
   private keyB!: Phaser.Input.Keyboard.Key;
   private keyN!: Phaser.Input.Keyboard.Key;
   private keyT!: Phaser.Input.Keyboard.Key;
   private keyM!: Phaser.Input.Keyboard.Key;
+  private keyV!: Phaser.Input.Keyboard.Key;
+
+  private bedImage!: Phaser.GameObjects.Image;
+  private cribBackGraphics!: Phaser.GameObjects.Graphics;
+  private cribImage!: Phaser.GameObjects.Image;
+  private deskImage!: Phaser.GameObjects.Image;
+  private chairImage!: Phaser.GameObjects.Image;
+  private sofaImage!: Phaser.GameObjects.Image;
+  private tvImage!: Phaser.GameObjects.Image;
+  private tableImage!: Phaser.GameObjects.Image;
+  private tableLabel!: Phaser.GameObjects.Text;
+  private stoveImage!: Phaser.GameObjects.Image;
+  private fridgeImage!: Phaser.GameObjects.Image;
+  private routerImage!: Phaser.GameObjects.Image;
+
+  private kitchenTrashImage!: Phaser.GameObjects.Image;
+  private bathroomTrashImage!: Phaser.GameObjects.Image;
+  private bathroomPoopImage!: Phaser.GameObjects.Image;
+  private trashBagSprites: { zone: CleanZoneId; image: Phaser.GameObjects.Image }[] = [];
+  private stoveFireImage!: Phaser.GameObjects.Image;
+  private kitchenSpreadFireImages: Phaser.GameObjects.Image[] = [];
 
   private player!: Phaser.GameObjects.Sprite;
+  private wifeSprite!: Phaser.GameObjects.Sprite;
+  private wifeLabel!: Phaser.GameObjects.Text;
   private babySprite!: Phaser.GameObjects.Sprite;
   private babyLabel!: Phaser.GameObjects.Text;
   private effectsGraphics!: Phaser.GameObjects.Graphics;
+  private comicGraphics!: Phaser.GameObjects.Graphics;
+  private wifeComicText!: Phaser.GameObjects.Text;
+  private playerComicText!: Phaser.GameObjects.Text;
   private hazardGraphics!: Phaser.GameObjects.Graphics;
   private ambientOverlay!: Phaser.GameObjects.Rectangle;
   private playerLabel!: Phaser.GameObjects.Text;
@@ -272,6 +198,13 @@ export class ApartmentScene extends Phaser.Scene {
   private facing: 'east' | 'west' = 'east';
   private walkAnimTimer = 0;
   private walkStep = 0;
+
+  // Wife movement and animation state
+  private wifeX = 0;
+  private wifeY = 0;
+  private wifeFacing: 'east' | 'west' = 'east';
+  private wifeWalkTimer = 0;
+  private wifeWalkStep = 0;
 
   // Baby movement, needs, and mischief state
   private babyX = 0;
@@ -295,113 +228,290 @@ export class ApartmentScene extends Phaser.Scene {
 
   preload(): void {
     // 3 level backgrounds
-    this.load.image('bg-hard', '/assets/bg-level01.png');
-    this.load.image('bg-medium', '/assets/bg-level02.png');
-    this.load.image('bg-easy', '/assets/bg-level03.png');
+    this.load.image('bg-hard', 'assets/bg-level01.png');
+    this.load.image('bg-medium', 'assets/bg-level02.png');
+    this.load.image('bg-easy', 'assets/bg-level03.png');
 
     // Main character rotations and poses
-    this.load.image('char-idle-east', '/assets/character-main/Idle/rotations/east.png');
-    this.load.image('char-idle-west', '/assets/character-main/Idle/rotations/west.png');
-    this.load.image('char-walk-east', '/assets/character-main/walking/rotations/east.png');
-    this.load.image('char-walk-west', '/assets/character-main/walking/rotations/west.png');
+    this.load.image('char-idle-east', 'assets/character-main/Idle/rotations/east.png');
+    this.load.image('char-idle-west', 'assets/character-main/Idle/rotations/west.png');
+    this.load.image('char-idle-north', 'assets/character-main/Idle/rotations/north.png');
+    this.load.image('char-walk-east', 'assets/character-main/walking/rotations/east.png');
+    this.load.image('char-walk-west', 'assets/character-main/walking/rotations/west.png');
     this.load.image(
       'char-walk2-east',
-      '/assets/character-main/walking_using_the_le/rotations/east.png',
+      'assets/character-main/walking_using_the_le/rotations/east.png',
     );
     this.load.image(
       'char-walk2-west',
-      '/assets/character-main/walking_using_the_le/rotations/west.png',
+      'assets/character-main/walking_using_the_le/rotations/west.png',
     );
     this.load.image(
       'char-typing-east',
-      '/assets/character-main/seated_and_typingju/rotations/east.png',
+      'assets/character-main/seated_and_typingju/rotations/east.png',
     );
     this.load.image(
       'char-typing-north',
-      '/assets/character-main/seated_and_typingju/rotations/north.png',
+      'assets/character-main/seated_and_typingju/rotations/north.png',
     );
     this.load.image(
       'char-eat-east',
-      '/assets/character-main/eating_instant_soup/rotations/east.png',
+      'assets/character-main/eating_instant_soup/rotations/east.png',
     );
     this.load.image(
       'char-drink-east',
-      '/assets/character-main/drinking_water_while/rotations/east.png',
+      'assets/character-main/drinking_water_while/rotations/east.png',
+    );
+    this.load.image(
+      'char-clean-east',
+      'assets/main-character-cleaning/cleaning/rotations/east.png',
+    );
+    this.load.image(
+      'char-clean-west',
+      'assets/main-character-cleaning/cleaning/rotations/west.png',
     );
 
     // Sitting, shower, and sleeping poses
     this.load.image(
       'char-sitting-south',
-      '/assets/character-main-sitting/sitting/rotations/south.png',
+      'assets/character-main-sitting/sitting/rotations/south.png',
     );
     this.load.image(
       'char-shower-south',
-      '/assets/character-main_shower/Taking_a_shower_but/rotations/south.png',
+      'assets/character-main_shower/Taking_a_shower_but/rotations/south.png',
     );
     this.load.image(
       'char-sleep-west',
-      '/assets/character-main-sleeping/sleeping/rotations/west.png',
+      'assets/character-main-sleeping/sleeping/rotations/west.png',
+    );
+
+    // Wife Level 1 (Hard: wife-low)
+    this.load.image('wife-low-idle-east', 'assets/wife-low/Idle/rotations/east.png');
+    this.load.image('wife-low-idle-west', 'assets/wife-low/Idle/rotations/west.png');
+    this.load.image('wife-low-idle-south', 'assets/wife-low/Idle/rotations/south.png');
+    this.load.image('wife-low-idle-north', 'assets/wife-low/Idle/rotations/north.png');
+    this.load.image('wife-low-walk1-east', 'assets/wife-low/walking/rotations/east.png');
+    this.load.image('wife-low-walk1-west', 'assets/wife-low/walking/rotations/west.png');
+    this.load.image(
+      'wife-low-walk2-east',
+      'assets/wife-low/walking_with_left_le/rotations/east.png',
+    );
+    this.load.image(
+      'wife-low-walk2-west',
+      'assets/wife-low/walking_with_left_le/rotations/west.png',
+    );
+    this.load.image('wife-low-sit-south', 'assets/wife-low/sitting/rotations/south.png');
+    this.load.image('wife-low-sleep-west', 'assets/wife-low/slepping/rotations/west.png');
+    this.load.image(
+      'wife-low-shower-south',
+      'assets/wife-low/She_is_taking_a_show/rotations/south.png',
+    );
+    this.load.image(
+      'wife-low-eat-south',
+      'assets/wife_low-eating/eating_ramen_soup/rotations/south.png',
+    );
+    this.load.image(
+      'wife-low-drink-south',
+      'assets/wife_low-drinking/drinking_a_water_bot/rotations/south.png',
+    );
+    this.load.image('wife-low-clean-east', 'assets/wife-low-cleaning/cleaning/rotations/east.png');
+    this.load.image('wife-low-clean-west', 'assets/wife-low-cleaning/cleaning/rotations/west.png');
+
+    // Wife Level 2 & 3 (Medium & Easy: wife-mid-high)
+    this.load.image('wife-high-idle-east', 'assets/wife-mid-high/Idle/rotations/east.png');
+    this.load.image('wife-high-idle-west', 'assets/wife-mid-high/Idle/rotations/west.png');
+    this.load.image('wife-high-idle-south', 'assets/wife-mid-high/Idle/rotations/south.png');
+    this.load.image('wife-high-idle-north', 'assets/wife-mid-high/Idle/rotations/north.png');
+    this.load.image('wife-high-walk1-east', 'assets/wife-mid-high/walking/rotations/east.png');
+    this.load.image('wife-high-walk1-west', 'assets/wife-mid-high/walking/rotations/west.png');
+    this.load.image(
+      'wife-high-walk2-east',
+      'assets/wife-mid-high/walking_using_the_le/rotations/east.png',
+    );
+    this.load.image(
+      'wife-high-walk2-west',
+      'assets/wife-mid-high/walking_using_the_le/rotations/west.png',
+    );
+    this.load.image('wife-high-sit-south', 'assets/wife-mid-high/sitting/rotations/south.png');
+    this.load.image(
+      'wife-high-sleep-west',
+      'assets/wife-mid-high/sleeping_witho_bg_gr/rotations/west.png',
+    );
+    this.load.image(
+      'wife-high-shower-south',
+      'assets/wife-mid-high/She_is_taking_a_show/rotations/south.png',
+    );
+    this.load.image(
+      'wife-high-eat-south',
+      'assets/wife_mid-high-eating/eating_ramen_soup/rotations/south.png',
+    );
+    this.load.image(
+      'wife-high-drink-south',
+      'assets/wife_mid-high-drinking/drinking_a_water_bot/rotations/south.png',
+    );
+    this.load.image(
+      'wife-high-clean-east',
+      'assets/wife-mid-high-cleaning/cleaning/rotations/east.png',
+    );
+    this.load.image(
+      'wife-high-clean-west',
+      'assets/wife-mid-high-cleaning/cleaning/rotations/west.png',
     );
 
     // Baby sprites (sitting, sleeping, crying, drinking bottle, crawling)
-    this.load.image('baby-sit-south', '/assets/baby/Idle/rotations/south.png');
-    this.load.image('baby-sit-east', '/assets/baby/Idle/rotations/east.png');
-    this.load.image('baby-sit-west', '/assets/baby/Idle/rotations/west.png');
-    this.load.image('baby-sleep-south', '/assets/baby/16-bit_pixel_art_sle/rotations/south.png');
-    this.load.image('baby-cry-south', '/assets/baby/16-bit_pixel_art_cry/rotations/south.png');
-    this.load.image('baby-bottle-south', '/assets/baby/6-bit_pixel_art_baby/rotations/south.png');
-    this.load.image('baby-crawl1-east', '/assets/baby/16-bit_pixel_art_cra/rotations/east.png');
-    this.load.image('baby-crawl1-west', '/assets/baby/16-bit_pixel_art_cra/rotations/west.png');
-    this.load.image('baby-crawl2-east', '/assets/baby/16-bit_pixel_art_bab/rotations/east.png');
-    this.load.image('baby-crawl2-west', '/assets/baby/16-bit_pixel_art_bab/rotations/west.png');
+    this.load.image('baby-sit-south', 'assets/baby/Idle/rotations/south.png');
+    this.load.image('baby-sit-east', 'assets/baby/Idle/rotations/east.png');
+    this.load.image('baby-sit-west', 'assets/baby/Idle/rotations/west.png');
+    this.load.image('baby-sleep-south', 'assets/baby/16-bit_pixel_art_sle/rotations/south.png');
+    this.load.image('baby-cry-south', 'assets/baby/16-bit_pixel_art_cry/rotations/south.png');
+    this.load.image('baby-bottle-south', 'assets/baby/6-bit_pixel_art_baby/rotations/south.png');
+    this.load.image('baby-crawl1-east', 'assets/baby/16-bit_pixel_art_cra/rotations/east.png');
+    this.load.image('baby-crawl1-west', 'assets/baby/16-bit_pixel_art_cra/rotations/west.png');
+    this.load.image('baby-crawl2-east', 'assets/baby/16-bit_pixel_art_bab/rotations/east.png');
+    this.load.image('baby-crawl2-west', 'assets/baby/16-bit_pixel_art_bab/rotations/west.png');
 
     // Beds (3 levels)
-    this.load.image('bed-hard', '/assets/bed-level01/bed/rotations/bed.png');
-    this.load.image('bed-medium', '/assets/bed-level02/bed/rotations/bed.png');
-    this.load.image('bed-easy', '/assets/bed-level03/bed/rotations/bed.png');
+    this.load.image('bed-hard', 'assets/bed-level01/bed/rotations/bed.png');
+    this.load.image('bed-medium', 'assets/bed-level02/bed/rotations/bed.png');
+    this.load.image('bed-easy', 'assets/bed-level03/bed/rotations/bed.png');
 
     // Empty baby cribs (3 levels)
     this.load.image(
       'crib-hard',
-      '/assets/empty_baby_crib-level01/empty_baby_crib/rotations/empty_baby_crib.png',
+      'assets/empty_baby_crib-level01/empty_baby_crib/rotations/empty_baby_crib.png',
     );
     this.load.image(
       'crib-medium',
-      '/assets/empty_baby_crib-level02/empty_baby_crib/rotations/empty_baby_crib.png',
+      'assets/empty_baby_crib-level02/empty_baby_crib/rotations/empty_baby_crib.png',
     );
     this.load.image(
       'crib-easy',
-      '/assets/empty_baby_crib-level03/empty_baby_crib/rotations/empty_baby_crib.png',
+      'assets/empty_baby_crib-level03/empty_baby_crib/rotations/empty_baby_crib.png',
     );
 
     // Computer desks (3 levels)
     this.load.image(
       'desk-hard',
-      '/assets/setup-computer-level01/Pixel_art_computer_desk_setup/rotations/Pixel_art_computer_desk_setup.png',
+      'assets/setup-computer-level01/Pixel_art_computer_desk_setup/rotations/Pixel_art_computer_desk_setup.png',
     );
     this.load.image(
       'desk-medium',
-      '/assets/setup-computer-level02/Pixel_art_modern_desk_setup_f/rotations/Pixel_art_modern_desk_setup_f.png',
+      'assets/setup-computer-level02/Pixel_art_modern_desk_setup_f/rotations/Pixel_art_modern_desk_setup_f.png',
     );
     this.load.image(
       'desk-easy',
-      '/assets/setup-computer-level03/Pixel_art_ultimate_professiona/rotations/Pixel_art_ultimate_professiona.png',
+      'assets/setup-computer-level03/Pixel_art_ultimate_professiona/rotations/Pixel_art_ultimate_professiona.png',
     );
 
-    // Desk chairs (3 levels) + dining chair
+    // Desk chairs (3 levels)
     this.load.image(
       'chair-hard',
-      '/assets/setup-chair-level01/shipping_box_of_amazon/rotations/shipping_box_of_amazon.png',
+      'assets/setup-chair-level01/shipping_box_of_amazon/rotations/shipping_box_of_amazon.png',
     );
     this.load.image(
       'chair-medium',
-      '/assets/setup-chair-level02/Pixel_art_office_chair_rear_v/rotations/Pixel_art_office_chair_rear_v.png',
+      'assets/setup-chair-level02/Pixel_art_office_chair_rear_v/rotations/Pixel_art_office_chair_rear_v.png',
     );
     this.load.image(
       'chair-easy',
-      '/assets/setup-chair-level03/Pixel_art_gaming_chair_rear_v/rotations/Pixel_art_gaming_chair_rear_v.png',
+      'assets/setup-chair-level03/Pixel_art_gaming_chair_rear_v/rotations/Pixel_art_gaming_chair_rear_v.png',
     );
-    this.load.image('dining-chair', '/assets/dining_chair/dining_chair/rotations/south.png');
+
+    // Dining Tables (3 levels, already include chairs)
+    this.load.image(
+      'table-hard',
+      'assets/dinner-table-level01/dinner_table/rotations/dinner_table.png',
+    );
+    this.load.image(
+      'table-medium',
+      'assets/dinner-table-level02/dinner_table/rotations/dinner_table.png',
+    );
+    this.load.image(
+      'table-easy',
+      'assets/dinner-table-level03/dinner_table/rotations/dinner_table.png',
+    );
+
+    // Kitchen Stoves (3 levels)
+    this.load.image('stove-hard', 'assets/stove-level01/stove/rotations/stove.png');
+    this.load.image('stove-medium', 'assets/stove-level02/stove/rotations/stove.png');
+    this.load.image('stove-easy', 'assets/stove-level03/stove/rotations/stove.png');
+
+    // Refrigerators (3 levels)
+    this.load.image(
+      'fridge-hard',
+      'assets/refrigerator-level01/refrigerator/rotations/refrigerator.png',
+    );
+    this.load.image(
+      'fridge-medium',
+      'assets/refrigerator-level02/refrigerator/rotations/refrigerator.png',
+    );
+    this.load.image(
+      'fridge-easy',
+      'assets/refrigerator-level03/refrigerator/rotations/refrigerator.png',
+    );
+
+    // Wi-Fi Routers / Modems (3 levels)
+    this.load.image(
+      'router-hard',
+      'assets/router-level01/small_cabinet_with_modem-route/rotations/small_cabinet_with_modem-route.png',
+    );
+    this.load.image(
+      'router-medium',
+      'assets/router-level02/small_cabinet_with_modem-route/rotations/small_cabinet_with_modem-route.png',
+    );
+    this.load.image(
+      'router-easy',
+      'assets/router-level03/small_cabinet_with_modem-route/rotations/small_cabinet_with_modem-route.png',
+    );
+
+    // Sofas (3 levels)
+    this.load.image(
+      'sofa-hard',
+      'assets/sofa-level01/three-seater_sofa/rotations/three-seater_sofa.png',
+    );
+    this.load.image(
+      'sofa-medium',
+      'assets/sofa-level02/three-seater_sofa/rotations/three-seater_sofa.png',
+    );
+    this.load.image(
+      'sofa-easy',
+      'assets/sofa-level03/three-seater_sofa/rotations/three-seater_sofa.png',
+    );
+
+    // Televisions (seen from behind: level 1 vs level 2/3, with level 3 scaled larger)
+    this.load.image(
+      'tv-hard',
+      'assets/tv-level01/television_from_behind_we_only/rotations/television_from_behind_we_only.png',
+    );
+    this.load.image(
+      'tv-med-easy',
+      'assets/tv-level-02-03/television_from_behind_we_only/rotations/television_from_behind_we_only.png',
+    );
+
+    // Trash cans (3 levels), Poop (level 4), and Trash Bags (level 5)
+    this.load.image(
+      'trash-1',
+      'assets/trash-level01/metal_trash_can/rotations/metal_trash_can.png',
+    );
+    this.load.image(
+      'trash-2',
+      'assets/trash-level02/metal_trash_can/rotations/metal_trash_can.png',
+    );
+    this.load.image(
+      'trash-3',
+      'assets/trash-level03/accumulated_trash/rotations/accumulated_trash.png',
+    );
+    this.load.image('poop', 'assets/poop/poop/rotations/poop.png');
+    this.load.image(
+      'trash-bags-1',
+      'assets/trash-bags-level01/accumulated_trash/rotations/accumulated_trash.png',
+    );
+    this.load.image(
+      'trash-bags-2',
+      'assets/trash-bags-level02/accumulated_trash/rotations/accumulated_trash.png',
+    );
+    this.load.image('fire-small', 'assets/fire_small/fire/rotations/fire.png');
+    this.load.image('fire-big', 'assets/fire_big/fire/rotations/fire.png');
   }
 
   create(): void {
@@ -410,9 +520,12 @@ export class ApartmentScene extends Phaser.Scene {
       throw new Error('GameSession not found in Phaser registry');
     }
 
-    this.layout = LEVEL_LAYOUTS[this.session.state.difficulty.id];
+    this.layout = LEVEL_LAYOUTS[this.tierSuffix(this.session.state.apartmentTier)];
     this.babyX = this.layout.cribX;
     this.babyY = this.layout.wallFloorY - 12;
+    this.wifeX =
+      this.session.state.wife.activity === 'sleeping' ? this.layout.bedX : this.layout.tvX + 12;
+    this.wifeY = this.layout.floorY;
 
     if (this.input.keyboard) {
       this.cursors = this.input.keyboard.createCursorKeys();
@@ -421,10 +534,12 @@ export class ApartmentScene extends Phaser.Scene {
       this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
       this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
       this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+      this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
       this.keyB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
       this.keyN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
       this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
       this.keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+      this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
     }
 
     this.drawApartment();
@@ -432,6 +547,136 @@ export class ApartmentScene extends Phaser.Scene {
     this.setupZones();
     this.setupCamera();
     this.setupEventListeners();
+    this.syncEquipmentVisuals();
+    this.syncFilthVisuals();
+  }
+
+  private tierSuffix(tier: ItemTier): 'hard' | 'medium' | 'easy' {
+    return tier === 1 ? 'hard' : tier === 2 ? 'medium' : 'easy';
+  }
+
+  private syncEquipmentVisuals(): void {
+    const eq = this.session.state.equipment;
+    const { cribX, wallFloorY } = this.layout;
+
+    // 1. Bed
+    if (eq.bed !== null) {
+      this.bedImage.setVisible(true).setTexture(`bed-${this.tierSuffix(eq.bed)}`);
+    } else {
+      this.bedImage.setVisible(false);
+    }
+
+    // 2. Baby crib
+    this.cribBackGraphics.clear();
+    if (eq.crib !== null) {
+      this.cribBackGraphics.fillStyle(0x2b211b, 0.85).fillRect(cribX - 24, wallFloorY - 40, 48, 28);
+      this.cribBackGraphics.fillStyle(0xf5ebe0, 0.95).fillRect(cribX - 23, wallFloorY - 18, 46, 8);
+      this.cribImage.setVisible(true).setTexture(`crib-${this.tierSuffix(eq.crib)}`);
+    } else {
+      this.cribImage.setVisible(false);
+    }
+
+    // 3. Desk & Chair
+    if (eq.desk !== null) {
+      this.deskImage.setVisible(true).setTexture(`desk-${this.tierSuffix(eq.desk)}`);
+    } else {
+      this.deskImage.setVisible(false);
+    }
+
+    if (eq.chair !== null) {
+      const scale = eq.chair === 1 ? 0.85 : 1.3;
+      const chairY =
+        eq.chair === 2 ? wallFloorY + 6 : eq.chair === 1 ? wallFloorY + 11 : this.layout.floorY + 2;
+      this.chairImage
+        .setVisible(true)
+        .setPosition(this.layout.deskX, chairY)
+        .setTexture(`chair-${this.tierSuffix(eq.chair)}`)
+        .setScale(scale);
+    } else {
+      this.chairImage.setVisible(false);
+    }
+
+    // 4. Sofa & Foreground TV (TV is seen from behind, closer to camera at depth 11)
+    if (eq.sofa !== null) {
+      // sofa-medium has 13px of bottom padding and smaller internal bounds inside its 48x48 frame
+      const sofaScale = eq.sofa === 2 ? 2.05 : eq.sofa === 1 ? 1.7 : 1.75;
+      const sofaY = eq.sofa === 2 ? wallFloorY + 28 : wallFloorY + 6;
+      this.sofaImage
+        .setVisible(true)
+        .setPosition(this.layout.tvX, sofaY)
+        .setTexture(`sofa-${this.tierSuffix(eq.sofa)}`)
+        .setScale(sofaScale);
+    } else {
+      this.sofaImage.setVisible(false);
+    }
+
+    if (eq.tv !== null) {
+      const tvTex = eq.tv === 1 ? 'tv-hard' : 'tv-med-easy';
+      // Hard is smaller (1.05), Medium is mid-sized (1.35), Easy is large (1.6) while keeping seated characters visible
+      const tvScale = eq.tv === 1 ? 1.05 : eq.tv === 2 ? 1.35 : 1.6;
+      this.tvImage.setVisible(true).setTexture(tvTex).setScale(tvScale);
+    } else {
+      this.tvImage.setVisible(false);
+    }
+
+    // 5. Dining Table (includes chairs; unavailable in Hard studio apartment) & Kitchen Stove
+    if (eq.table !== null && this.session.state.apartmentTier !== 1) {
+      this.tableImage
+        .setVisible(true)
+        .setTexture(`table-${this.tierSuffix(eq.table)}`)
+        .setScale(2.05);
+      this.tableLabel.setVisible(true);
+    } else {
+      this.tableImage.setVisible(false);
+      this.tableLabel.setVisible(false);
+    }
+
+    if (eq.stove !== null) {
+      this.stoveImage.setVisible(true).setTexture(`stove-${this.tierSuffix(eq.stove)}`);
+    } else {
+      this.stoveImage.setVisible(false);
+    }
+
+    // 6. Refrigerator & Wi-Fi Router (small, ~half the height of the main character)
+    if (eq.fridge !== null) {
+      this.fridgeImage.setVisible(true).setTexture(`fridge-${this.tierSuffix(eq.fridge)}`);
+    } else {
+      this.fridgeImage.setVisible(false);
+    }
+
+    if (eq.router !== null) {
+      this.routerImage
+        .setVisible(true)
+        .setTexture(`router-${this.tierSuffix(eq.router)}`)
+        .setScale(0.75);
+    } else {
+      this.routerImage.setVisible(false);
+    }
+  }
+
+  private syncFilthVisuals(): void {
+    const state = this.session.state;
+    const kitchenLevel = state.getZoneFilthLevel('kitchen');
+    const bathroomLevel = state.getZoneFilthLevel('bathroom');
+
+    // Kitchen trash can: always present (Level 1 = clean, Level 2 = full, Level 3+ = overflowing)
+    const kitchenTrashTex =
+      kitchenLevel <= 1 ? 'trash-1' : kitchenLevel === 2 ? 'trash-2' : 'trash-3';
+    this.kitchenTrashImage.setTexture(kitchenTrashTex).setScale(kitchenLevel >= 3 ? 0.78 : 0.66);
+
+    // Bathroom trash can: always present (Level 1 = clean, Level 2 = full, Level 3+ = overflowing)
+    const bathroomTrashTex =
+      bathroomLevel <= 1 ? 'trash-1' : bathroomLevel === 2 ? 'trash-2' : 'trash-3';
+    this.bathroomTrashImage.setTexture(bathroomTrashTex).setScale(bathroomLevel >= 3 ? 0.78 : 0.66);
+
+    // Level 4+: Poop appears on the bathroom floor if bathroom is not cleaned
+    this.bathroomPoopImage.setVisible(bathroomLevel >= 4);
+
+    // Level 5: Trash bags appear across rooms that reach filth level 5
+    for (const bag of this.trashBagSprites) {
+      const zoneLevel = state.getZoneFilthLevel(bag.zone);
+      bag.image.setVisible(zoneLevel >= 5);
+    }
   }
 
   private drawApartment(): void {
@@ -449,18 +694,24 @@ export class ApartmentScene extends Phaser.Scene {
       bedX,
       deskX,
       cribX,
+      tvX,
+      tableX,
+      kitchenX,
+      kitchenTrashX,
+      fridgeX,
+      modemX,
       toiletX,
+      bathroomTrashX,
+      sinkX,
       showerX,
-      diningChairX,
-      missingPlaceholders,
     } = this.layout;
 
     // 1. Apartment background scaled to canvas height (270px)
     const bg = this.add.image(0, 0, bgKey).setOrigin(0, 0);
     bg.setDisplaySize(worldWidth, 270);
 
-    // 2. Bed against the wall
-    this.add
+    // 2. Bed flush against the leftmost bedroom wall
+    this.bedImage = this.add
       .image(bedX, wallFloorY + 6, bedKey)
       .setOrigin(0.5, 1)
       .setScale(SPRITE_SCALE)
@@ -478,11 +729,9 @@ export class ApartmentScene extends Phaser.Scene {
 
     // 2b. Baby crib per level:
     // Mattress backing at depth 2, baby at depth 3, and crib bars in front at depth 4
-    const cribBack = this.add.graphics().setDepth(2);
-    cribBack.fillStyle(0x2b211b, 0.85).fillRect(cribX - 24, wallFloorY - 40, 48, 28);
-    cribBack.fillStyle(0xf5ebe0, 0.95).fillRect(cribX - 23, wallFloorY - 18, 46, 8);
+    this.cribBackGraphics = this.add.graphics().setDepth(2);
 
-    this.add
+    this.cribImage = this.add
       .image(cribX, wallFloorY + 6, cribKey)
       .setOrigin(0.5, 1)
       .setScale(SPRITE_SCALE)
@@ -500,13 +749,13 @@ export class ApartmentScene extends Phaser.Scene {
       .setDepth(5);
 
     // 3. Desk Setup layers: Wall -> Desk Setup (depth 2) -> Seated Player (depth 3) -> Chair (depth 4)
-    this.add
+    this.deskImage = this.add
       .image(deskX, wallFloorY + 4, deskKey)
       .setOrigin(0.5, 1)
       .setScale(DESK_SCALE)
       .setDepth(2);
 
-    this.add
+    this.chairImage = this.add
       .image(deskX, floorY + 2, chairKey)
       .setOrigin(0.5, 1)
       .setScale(chairScale)
@@ -523,9 +772,181 @@ export class ApartmentScene extends Phaser.Scene {
       .setOrigin(0.5, 0)
       .setDepth(5);
 
-    // 4. Bathroom labels (Toilet and Shower built into the background)
+    // 3b. Living Room: Sofa against back wall (depth 2) and TV seen from behind in foreground (depth 11)
+    // Characters walking past (depth 8-10) walk BETWEEN the sofa (depth 2) and the TV (depth 11)
+    this.sofaImage = this.add
+      .image(tvX, wallFloorY + 28, 'sofa-medium')
+      .setOrigin(0.5, 1)
+      .setScale(2.05)
+      .setDepth(2);
+
+    this.tvImage = this.add
+      .image(tvX, floorY + 18, 'tv-med-easy')
+      .setOrigin(0.5, 1)
+      .setScale(1.35)
+      .setDepth(11);
+
+    this.add
+      .text(tvX, floorY + 14, 'SOFA & TV', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        color: '#ffe8bb',
+        backgroundColor: '#1b1b26cc',
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 0)
+      .setDepth(12);
+
+    // 3c. Wi-Fi Router / Modem cabinet (depth 2, compact ~half character height)
+    this.routerImage = this.add
+      .image(modemX, wallFloorY - 4, 'router-medium')
+      .setOrigin(0.5, 1)
+      .setScale(0.75)
+      .setDepth(2);
+
+    this.add
+      .text(modemX, floorY + 2, 'WI-FI', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        color: '#a8dadc',
+        backgroundColor: '#1b1b26cc',
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 0)
+      .setDepth(5);
+
+    // 3d. Dining Table (includes chairs, depth 2; hidden in Hard studio apartment)
+    this.tableImage = this.add
+      .image(tableX, wallFloorY + 4, 'table-medium')
+      .setOrigin(0.5, 1)
+      .setScale(2.05)
+      .setDepth(2);
+
+    this.tableLabel = this.add
+      .text(tableX, floorY + 2, 'TABLE', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        color: '#ffe8bb',
+        backgroundColor: '#1b1b26cc',
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 0)
+      .setDepth(5);
+
+    // 3e. Kitchen Stove & Refrigerator pushed further back against the rear kitchen wall (wallFloorY - 6)
+    this.stoveImage = this.add
+      .image(kitchenX, wallFloorY - 6, 'stove-medium')
+      .setOrigin(0.5, 1)
+      .setScale(1.55)
+      .setDepth(2);
+
+    this.add
+      .text(kitchenX, floorY + 2, 'STOVE', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        color: '#ffe8bb',
+        backgroundColor: '#1b1b26cc',
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 0)
+      .setDepth(5);
+
+    this.fridgeImage = this.add
+      .image(fridgeX, wallFloorY - 6, 'fridge-medium')
+      .setOrigin(0.5, 1)
+      .setScale(1.65)
+      .setDepth(2);
+
+    this.add
+      .text(fridgeX, floorY + 2, 'FRIDGE', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        color: '#ffe8bb',
+        backgroundColor: '#1b1b26cc',
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 0)
+      .setDepth(5);
+
+    // 3f. Trash cans (always present in Kitchen & Bathroom starting at trash-level01), Poop (Lv.4), and Trash Bags (Lv.5)
+    this.kitchenTrashImage = this.add
+      .image(kitchenTrashX, wallFloorY - 2, 'trash-1')
+      .setOrigin(0.5, 1)
+      .setScale(0.66)
+      .setDepth(3);
+
+    this.bathroomTrashImage = this.add
+      .image(bathroomTrashX, wallFloorY - 2, 'trash-1')
+      .setOrigin(0.5, 1)
+      .setScale(0.66)
+      .setDepth(3);
+
+    this.bathroomPoopImage = this.add
+      .image(bathroomTrashX - 14, floorY - 2, 'poop')
+      .setOrigin(0.5, 1)
+      .setScale(0.48)
+      .setDepth(3)
+      .setVisible(false);
+
+    // Random trash bags across all rooms (Bedroom, Nursery/Living, Bathroom, Kitchen) at Filth Level 5
+    const hasTable = this.session.state.apartmentTier !== 1;
+    const bagSpots: { zone: CleanZoneId; x: number; y: number; tex: string }[] = [
+      { zone: 'bedroom', x: bedX + 34, y: floorY - 2, tex: 'trash-bags-1' },
+      { zone: 'bedroom', x: cribX - 30, y: floorY - 1, tex: 'trash-bags-2' },
+      { zone: 'bedroom', x: tvX - 36, y: floorY - 2, tex: 'trash-bags-1' },
+      { zone: 'bathroom', x: showerX - 26, y: floorY - 2, tex: 'trash-bags-2' },
+      { zone: 'kitchen', x: kitchenX - 24, y: floorY - 2, tex: 'trash-bags-1' },
+      ...(hasTable
+        ? [{ zone: 'kitchen' as CleanZoneId, x: tableX + 30, y: floorY - 1, tex: 'trash-bags-2' }]
+        : []),
+    ];
+    this.trashBagSprites = bagSpots.map((spot) => ({
+      zone: spot.zone,
+      image: this.add
+        .image(spot.x, spot.y, spot.tex)
+        .setOrigin(0.5, 1)
+        .setScale(0.82)
+        .setDepth(3)
+        .setVisible(false),
+    }));
+
+    // 3g. Kitchen fire sprites: Stage 1 (fire_small on stove), Stage 2 (fire_big on stove), Stage 3 (spreads across kitchen)
+    this.stoveFireImage = this.add
+      .image(kitchenX, wallFloorY - 22, 'fire-small')
+      .setOrigin(0.5, 1)
+      .setScale(0.95)
+      .setDepth(9)
+      .setVisible(false);
+
+    const spreadPositions = [
+      { x: kitchenX - 18, y: wallFloorY - 12, tex: 'fire-big' },
+      { x: kitchenTrashX, y: wallFloorY - 4, tex: 'fire-small' },
+      { x: fridgeX - 6, y: wallFloorY - 14, tex: 'fire-big' },
+      ...(hasTable ? [{ x: tableX + 8, y: wallFloorY - 8, tex: 'fire-small' }] : []),
+    ];
+    this.kitchenSpreadFireImages = spreadPositions.map((pos) =>
+      this.add
+        .image(pos.x, pos.y, pos.tex)
+        .setOrigin(0.5, 1)
+        .setScale(1.0)
+        .setDepth(9)
+        .setVisible(false),
+    );
+
+    // 4. Bathroom labels (Toilet, Sink, and Shower built into the background)
     this.add
       .text(toiletX, floorY + 2, 'TOILET', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        color: '#a8dadc',
+        backgroundColor: '#1b1b26cc',
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 0)
+      .setDepth(5);
+
+    this.add
+      .text(sinkX, floorY + 2, 'SINK', {
         fontFamily: 'monospace',
         fontSize: '8px',
         color: '#a8dadc',
@@ -546,39 +967,7 @@ export class ApartmentScene extends Phaser.Scene {
       .setOrigin(0.5, 0)
       .setDepth(5);
 
-    // 5. Dining chair if present in this level
-    if (diningChairX !== undefined) {
-      this.add
-        .image(diningChairX, wallFloorY + 8, 'dining-chair')
-        .setOrigin(0.5, 1)
-        .setScale(1.5)
-        .setDepth(2);
-    }
-
-    // 6. Placeholder rectangles for missing furniture assets (WIFI MODEM, STOVE, TABLE, FRIDGE)
-    const g = this.add.graphics().setDepth(2);
-    for (const item of missingPlaceholders) {
-      const bottomY = wallFloorY + 6;
-      const topY = bottomY - item.height;
-      const leftX = item.x - item.width / 2;
-
-      g.fillStyle(item.fillColor, 0.72).fillRect(leftX, topY, item.width, item.height);
-      g.lineStyle(2, item.borderColor, 1).strokeRect(leftX, topY, item.width, item.height);
-
-      this.add
-        .text(item.x, topY + item.height / 2, item.label, {
-          fontFamily: 'monospace',
-          fontSize: '7px',
-          color: '#fff4d4',
-          align: 'center',
-          backgroundColor: '#151820bb',
-          padding: { x: 2, y: 1 },
-        })
-        .setOrigin(0.5, 0.5)
-        .setDepth(3);
-    }
-
-    // 7. Baby crying indicator
+    // 5. Baby crying indicator
     this.cryText = this.add
       .text(cribX, wallFloorY - 68, 'WAHH!\n  ♫', {
         fontFamily: 'monospace',
@@ -615,8 +1004,28 @@ export class ApartmentScene extends Phaser.Scene {
       .setDepth(14)
       .setVisible(false);
 
+    const wifePrefix = this.session.state.difficulty.id === 'hard' ? 'wife-low' : 'wife-high';
+    this.wifeSprite = this.add
+      .sprite(this.wifeX, floorY, `${wifePrefix}-idle-south`)
+      .setOrigin(0.5, 1)
+      .setScale(SPRITE_SCALE)
+      .setDepth(8);
+
+    this.wifeLabel = this.add
+      .text(this.wifeX, floorY - 76, 'WIFE', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        color: '#ffe8bb',
+        backgroundColor: '#3d2842cc',
+        padding: { x: 3, y: 1 },
+      })
+      .setOrigin(0.5, 1)
+      .setDepth(13);
+
+    const initialPlayerX =
+      this.session.state.player.mode === 'computer' ? this.layout.deskX : startX;
     this.player = this.add
-      .sprite(startX, floorY, 'char-idle-east')
+      .sprite(initialPlayerX, floorY, 'char-idle-east')
       .setOrigin(0.5, 1)
       .setScale(SPRITE_SCALE)
       .setDepth(10);
@@ -632,10 +1041,36 @@ export class ApartmentScene extends Phaser.Scene {
       .rectangle(0, 0, 480, 270, 0x000000, 0)
       .setOrigin(0, 0)
       .setScrollFactor(0)
-      .setDepth(11);
+      .setDepth(12);
+
+    // Comic-book shout bubbles when wife and player are yelling at each other
+    this.comicGraphics = this.add.graphics().setDepth(15);
+    this.wifeComicText = this.add
+      .text(0, 0, '', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        fontStyle: 'bold',
+        color: '#1b1118',
+        align: 'center',
+      })
+      .setOrigin(0.5, 0.5)
+      .setDepth(16)
+      .setVisible(false);
+
+    this.playerComicText = this.add
+      .text(0, 0, '', {
+        fontFamily: 'monospace',
+        fontSize: '8px',
+        fontStyle: 'bold',
+        color: '#1b1118',
+        align: 'center',
+      })
+      .setOrigin(0.5, 0.5)
+      .setDepth(16)
+      .setVisible(false);
 
     this.playerLabel = this.add
-      .text(startX, floorY - 76, 'YOU', {
+      .text(initialPlayerX, floorY - 76, 'YOU', {
         fontFamily: 'monospace',
         fontSize: '8px',
         color: '#fff4d4',
@@ -643,7 +1078,7 @@ export class ApartmentScene extends Phaser.Scene {
         padding: { x: 3, y: 1 },
       })
       .setOrigin(0.5, 1)
-      .setDepth(12);
+      .setDepth(13);
 
     this.urgencyText = this.add
       .text(0, 0, '', {
@@ -694,8 +1129,52 @@ export class ApartmentScene extends Phaser.Scene {
       .setVisible(false);
   }
 
+  private getZoneForX(x: number): CleanZoneId {
+    const { toiletX, showerX, kitchenX, tableX, fridgeX } = this.layout;
+    const minBath = Math.min(toiletX, showerX) - 36;
+    const maxBath = Math.max(toiletX, showerX) + 36;
+    if (x >= minBath && x <= maxBath) {
+      return 'bathroom';
+    }
+    const hasTable =
+      this.session.state.equipment.table !== null && this.session.state.apartmentTier !== 1;
+    const minKitchen =
+      (hasTable ? Math.min(kitchenX, tableX, fridgeX) : Math.min(kitchenX, fridgeX)) - 36;
+    const maxKitchen =
+      (hasTable ? Math.max(kitchenX, tableX, fridgeX) : Math.max(kitchenX, fridgeX)) + 36;
+    if (x >= minKitchen && x <= maxKitchen) {
+      return 'kitchen';
+    }
+    return 'bedroom';
+  }
+
+  private startCleanZone(zone: CleanZoneId): void {
+    if (this.session.state.baby.location === 'carried') {
+      this.session.events.emit('notify', {
+        text: '👶 Put the baby in the crib or bed before cleaning the apartment!',
+        kind: 'warn',
+      });
+      return;
+    }
+    this.session.state.filth.targetZone = zone;
+    this.session.activities.start('clean');
+  }
+
   private setupZones(): void {
-    const { bedX, fridgeX, deskX, cribX, toiletX, showerX, kitchenX, modemX } = this.layout;
+    const {
+      bedX,
+      fridgeX,
+      deskX,
+      cribX,
+      tvX,
+      toiletX,
+      sinkX,
+      showerX,
+      bathroomTrashX,
+      kitchenTrashX,
+      kitchenX,
+      modemX,
+    } = this.layout;
 
     this.zones = [
       {
@@ -704,6 +1183,13 @@ export class ApartmentScene extends Phaser.Scene {
         width: 44,
         actionText: '[E] REST / NAP',
         onInteract: () => {
+          if (this.session.state.equipment.bed === null) {
+            this.session.events.emit('notify', {
+              text: '🛏️ You sold your bed! Buy a new bed in the MARKET app.',
+              kind: 'warn',
+            });
+            return;
+          }
           const baby = this.session.state.baby;
           if (baby.location === 'bed' && baby.demand === 'feed') {
             this.session.activities.start('care');
@@ -721,16 +1207,41 @@ export class ApartmentScene extends Phaser.Scene {
         },
       },
       {
+        name: 'clean-bedroom',
+        x: bedX + 36,
+        width: 24,
+        actionText: '[E] / [C] 🧹 CLEAN BEDROOM',
+        onInteract: () => this.startCleanZone('bedroom'),
+      },
+      {
+        name: 'tv',
+        x: tvX,
+        width: 44,
+        actionText: '[E] 📺 WATCH TV (-STRESS)',
+        onInteract: () => {
+          this.session.activities.start('watch-tv');
+        },
+      },
+      {
         name: 'fridge',
         x: fridgeX,
         width: 38,
-        actionText: '[E] EAT MEAL · [R] 💧 DRINK WATER',
-        onInteract: () => this.session.activities.start('eat'),
+        actionText: '[E] 🧊 OPEN FRIDGE · [R] 💧 DRINK WATER',
+        onInteract: () => {
+          if (this.session.state.equipment.fridge === null) {
+            this.session.events.emit('notify', {
+              text: '🧊 You sold your refrigerator! Buy a new refrigerator in the MARKET app.',
+              kind: 'warn',
+            });
+            return;
+          }
+          this.session.events.emit('fridge:open');
+        },
       },
       {
         name: 'kitchen',
         x: kitchenX,
-        width: 38,
+        width: 48,
         actionText: '[E] 🔥 EXTINGUISH FIRE',
         onInteract: () => {
           if (this.session.state.baby.location === 'carried') {
@@ -741,14 +1252,16 @@ export class ApartmentScene extends Phaser.Scene {
             return;
           }
           if (this.session.state.baby.kitchenFire) {
-            this.session.state.baby.kitchenFire = false;
-            this.session.events.emit('notify', {
-              text: '🧯 You extinguished the kitchen fire in time!',
-              kind: 'success',
-            });
-            this.session.events.emit('state:changed');
+            this.session.baby.extinguishKitchenFire();
           }
         },
+      },
+      {
+        name: 'clean-kitchen',
+        x: kitchenTrashX,
+        width: 24,
+        actionText: '[E] / [C] 🧹 CLEAN KITCHEN',
+        onInteract: () => this.startCleanZone('kitchen'),
       },
       {
         name: 'modem',
@@ -805,6 +1318,13 @@ export class ApartmentScene extends Phaser.Scene {
         width: 44,
         actionText: '[E] CARE FOR BABY',
         onInteract: () => {
+          if (this.session.state.equipment.crib === null) {
+            this.session.events.emit('notify', {
+              text: '🛏️ You sold the baby crib! Buy a new crib in the MARKET app.',
+              kind: 'warn',
+            });
+            return;
+          }
           const baby = this.session.state.baby;
           if (baby.location === 'carried') {
             this.putBabyToSleepIn('crib');
@@ -822,14 +1342,28 @@ export class ApartmentScene extends Phaser.Scene {
       {
         name: 'toilet',
         x: toiletX,
-        width: 38,
+        width: 26,
         actionText: '[E] USE TOILET',
         onInteract: () => this.session.activities.start('toilet'),
       },
       {
+        name: 'clean-bathroom',
+        x: bathroomTrashX,
+        width: 20,
+        actionText: '[E] / [C] 🧹 CLEAN BATHROOM',
+        onInteract: () => this.startCleanZone('bathroom'),
+      },
+      {
+        name: 'sink',
+        x: sinkX,
+        width: 24,
+        actionText: '[E] 🚰 WASH HANDS',
+        onInteract: () => this.session.activities.start('wash-hands'),
+      },
+      {
         name: 'shower',
         x: showerX,
-        width: 40,
+        width: 34,
         actionText: '[E] TAKE SHOWER',
         onInteract: () => this.session.activities.start('shower'),
       },
@@ -842,20 +1376,32 @@ export class ApartmentScene extends Phaser.Scene {
   }
 
   private setupEventListeners(): void {
-    this.session.events.on('baby:crying', () => {
-      this.cryText.setVisible(true);
-      this.cryText.setColor('#f3315c');
-    });
+    const unsubs = [
+      this.session.events.on('apartment:changed', () => {
+        this.scene.restart();
+      }),
+      this.session.events.on('equipment:changed', () => {
+        this.syncEquipmentVisuals();
+      }),
+      this.session.events.on('baby:crying', () => {
+        this.cryText.setVisible(true);
+        this.cryText.setColor('#f3315c');
+      }),
+      this.session.events.on('baby:critical', () => {
+        this.cryText.setVisible(true);
+        this.cryText.setColor('#ff0033');
+        this.cryText.setText('CRITICAL!\nWAHH!!');
+      }),
+      this.session.events.on('baby:attended', () => {
+        this.cryText.setVisible(false);
+        this.cryText.setText('WAHH!\n  ♫');
+      }),
+    ];
 
-    this.session.events.on('baby:critical', () => {
-      this.cryText.setVisible(true);
-      this.cryText.setColor('#ff0033');
-      this.cryText.setText('CRITICAL!\nWAHH!!');
-    });
-
-    this.session.events.on('baby:attended', () => {
-      this.cryText.setVisible(false);
-      this.cryText.setText('WAHH!\n  ♫');
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      for (const unsub of unsubs) {
+        unsub();
+      }
     });
   }
 
@@ -941,10 +1487,17 @@ export class ApartmentScene extends Phaser.Scene {
   }
 
   private chooseNextMischiefTarget(): void {
-    const targets: MischiefTarget[] = ['kitchen', 'modem', 'desk', 'table'];
+    const hasTable =
+      this.session.state.equipment.table !== null && this.session.state.apartmentTier !== 1;
+    const targets: MischiefTarget[] = hasTable
+      ? ['kitchen', 'modem', 'desk', 'table']
+      : ['kitchen', 'modem', 'desk'];
     const currentIdx = targets.indexOf(this.mischiefTarget);
     this.mischiefTarget =
-      targets[(currentIdx + 1 + Math.floor(Math.random() * 3)) % targets.length];
+      targets[
+        (currentIdx + 1 + Math.floor(Math.random() * Math.max(1, targets.length - 1))) %
+          targets.length
+      ];
     this.mischiefTimer = 0;
   }
 
@@ -965,11 +1518,7 @@ export class ApartmentScene extends Phaser.Scene {
     const { baby, player } = this.session.state;
 
     if (target === 'kitchen') {
-      baby.kitchenFire = true;
-      this.session.events.emit('notify', {
-        text: '🔥 THE BABY CLIMBED THE STOVE AND STARTED A FIRE! Run to the stove and press [E].',
-        kind: 'danger',
-      });
+      this.session.baby.startKitchenFire();
     } else if (target === 'modem') {
       baby.modemUnplugged = true;
       this.session.events.emit('notify', {
@@ -1139,6 +1688,13 @@ export class ApartmentScene extends Phaser.Scene {
       return;
     }
 
+    if (
+      this.mischiefTarget === 'table' &&
+      (this.session.state.equipment.table === null || this.session.state.apartmentTier === 1)
+    ) {
+      this.chooseNextMischiefTarget();
+    }
+
     const targetX = this.getTargetX(this.mischiefTarget);
     const dist = targetX - this.babyX;
 
@@ -1203,6 +1759,209 @@ export class ApartmentScene extends Phaser.Scene {
     }
   }
 
+  private updateWifeBehavior(time: number, delta: number): void {
+    const { wife, difficulty, filth } = this.session.state;
+    const prefix = difficulty.id === 'hard' ? 'wife-low' : 'wife-high';
+
+    let targetX = this.layout.tvX + 14;
+    let actionLabel = 'WIFE';
+
+    switch (wife.activity) {
+      case 'sleeping':
+        targetX = this.layout.bedX - 4;
+        actionLabel = 'WIFE · 😴 SLEEP';
+        break;
+      case 'watching-tv':
+        // 3-seater sofa: wife always sits on the right side
+        targetX = this.layout.tvX + 14;
+        actionLabel = 'WIFE · 📺 TV';
+        break;
+      case 'out':
+        targetX = this.layout.doorX;
+        actionLabel = '🚪 WIFE IS OUT';
+        break;
+      case 'helping-baby':
+        targetX = this.babyX + 18;
+        actionLabel = 'WIFE · 🍼 HELPING BABY';
+        break;
+      case 'eating':
+        targetX =
+          this.session.state.equipment.table !== null && this.session.state.apartmentTier !== 1
+            ? this.layout.tableX
+            : this.layout.fridgeX - 18;
+        actionLabel = 'WIFE · 🍲 EATING';
+        break;
+      case 'drinking':
+        targetX = this.layout.fridgeX - 16;
+        actionLabel = 'WIFE · 💧 DRINKING';
+        break;
+      case 'toilet':
+        targetX = this.layout.toiletX;
+        actionLabel = 'WIFE · 🚽 WC';
+        break;
+      case 'washing-hands':
+        targetX = this.layout.sinkX;
+        actionLabel = 'WIFE · 🧼 WASHING HANDS';
+        break;
+      case 'cleaning':
+        targetX =
+          filth.bathroom >= filth.kitchen && filth.bathroom >= filth.bedroom
+            ? this.layout.bathroomTrashX
+            : filth.kitchen >= filth.bedroom
+              ? this.layout.kitchenTrashX
+              : this.layout.bedX + 34;
+        actionLabel = 'WIFE · 🧹 CLEANING';
+        break;
+      case 'showering':
+        targetX = this.layout.showerX;
+        actionLabel = 'WIFE · 🚿 SHOWER';
+        break;
+      default:
+        targetX = this.layout.tvX + 14;
+        break;
+    }
+
+    const dist = targetX - this.wifeX;
+    if (Math.abs(dist) > 6) {
+      // Walking toward her next activity spot
+      const walkSpeed = 78;
+      this.wifeX += Math.sign(dist) * ((walkSpeed * delta) / 1000);
+      this.wifeY = this.layout.floorY;
+      this.wifeFacing = dist > 0 ? 'east' : 'west';
+
+      this.wifeWalkTimer += delta;
+      if (this.wifeWalkTimer >= 135) {
+        this.wifeWalkTimer = 0;
+        this.wifeWalkStep = (this.wifeWalkStep + 1) % 4;
+      }
+
+      const frames = [
+        `${prefix}-walk1-${this.wifeFacing}`,
+        `${prefix}-idle-${this.wifeFacing}`,
+        `${prefix}-walk2-${this.wifeFacing}`,
+        `${prefix}-idle-${this.wifeFacing}`,
+      ];
+      this.wifeSprite
+        .setVisible(true)
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(8)
+        .setTexture(frames[this.wifeWalkStep]);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+      return;
+    }
+
+    this.wifeX = targetX;
+    this.wifeWalkTimer = 0;
+    this.wifeWalkStep = 0;
+
+    if (wife.activity === 'out') {
+      this.wifeSprite.setVisible(false);
+      this.wifeLabel
+        .setText('🚪 WIFE OUT')
+        .setPosition(this.layout.doorX, this.layout.wallFloorY - 58)
+        .setVisible(true);
+      return;
+    }
+
+    this.wifeSprite.setVisible(true);
+
+    if (wife.activity === 'sleeping') {
+      this.wifeY = this.layout.wallFloorY + 2;
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(5)
+        .setTexture(`${prefix}-sleep-west`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 54)
+        .setVisible(true);
+    } else if (wife.activity === 'toilet') {
+      // Aligned higher up so she sits properly on the toilet bowl
+      this.wifeY = this.layout.wallFloorY - 8;
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(6)
+        .setTexture(`${prefix}-sit-south`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    } else if (wife.activity === 'washing-hands') {
+      // Standing in front of the bathroom sink with her back to the camera
+      this.wifeY = this.layout.wallFloorY + 2;
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(6)
+        .setTexture(`${prefix}-idle-north`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    } else if (wife.activity === 'watching-tv') {
+      this.wifeY = this.layout.wallFloorY + 4;
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(6)
+        .setTexture(`${prefix}-sit-south`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    } else if (wife.activity === 'showering') {
+      this.wifeY = this.layout.wallFloorY + 8;
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(6)
+        .setTexture(`${prefix}-shower-south`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    } else if (wife.activity === 'cleaning') {
+      this.wifeY = this.layout.floorY;
+      const cleanDir = Math.floor(time / 420) % 2 === 0 ? 'east' : 'west';
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(8)
+        .setTexture(`${prefix}-clean-${cleanDir}`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    } else if (wife.activity === 'eating') {
+      this.wifeY = this.layout.floorY;
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(8)
+        .setTexture(`${prefix}-eat-south`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    } else if (wife.activity === 'drinking') {
+      this.wifeY = this.layout.floorY;
+      this.wifeSprite
+        .setPosition(this.wifeX, this.wifeY)
+        .setDepth(8)
+        .setTexture(`${prefix}-drink-south`);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    } else {
+      this.wifeY = this.layout.floorY;
+      const tex = wife.activity === 'helping-baby' ? `${prefix}-idle-west` : `${prefix}-idle-south`;
+      this.wifeSprite.setPosition(this.wifeX, this.wifeY).setDepth(8).setTexture(tex);
+      this.wifeLabel
+        .setText(actionLabel)
+        .setPosition(this.wifeX, this.wifeY - 88)
+        .setVisible(true);
+    }
+  }
+
   /**
    * Renders visual effects for baby-caused disasters:
    * - Flames and smoke when the stove is on fire.
@@ -1212,25 +1971,34 @@ export class ApartmentScene extends Phaser.Scene {
   private renderHazardEffects(time: number): void {
     this.hazardGraphics.clear();
     const { baby } = this.session.state;
-    const { kitchenX, modemX, deskX, wallFloorY } = this.layout;
+    const { modemX, deskX, wallFloorY } = this.layout;
 
-    // 1. Kitchen stove fire
+    // 1. Kitchen stove fire:
+    // Stage 1: fire_small on stove
+    // Stage 2: fire_big on stove
+    // Stage 3: fire spreads across the whole kitchen (stove + kitchen trash + fridge + table)
     if (baby.kitchenFire) {
-      for (let i = 0; i < 7; i++) {
-        const flicker = Math.sin(time * 0.02 + i * 1.3) * 6;
-        const fx = kitchenX - 18 + i * 6;
-        const fy = wallFloorY - 28 + (i % 2) * 4;
-        this.hazardGraphics.fillStyle(0xff4d00, 0.9);
-        this.hazardGraphics.fillRect(fx, fy - 14 - flicker, 6, 16 + flicker);
-        this.hazardGraphics.fillStyle(0xffbe0b, 0.95);
-        this.hazardGraphics.fillRect(fx + 1, fy - 8 - flicker * 0.5, 4, 9);
+      const stage = baby.fireStage || 1;
+      const pulse = 1 + Math.sin(time * 0.018) * 0.08;
+      const baseScale = stage === 1 ? 0.92 : 1.28;
+      this.stoveFireImage
+        .setVisible(true)
+        .setTexture(stage === 1 ? 'fire-small' : 'fire-big')
+        .setScale(baseScale * pulse);
+
+      for (let i = 0; i < this.kitchenSpreadFireImages.length; i++) {
+        const img = this.kitchenSpreadFireImages[i];
+        if (stage >= 3) {
+          const itemPulse = 1 + Math.sin(time * 0.02 + (i + 1) * 1.4) * 0.09;
+          img.setVisible(true).setScale((i % 2 === 0 ? 1.18 : 0.96) * itemPulse);
+        } else {
+          img.setVisible(false);
+        }
       }
-      this.hazardGraphics.fillStyle(0x2b2d42, 0.65);
-      for (let s = 0; s < 4; s++) {
-        const rise = (time * 0.04 + s * 14) % 45;
-        const sx = kitchenX - 10 + s * 7 + Math.sin(time * 0.008 + s) * 4;
-        const sy = wallFloorY - 44 - rise;
-        this.hazardGraphics.fillRect(sx, sy, 7, 7);
+    } else {
+      this.stoveFireImage.setVisible(false);
+      for (const img of this.kitchenSpreadFireImages) {
+        img.setVisible(false);
       }
     }
 
@@ -1250,15 +2018,111 @@ export class ApartmentScene extends Phaser.Scene {
   }
 
   /**
-   * Renders visual effects on the character and baby:
-   * - Zzz when the baby is sleeping in crib, bed, or player's arms.
-   * - Falling water droplets while showering.
+   * Draws a comic-book style shout bubble with a sharp pointer tail and action burst lines.
+   */
+  private drawComicShoutBubble(
+    cx: number,
+    cy: number,
+    width: number,
+    height: number,
+    fillColor: number,
+    borderColor: number,
+  ): void {
+    const left = cx - width / 2;
+    const top = cy - height / 2;
+    const bottom = cy + height / 2;
+
+    // 1. Comic drop shadow
+    this.comicGraphics.fillStyle(0x111118, 0.88);
+    this.comicGraphics.fillRect(left + 3, top + 3, width, height);
+
+    // 2. Main comic box fill & bold border
+    this.comicGraphics.fillStyle(fillColor, 0.98);
+    this.comicGraphics.fillRect(left, top, width, height);
+    this.comicGraphics.lineStyle(2, borderColor, 1);
+    this.comicGraphics.strokeRect(left, top, width, height);
+
+    // 3. Comic pointer tail pointing down toward the character's head
+    this.comicGraphics.fillStyle(fillColor, 0.98);
+    this.comicGraphics.fillTriangle(cx - 6, bottom - 1, cx + 6, bottom - 1, cx - 2, bottom + 9);
+    this.comicGraphics.lineStyle(2, borderColor, 1);
+    this.comicGraphics.lineBetween(cx - 6, bottom, cx - 2, bottom + 9);
+    this.comicGraphics.lineBetween(cx + 6, bottom, cx - 2, bottom + 9);
+
+    // 4. Comic burst / shout rays at top corners
+    this.comicGraphics.lineStyle(1.5, borderColor, 0.95);
+    this.comicGraphics.lineBetween(left - 3, top - 2, left - 7, top - 6);
+    this.comicGraphics.lineBetween(left + 2, top - 3, left, top - 8);
+    this.comicGraphics.lineBetween(left + width + 3, top - 2, left + width + 7, top - 6);
+    this.comicGraphics.lineBetween(left + width - 2, top - 3, left + width, top - 8);
+  }
+
+  /**
+   * Renders comic-book speech bubbles above both the Wife and the Player when they are yelling at each other.
+   */
+  private renderComicShoutBubbles(time: number): void {
+    this.comicGraphics.clear();
+    const { wife } = this.session.state;
+
+    if (!wife.arguing || wife.activity === 'out' || !this.wifeSprite.visible) {
+      this.wifeComicText.setVisible(false);
+      this.playerComicText.setVisible(false);
+      return;
+    }
+
+    const phraseIndex = Math.floor(time / 3200) % 3;
+    const wifeLines =
+      wife.argueReason === 'hungry'
+        ? ["I'M STARVING!!\nBUY FOOD NOW!", 'EMPTY FRIDGE?!\nFEED ME!!', 'WHERE IS\nMY DINNER?!']
+        : [
+            'THE BABY IS\nCRYING!! HELP!',
+            'DO SOMETHING\nWITH THE BABY!',
+            "I CAN'T TAKE\nTHIS CRYING!!",
+          ];
+    const playerLines = [
+      "I'M WORKING!!\nHOLD ON!",
+      "STOP YELLING!\nI'M STRESSED!",
+      'I ONLY HAVE\nTWO HANDS!!',
+    ];
+
+    const jitterW = Math.sin(time * 0.045) * 1.5;
+    const jitterP = Math.cos(time * 0.048) * 1.5;
+
+    // Clamp X inside world bounds so bubbles never clip off-screen
+    const minX = 56;
+    const maxX = this.layout.worldWidth - 56;
+    const wx = Phaser.Math.Clamp(this.wifeX + jitterW, minX, maxX);
+    const px = Phaser.Math.Clamp(this.player.x + jitterP, minX, maxX);
+
+    let wy = this.wifeY - 108;
+    let py = this.player.y - 104;
+
+    // Prevent overlap if Wife and Player are standing right next to each other
+    if (Math.abs(wx - px) < 96) {
+      wy -= 16;
+      py += 12;
+    }
+
+    this.drawComicShoutBubble(wx, wy, 92, 26, 0xfff3b0, 0xe63946);
+    this.wifeComicText.setText(wifeLines[phraseIndex]).setPosition(wx, wy).setVisible(true);
+
+    this.drawComicShoutBubble(px, py, 88, 26, 0xffd6d6, 0xc1121f);
+    this.playerComicText.setText(playerLines[phraseIndex]).setPosition(px, py).setVisible(true);
+  }
+
+  /**
+   * Renders visual effects on the character, wife, and baby:
+   * - Comic-book shout bubbles when arguing.
+   * - Zzz when the baby or wife is sleeping.
+   * - Falling water droplets while showering or washing hands.
    * - Dirt Level 2 (dirt >= 40): rising green stink waves.
    * - Dirt Level 3 (dirt >= 75): flies orbiting around the player.
    */
   private renderCharacterEffects(time: number): void {
     this.effectsGraphics.clear();
-    const { player, baby } = this.session.state;
+    this.renderComicShoutBubbles(time);
+
+    const { player, wife, baby } = this.session.state;
     const mode = player.mode;
     const px = this.player.x;
     const py = this.player.y;
@@ -1276,6 +2140,17 @@ export class ApartmentScene extends Phaser.Scene {
         const zx = this.babyX + 6 + i * 4;
         const zy = this.babyY - 22 - floatOffset;
         this.effectsGraphics.fillRect(zx, zy, 3, 1.5);
+      }
+    }
+
+    // 0b. Soft Zzz when wife is sleeping in bed
+    if (wife.activity === 'sleeping' && this.wifeSprite.visible) {
+      this.effectsGraphics.fillStyle(0xf4a261, 0.85);
+      for (let i = 0; i < 2; i++) {
+        const floatOffset = (time * 0.022 + i * 12) % 22;
+        const zx = this.wifeX - 14 - i * 4;
+        const zy = this.wifeY - 36 - floatOffset;
+        this.effectsGraphics.fillRect(zx, zy, 3.5, 1.5);
       }
     }
 
@@ -1418,13 +2293,14 @@ export class ApartmentScene extends Phaser.Scene {
   override update(time: number, delta: number): void {
     // 1. Advance game simulation session
     this.session.update(delta);
+    this.syncFilthVisuals();
 
-    const { player: playerState, baby } = this.session.state;
+    const { player: playerState, baby, filth } = this.session.state;
     const mode = playerState.mode;
     const isPlayerIdle = playerState.isIdle;
 
     // Debug/testing hotkeys:
-    // [B] +Bladder, [N] +Dirt, [T] +2h Day/Dusk/Night, [M] cycle baby demand (Feed -> Crawl -> Sleep)
+    // [B] +Bladder, [N] +Dirt, [T] +2h Day/Dusk/Night, [M] cycle baby demand, [V] cycle apartment filth
     if (Phaser.Input.Keyboard.JustDown(this.keyB)) {
       playerState.adjust('bladder', 35);
       this.session.events.emit('state:changed');
@@ -1450,6 +2326,21 @@ export class ApartmentScene extends Phaser.Scene {
       baby.needs = 40;
       baby.crying = true;
       this.session.events.emit('state:changed');
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.keyV)) {
+      const steps = [0, 26, 50, 72, 92];
+      const currentLevel = this.session.state.getZoneFilthLevel('bathroom');
+      const nextVal = steps[currentLevel % steps.length];
+      filth.bedroom = nextVal;
+      filth.bathroom = nextVal;
+      filth.kitchen = nextVal;
+      this.syncFilthVisuals();
+      this.session.events.emit('state:changed');
+    }
+
+    // [C] to clean the current room (bedroom/living, bathroom, or kitchen)
+    if (Phaser.Input.Keyboard.JustDown(this.keyC) && isPlayerIdle) {
+      this.startCleanZone(this.getZoneForX(this.player.x));
     }
 
     // [R] at the refrigerator to DRINK WATER (uses the water bottle animation)
@@ -1533,15 +2424,28 @@ export class ApartmentScene extends Phaser.Scene {
       this.walkStep = 0;
 
       if (mode === 'computer') {
+        const chairTier = this.session.state.equipment.chair;
         this.player.x = this.layout.deskX;
-        this.player.y = this.layout.wallFloorY + 10;
+        this.player.y =
+          chairTier === 2
+            ? this.layout.wallFloorY + 4
+            : chairTier === 1
+              ? this.layout.wallFloorY + 7
+              : this.layout.wallFloorY + 10;
         this.player.setDepth(3);
         this.player.setTexture('char-typing-north');
       } else if (mode === 'toilet') {
+        // Aligned higher up so the character sits properly on the toilet bowl
         this.player.x = this.layout.toiletX;
-        this.player.y = this.layout.wallFloorY + 8;
+        this.player.y = this.layout.wallFloorY - 8;
         this.player.setDepth(6);
         this.player.setTexture('char-sitting-south');
+      } else if (mode === 'washing-hands') {
+        // Standing in front of the bathroom sink with back to the camera
+        this.player.x = this.layout.sinkX;
+        this.player.y = this.layout.wallFloorY + 2;
+        this.player.setDepth(6);
+        this.player.setTexture('char-idle-north');
       } else if (mode === 'showering') {
         this.player.x = this.layout.showerX;
         this.player.y = this.layout.wallFloorY + 8;
@@ -1552,6 +2456,17 @@ export class ApartmentScene extends Phaser.Scene {
         this.player.y = this.layout.wallFloorY + 4;
         this.player.setDepth(6);
         this.player.setTexture('char-sleep-west');
+      } else if (mode === 'watching-tv') {
+        // 3-seater sofa: player always sits on the left side (wife sits on the right side)
+        this.player.x = this.layout.tvX - 14;
+        this.player.y = this.layout.wallFloorY + 4;
+        this.player.setDepth(6);
+        this.player.setTexture('char-sitting-south');
+      } else if (mode === 'cleaning') {
+        this.player.y = this.layout.floorY;
+        this.player.setDepth(10);
+        const cleanFacing = Math.floor(time / 420) % 2 === 0 ? 'east' : 'west';
+        this.player.setTexture(`char-clean-${cleanFacing}`);
       } else {
         this.player.y = this.layout.floorY;
         this.player.setDepth(10);
@@ -1568,18 +2483,25 @@ export class ApartmentScene extends Phaser.Scene {
       }
     }
 
-    // 3. Update baby behavior and visual effects
+    // 3. Update baby, wife behavior, and visual effects
     this.updateBabyBehavior(time, delta);
+    this.updateWifeBehavior(time, delta);
     this.renderHazardEffects(time);
     this.renderCharacterEffects(time);
 
-    const headY = this.player.y - 76;
+    const headY = this.player.y - 84;
     this.playerLabel.setPosition(this.player.x, headY);
 
-    // 4. Show urgency alert for bathroom emergency or kitchen fire
+    // 4. Show urgency alert for bathroom emergency, unwashed hands, filth, or kitchen fire
     if (baby.kitchenFire && isPlayerIdle) {
+      const fireAlert =
+        baby.fireStage >= 3
+          ? '🔥🔥 KITCHEN ENGULFED IN FIRE!'
+          : baby.fireStage === 2
+            ? '🔥 BIG STOVE FIRE!'
+            : '🔥 SMALL STOVE FIRE!';
       this.urgencyText
-        .setText('🔥 KITCHEN FIRE!')
+        .setText(fireAlert)
         .setPosition(this.player.x, headY - 28)
         .setVisible(true);
     } else if (playerState.bladderLevel === 3 && isPlayerIdle) {
@@ -1592,6 +2514,16 @@ export class ApartmentScene extends Phaser.Scene {
         .setText('🚽 NEED TOILET')
         .setPosition(this.player.x, headY - 28)
         .setVisible(true);
+    } else if (playerState.unwashedHands && isPlayerIdle) {
+      this.urgencyText
+        .setText('🧼 WASH HANDS AT SINK!')
+        .setPosition(this.player.x, headY - 28)
+        .setVisible(true);
+    } else if (this.session.state.maxFilthLevel >= 3 && isPlayerIdle) {
+      this.urgencyText
+        .setText('🧹 FILTHY! PRESS [C] TO CLEAN')
+        .setPosition(this.player.x, headY - 28)
+        .setVisible(true);
     } else {
       this.urgencyText.setVisible(false);
     }
@@ -1602,6 +2534,18 @@ export class ApartmentScene extends Phaser.Scene {
       for (const zone of this.zones) {
         if (zone.name === 'kitchen' && !baby.kitchenFire) continue;
         if (zone.name === 'modem' && !baby.modemUnplugged) continue;
+        if (
+          zone.name === 'clean-bathroom' &&
+          this.session.state.getZoneFilthLevel('bathroom') < 2
+        ) {
+          continue;
+        }
+        if (zone.name === 'clean-kitchen' && this.session.state.getZoneFilthLevel('kitchen') < 2) {
+          continue;
+        }
+        if (zone.name === 'clean-bedroom' && this.session.state.getZoneFilthLevel('bedroom') < 2) {
+          continue;
+        }
         if (Math.abs(this.player.x - zone.x) <= zone.width) {
           activeZone = zone;
           break;

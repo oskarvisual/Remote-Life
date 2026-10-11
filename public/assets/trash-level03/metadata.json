@@ -1,0 +1,22 @@
+{
+  "group_id": "5ba92d79-941c-42cf-9062-65109d64b9b3",
+  "objects": [
+    {
+      "id": "bbad9533-9037-4f5d-ba1d-e96360a78030",
+      "name": "base",
+      "prompt": "accumulated trash",
+      "size": {
+        "width": 48,
+        "height": 48
+      },
+      "directions": 1,
+      "view": "low top-down",
+      "rotations": {
+        "unknown": "rotations/accumulated_trash.png"
+      },
+      "animations": {}
+    }
+  ],
+  "export_version": "1.1",
+  "export_date": "2026-10-11T03:53:16.952124"
+}

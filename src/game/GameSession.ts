@@ -1,10 +1,13 @@
 import {
   CareActivity,
+  CleanActivity,
   DrinkActivity,
   EatActivity,
   NapActivity,
   ShowerActivity,
   ToiletActivity,
+  WashHandsActivity,
+  WatchTvActivity,
 } from './activities/Activity';
 import { BALANCE } from './config/balance';
 import type { DifficultyId } from './config/difficulties';
@@ -26,6 +29,7 @@ import { MeetingSystem } from './systems/MeetingSystem';
 import { NeedsSystem } from './systems/NeedsSystem';
 import { ScheduleSystem, type ScheduledEvent } from './systems/ScheduleSystem';
 import { TaskSystem } from './systems/TaskSystem';
+import { WifeSystem } from './systems/WifeSystem';
 
 export interface GameSessionOptions {
   seed?: number;
@@ -45,6 +49,7 @@ export class GameSession {
   readonly activities: ActivitySystem;
   readonly tasks: TaskSystem;
   readonly baby: BabySystem;
+  readonly wife: WifeSystem;
   readonly needs: NeedsSystem;
   readonly meeting: MeetingSystem;
   readonly internet: InternetSystem;
@@ -68,6 +73,7 @@ export class GameSession {
     this.activities = add(new ActivitySystem(ctx));
     this.tasks = add(new TaskSystem(ctx));
     this.baby = add(new BabySystem(ctx));
+    this.wife = add(new WifeSystem(ctx, this.baby));
     this.needs = add(new NeedsSystem(ctx));
     this.internet = add(new InternetSystem(ctx));
     this.meeting = add(new MeetingSystem(ctx));
@@ -82,7 +88,10 @@ export class GameSession {
       .register(new EatActivity())
       .register(new DrinkActivity())
       .register(new ToiletActivity())
-      .register(new ShowerActivity());
+      .register(new ShowerActivity())
+      .register(new WashHandsActivity())
+      .register(new CleanActivity())
+      .register(new WatchTvActivity());
 
     this.schedule
       .register('task', () => this.tasks.spawn())

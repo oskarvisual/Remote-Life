@@ -1,15 +1,22 @@
 import { BALANCE } from '../config/balance';
 import { DIFFICULTIES, type DifficultyId, type DifficultySettings } from '../config/difficulties';
 import type {
+  ApartmentFilthState,
   BabyState,
+  CleanZoneId,
   Email,
+  EquipmentSlot,
+  FilthLevel,
+  FridgeState,
   GameOutcome,
+  ItemTier,
   JobOffer,
   MeetingState,
   PlayerMode,
   SessionStatus,
   StatKey,
   Task,
+  WifeState,
 } from './models';
 import { formatClock, parseClock, SECONDS_PER_DAY } from './time';
 
@@ -30,6 +37,7 @@ export interface PlayerInit {
 export class PlayerState {
   money: number;
   mode: PlayerMode = 'idle';
+  unwashedHands = false;
   private readonly stats: Record<StatKey, number>;
 
   constructor(init: PlayerInit) {
@@ -108,9 +116,18 @@ export class GameState {
   emails: Email[] = [];
   jobOffers: JobOffer[] = [];
   meeting: MeetingState | null = null;
+  readonly wife: WifeState;
   readonly baby: BabyState;
-  readonly fridge: { meals: number };
+  readonly fridge: FridgeState;
+  readonly filth: ApartmentFilthState;
+  apartmentTier: ItemTier;
+  readonly equipment: Record<EquipmentSlot, ItemTier | null>;
   internetUnstableUntil = 0;
+
+  /** Rent & Eviction state */
+  rentDue = false;
+  evictionDaysLeft = 5;
+  lastPaidRentCycle = 0;
 
   status: SessionStatus = 'running';
   outcome: GameOutcome | null = null;
@@ -127,8 +144,25 @@ export class GameState {
       food: BALANCE.player.startFood,
       reputation: BALANCE.player.startReputation,
     });
+    this.wife = {
+      stress: BALANCE.wife.startStress,
+      energy: BALANCE.wife.startEnergy,
+      food: BALANCE.wife.startFood,
+      hydration: BALANCE.wife.startHydration,
+      bladder: BALANCE.wife.startBladder,
+      dirt: BALANCE.wife.startDirt,
+      activity: this.difficulty.id === 'hard' ? 'sleeping' : 'watching-tv',
+      busyUntil: 0,
+      arguing: false,
+      argueReason: 'none',
+    };
     this.baby = {
       needs: BALANCE.baby.startNeeds,
+      food: BALANCE.baby.startFood,
+      hydration: BALANCE.baby.startHydration,
+      energy: BALANCE.baby.startEnergy,
+      stress: BALANCE.baby.startStress,
+      dirt: BALANCE.baby.startDirt,
       crying: false,
       critical: false,
       location: 'crib',
@@ -136,10 +170,77 @@ export class GameState {
       carriedAsleep: false,
       cribSleeping: false,
       kitchenFire: false,
+      fireStage: 0,
+      fireElapsedSeconds: 0,
       modemUnplugged: false,
       pcUnplugged: false,
     };
-    this.fridge = { meals: BALANCE.player.startMeals };
+    this.fridge = {
+      meals: BALANCE.player.startMeals,
+      fastFood: 1,
+      instantSoup: 2,
+      healthySalad: 1,
+      water: 3,
+      energyDrink: 1,
+      babyMilk: 3,
+    };
+    this.filth = {
+      bedroom: 0,
+      bathroom: 0,
+      kitchen: 0,
+      targetZone: 'kitchen',
+    };
+
+    const startTier: ItemTier =
+      this.difficulty.id === 'hard' ? 1 : this.difficulty.id === 'medium' ? 2 : 3;
+    this.apartmentTier = startTier;
+    this.equipment = {
+      bed: startTier,
+      crib: startTier,
+      desk: startTier,
+      chair: startTier,
+      tv: startTier,
+      sofa: startTier,
+      table: startTier === 1 ? null : startTier,
+      stove: startTier,
+      fridge: startTier,
+      router: startTier,
+    };
+  }
+
+  /**
+   * Maps a room's raw filth (0-100) to a 5-stage filth level:
+   * - Level 1 (< 25): Clean (trash-level01)
+   * - Level 2 (25-47): Dirty trash can (trash-level02)
+   * - Level 3 (48-67): Overflowing trash can (trash-level03)
+   * - Level 4 (68-83): Poop in bathroom + severe filth
+   * - Level 5 (>= 84): Trash bags scattered across rooms
+   */
+  getZoneFilthLevel(zone: CleanZoneId): FilthLevel {
+    const val = this.filth[zone];
+    if (val >= 84) return 5;
+    if (val >= 68) return 4;
+    if (val >= 48) return 3;
+    if (val >= 25) return 2;
+    return 1;
+  }
+
+  get maxFilthLevel(): FilthLevel {
+    return Math.max(
+      this.getZoneFilthLevel('bedroom'),
+      this.getZoneFilthLevel('bathroom'),
+      this.getZoneFilthLevel('kitchen'),
+    ) as FilthLevel;
+  }
+
+  get totalFoodStock(): number {
+    const f = this.fridge;
+    return f.meals + f.fastFood + f.instantSoup + f.healthySalad;
+  }
+
+  get totalDrinkStock(): number {
+    const f = this.fridge;
+    return f.water + f.energyDrink;
   }
 
   get now(): number {
