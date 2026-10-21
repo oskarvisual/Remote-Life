@@ -21,6 +21,78 @@ let currentComputer: Computer | null = null;
 let currentFridgeModal: FridgeModal | null = null;
 let currentGameOverModal: GameOverModal | null = null;
 
+function getVisibleViewport(): { width: number; height: number } {
+  if (typeof window === 'undefined') {
+    return { width: 480, height: 270 };
+  }
+
+  // visualViewport is the most accurate API for visible height on mobile browsers
+  // (such as Arc, Safari, Chrome) because it discounts dynamic browser bars.
+  const visualHeight = window.visualViewport?.height;
+  const innerHeight = window.innerHeight;
+  const clientHeight = document.documentElement?.clientHeight;
+
+  const visualWidth = window.visualViewport?.width;
+  const innerWidth = window.innerWidth;
+  const clientWidth = document.documentElement?.clientWidth;
+
+  const validHeights = [visualHeight, innerHeight, clientHeight].filter(
+    (h): h is number => typeof h === 'number' && h > 0,
+  );
+  const height = validHeights.length > 0 ? Math.round(Math.min(...validHeights)) : 270;
+
+  const validWidths = [visualWidth, innerWidth, clientWidth].filter(
+    (w): w is number => typeof w === 'number' && w > 0,
+  );
+  const width = validWidths.length > 0 ? Math.round(Math.min(...validWidths)) : 480;
+
+  return { width, height };
+}
+
+function syncScreenDimensions(): void {
+  if (typeof window === 'undefined') return;
+
+  const { width, height } = getVisibleViewport();
+  document.documentElement.style.setProperty('--app-height', `${height}px`);
+  document.documentElement.style.setProperty('--app-width', `${width}px`);
+
+  const appEl = document.getElementById('app');
+  if (appEl && window.matchMedia('(max-width: 768px)').matches) {
+    appEl.style.height = `${height}px`;
+    appEl.style.maxHeight = `${height}px`;
+  }
+}
+
+let viewportListenersAttached = false;
+function setupViewportListeners(): void {
+  if (typeof window === 'undefined' || viewportListenersAttached) return;
+  viewportListenersAttached = true;
+
+  const onViewportChange = (): void => {
+    syncScreenDimensions();
+    if (phaserGame?.scale) {
+      const nextDims = getGameDimensions();
+      if (
+        phaserGame.scale.width !== nextDims.width ||
+        phaserGame.scale.height !== nextDims.height
+      ) {
+        phaserGame.scale.resize(nextDims.width, nextDims.height);
+      }
+    }
+  };
+
+  window.addEventListener('resize', onViewportChange);
+  window.addEventListener('orientationchange', onViewportChange);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', onViewportChange);
+    window.visualViewport.addEventListener('scroll', onViewportChange);
+  }
+}
+
+// Initial synchronization on load
+syncScreenDimensions();
+setupViewportListeners();
+
 function getGameDimensions(): { width: number; height: number } {
   if (typeof window === 'undefined') {
     return { width: 480, height: 270 };
@@ -30,9 +102,12 @@ function getGameDimensions(): { width: number; height: number } {
     return { width: 480, height: 270 };
   }
 
-  const appWidth = window.innerWidth || document.documentElement.clientWidth;
-  const appHeight = window.innerHeight || document.documentElement.clientHeight;
-  const availableHeight = Math.max(200, appHeight - 138);
+  const { width: appWidth, height: appHeight } = getVisibleViewport();
+  const hudEl = document.getElementById('hud');
+  const controlsEl = document.getElementById('mobile-controls');
+  const hudHeight = hudEl?.offsetHeight || 42;
+  const controlsHeight = controlsEl?.offsetHeight || 88;
+  const availableHeight = Math.max(160, appHeight - hudHeight - controlsHeight);
   const aspect = appWidth / availableHeight;
   // Fits height cleanly to 270 and adapts width so apartment fills middle view (characters appear 2.5x larger!)
   const mobileWidth = Math.round(Math.max(160, Math.min(480, 270 * aspect)));
@@ -99,6 +174,7 @@ function startGame(difficulty: DifficultyId): void {
   });
 
   // 4. Initialize or update Phaser Game
+  syncScreenDimensions();
   const dims = getGameDimensions();
 
   if (!phaserGame) {
@@ -114,18 +190,6 @@ function startGame(difficulty: DifficultyId): void {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
-    });
-
-    window.addEventListener('resize', () => {
-      if (phaserGame?.scale) {
-        const nextDims = getGameDimensions();
-        if (
-          phaserGame.scale.width !== nextDims.width ||
-          phaserGame.scale.height !== nextDims.height
-        ) {
-          phaserGame.scale.resize(nextDims.width, nextDims.height);
-        }
-      }
     });
   } else {
     if (phaserGame.scale.width !== dims.width || phaserGame.scale.height !== dims.height) {
