@@ -12,8 +12,14 @@ export class HUD extends UIComponent {
   ) {
     super(container, session.events);
 
-    this.listen('clock:tick', () => this.render());
-    this.listen('state:changed', () => this.render());
+    this.listen('clock:tick', () => {
+      this.render();
+      this.syncStatsModalIfOpen();
+    });
+    this.listen('state:changed', () => {
+      this.render();
+      this.syncStatsModalIfOpen();
+    });
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Tab') {
@@ -24,12 +30,52 @@ export class HUD extends UIComponent {
     window.addEventListener('keydown', onKeyDown);
     this.subscriptions.push(() => window.removeEventListener('keydown', onKeyDown));
 
+    const statsDialog = document.querySelector<HTMLDialogElement>('#stats-modal');
+    if (statsDialog) {
+      const onDialogClick = (event: MouseEvent) => {
+        if (event.target === statsDialog) {
+          this.closeStatsModal();
+        }
+      };
+      statsDialog.addEventListener('click', onDialogClick);
+      this.subscriptions.push(() => statsDialog.removeEventListener('click', onDialogClick));
+    }
+
     this.render();
+  }
+
+  override destroy(): void {
+    this.closeStatsModal();
+    super.destroy();
   }
 
   toggleDetails(): void {
     this.detailsOpen = !this.detailsOpen;
     this.render();
+  }
+
+  private openStatsModal(): void {
+    const dialog = document.querySelector<HTMLDialogElement>('#stats-modal');
+    if (dialog) {
+      this.renderStatsModalContent(dialog);
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+    }
+  }
+
+  private closeStatsModal(): void {
+    const dialog = document.querySelector<HTMLDialogElement>('#stats-modal');
+    if (dialog?.open) {
+      dialog.close();
+    }
+  }
+
+  private syncStatsModalIfOpen(): void {
+    const dialog = document.querySelector<HTMLDialogElement>('#stats-modal');
+    if (dialog?.open) {
+      this.renderStatsModalContent(dialog);
+    }
   }
 
   private getWifeActivityLabel(activity: WifeActivity): string {
@@ -57,6 +103,143 @@ export class HUD extends UIComponent {
       default:
         return '🧍 IDLE';
     }
+  }
+
+  private renderStatsModalContent(dialog: HTMLDialogElement): void {
+    const { player, wife, fridge, baby, difficulty } = this.session.state;
+    const daysUntilRent = this.session.economy.daysUntilRent;
+
+    const fullStatRow = (label: string, value: number, alertThreshold = 25, isInverse = false) => {
+      const isAlert = isInverse ? value >= 100 - alertThreshold : value <= alertThreshold;
+      return html`
+        <div class="detail-stat-row ${isAlert ? 'alert' : ''}">
+          <span class="detail-stat-label">${label}</span>
+          <i class="detail-bar">
+            <em style="width:${Math.max(0, Math.min(100, value))}%"></em>
+          </i>
+          <span class="detail-stat-val">${Math.round(value)}%</span>
+        </div>
+      `;
+    };
+
+    const wifeProfileMap = {
+      hard: 'Sleeps Often · Goes Out · Rarely Helps',
+      medium: 'Watches TV · Night Sleeper · Helps Often',
+      easy: 'Watches TV · Daytime Naps · Helps Sometimes',
+    } as const;
+
+    const dirtBadge =
+      player.dirtLevel === 3 ? '🪰 FILTHY' : player.dirtLevel === 2 ? '🤢 SMELLY' : '✨ CLEAN';
+
+    const modalTemplate = html`
+      <div class="stats-modal-card">
+        <header class="stats-modal-header">
+          <div class="stats-modal-title">
+            <strong>FAMILY & WORK STATS</strong>
+            <small>
+              Day ${this.session.state.day} · ${this.session.state.timeLabel()} · $${player.money}
+            </small>
+          </div>
+          <button
+            type="button"
+            class="close-modal-btn"
+            aria-label="Close Stats"
+            @click=${() => this.closeStatsModal()}
+          >
+            ✕ CLOSE
+          </button>
+        </header>
+
+        <div class="stats-modal-family-grid">
+          <div class="family-card">
+            <header class="family-card-header">
+              <strong>🧑 YOU (PLAYER)</strong>
+              <span class="status-pill">${player.mode.toUpperCase()} · ${dirtBadge}</span>
+            </header>
+            <small class="family-sub"
+              >Remote Worker · Rep ${Math.round(player.get('reputation'))}%</small
+            >
+            <div class="detail-stat-list">
+              ${fullStatRow('STRESS', player.get('stress'), 30, true)}
+              ${fullStatRow('ENERGY', player.get('energy'), 25, false)}
+              ${fullStatRow('HUNGER', player.get('food'), 25, false)}
+              ${fullStatRow('HYDRATION', player.get('hydration'), 25, false)}
+              ${fullStatRow('BLADDER (WC)', player.get('bladder'), 35, true)}
+              ${fullStatRow('DIRT / ODOR', player.get('dirt'), 40, true)}
+              ${fullStatRow('REPUTATION', player.get('reputation'), 30, false)}
+            </div>
+            <div class="mobile-stats-extra">
+              <span
+                >🧊 Meals: ${this.session.state.totalFoodStock} · Water: ${fridge.water} · Milk:
+                ${fridge.babyMilk}</span
+              >
+              <span
+                >${
+                  this.session.state.rentDue
+                    ? '🚨 RENT OVERDUE'
+                    : `🏠 Rent in ${daysUntilRent} days`
+                }</span
+              >
+            </div>
+          </div>
+
+          <div class="family-card">
+            <header class="family-card-header">
+              <strong>👩 WIFE (PARTNER)</strong>
+              <span class="status-pill">${this.getWifeActivityLabel(wife.activity)}</span>
+            </header>
+            <small class="family-sub">${wifeProfileMap[difficulty.id]}</small>
+            <div class="detail-stat-list">
+              ${fullStatRow('STRESS', wife.stress, 30, true)}
+              ${fullStatRow('ENERGY', wife.energy, 25, false)}
+              ${fullStatRow('HUNGER', wife.food, 25, false)}
+              ${fullStatRow('HYDRATION', wife.hydration, 25, false)}
+              ${fullStatRow('BLADDER (WC)', wife.bladder, 35, true)}
+              ${fullStatRow('DIRT / ODOR', wife.dirt, 40, true)}
+            </div>
+          </div>
+
+          <div class="family-card">
+            <header class="family-card-header">
+              <strong>👶 BABY</strong>
+              <span class="status-pill">
+                ${baby.location.toUpperCase()}
+                ${baby.demand !== 'none' ? `· NEEDS ${baby.demand.toUpperCase()}` : '· CALM'}
+              </span>
+            </header>
+            <small class="family-sub">
+              ${
+                baby.crying
+                  ? '😭 Crying! Needs care right away'
+                  : baby.location === 'loose'
+                    ? '⚠️ Crawling loose in apartment'
+                    : '😊 Resting safely'
+              }
+            </small>
+            <div class="detail-stat-list">
+              ${fullStatRow('COMFORT', baby.needs, 45, false)}
+              ${fullStatRow('STRESS', baby.stress, 35, true)}
+              ${fullStatRow('ENERGY', baby.energy, 25, false)}
+              ${fullStatRow('HUNGER (MILK)', baby.food, 30, false)}
+              ${fullStatRow('HYDRATION', baby.hydration, 30, false)}
+              ${fullStatRow('DIAPER DIRT', baby.dirt, 40, true)}
+            </div>
+          </div>
+        </div>
+
+        <footer class="stats-modal-footer">
+          <button
+            type="button"
+            class="close-modal-btn full-width"
+            @click=${() => this.closeStatsModal()}
+          >
+            CLOSE STATS
+          </button>
+        </footer>
+      </div>
+    `;
+
+    render(modalTemplate, dialog);
   }
 
   render(): void {
@@ -154,7 +337,31 @@ export class HUD extends UIComponent {
       hour >= 7 && hour < 16.5 ? '☀️ DAY' : hour >= 16.5 && hour < 20.5 ? '🌅 DUSK' : '🌙 NIGHT';
 
     const template = html`
-      <div class="hud-top-row">
+      <!-- Mobile Top Row (~5% height): Left super summarized, Right money & stats button -->
+      <div class="hud-mobile-row">
+        <div class="time mobile-time">
+          <span>${phaseBadge}</span>
+          <span>${this.session.state.timeLabel()}</span>
+          <span>·</span>
+          <span>D${this.session.state.day}</span>
+          ${internetBad ? html`<span class="wifi-bad">⚠️ WIFI</span>` : ''}
+          ${baby.kitchenFire ? html`<span class="wifi-bad">🔥 FIRE</span>` : ''}
+          ${baby.pcUnplugged ? html`<span class="wifi-bad">🔌 PC</span>` : ''}
+        </div>
+        <div class="stats mobile-stats">
+          <span class="money">$${player.money}</span>
+          <button
+            type="button"
+            class="stats-toggle-btn mobile-stats-btn"
+            @click=${() => this.openStatsModal()}
+          >
+            📊 STATS
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Top Row: unchanged for desktop users -->
+      <div class="hud-top-row hud-desktop-row">
         <div class="time">
           <span>${levelMap[difficulty.id]}</span>
           <span>·</span>
@@ -235,7 +442,10 @@ export class HUD extends UIComponent {
       ${
         this.detailsOpen
           ? html`
-              <section class="family-stats-panel" aria-label="Family Statistics">
+              <section
+                class="family-stats-panel hud-desktop-dropdown"
+                aria-label="Family Statistics"
+              >
                 <div class="family-card">
                   <header class="family-card-header">
                     <strong>🧑 YOU (PLAYER)</strong>

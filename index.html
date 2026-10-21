@@ -2,13 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
     <title>Remote Life</title>
   </head>
   <body>
     <main id="app">
-      <div id="game"></div>
       <div id="hud"></div>
+      <div id="game"></div>
+      <div id="mobile-controls"></div>
       <div id="notifications" aria-live="polite"></div>
       <div id="computer" hidden></div>
       <div id="fridge" hidden></div>
@@ -26,6 +30,7 @@
         </svg>
         <span>GITHUB</span>
       </a>
+      <dialog id="stats-modal" class="game-dialog stats-modal-dialog"></dialog>
       <dialog id="mobile-notice" class="game-dialog"></dialog>
       <dialog id="start-menu" class="game-dialog"></dialog>
       <dialog id="game-over-modal" class="game-dialog"></dialog>

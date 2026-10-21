@@ -8,13 +8,14 @@ import { Computer } from './ui/Computer';
 import { FridgeModal } from './ui/FridgeModal';
 import { GameOverModal } from './ui/GameOverModal';
 import { HUD } from './ui/HUD';
-import { MobileNotice } from './ui/MobileNotice';
+import { MobileControls } from './ui/MobileControls';
 import { Notifications } from './ui/Notifications';
 import { loadProfile, saveProfile, StartMenu } from './ui/StartMenu';
 
 let phaserGame: Phaser.Game | null = null;
 let currentSession: GameSession | null = null;
 let currentHud: HUD | null = null;
+let currentMobileControls: MobileControls | null = null;
 let currentNotifications: Notifications | null = null;
 let currentComputer: Computer | null = null;
 let currentFridgeModal: FridgeModal | null = null;
@@ -27,6 +28,9 @@ function startGame(difficulty: DifficultyId): void {
   }
   if (currentHud) {
     currentHud.destroy();
+  }
+  if (currentMobileControls) {
+    currentMobileControls.destroy();
   }
   if (currentNotifications) {
     currentNotifications.destroy();
@@ -43,6 +47,7 @@ function startGame(difficulty: DifficultyId): void {
 
   // 3. Mount UI components
   const hudContainer = document.querySelector<HTMLElement>('#hud');
+  const mobileControlsContainer = document.querySelector<HTMLElement>('#mobile-controls');
   const notificationsContainer = document.querySelector<HTMLElement>('#notifications');
   const computerContainer = document.querySelector<HTMLElement>('#computer');
   const fridgeContainer = document.querySelector<HTMLElement>('#fridge');
@@ -50,6 +55,9 @@ function startGame(difficulty: DifficultyId): void {
 
   if (hudContainer) {
     currentHud = new HUD(hudContainer, currentSession);
+  }
+  if (mobileControlsContainer) {
+    currentMobileControls = new MobileControls(mobileControlsContainer, currentSession);
   }
   if (notificationsContainer) {
     currentNotifications = new Notifications(notificationsContainer, currentSession.events);
@@ -107,23 +115,7 @@ function showStartMenu(): void {
   }
 }
 
-function isMobileViewport(): boolean {
-  return window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
-}
-
-function showMobileNotice(): void {
-  const mobileNoticeDialog = document.querySelector<HTMLDialogElement>('#mobile-notice');
-  if (mobileNoticeDialog) {
-    new MobileNotice(mobileNoticeDialog).show();
-  }
-}
-
 function init(): void {
-  if (isMobileViewport()) {
-    showMobileNotice();
-    return;
-  }
-
   window.addEventListener('keydown', (event) => {
     const keyMap: Record<string, DifficultyId> = {
       '1': 'hard',

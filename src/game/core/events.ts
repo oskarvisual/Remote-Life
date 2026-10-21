@@ -56,5 +56,16 @@ export interface GameEvents {
   'fridge:open': void;
   'fridge:close': void;
 
+  'input:virtual': {
+    key: 'left' | 'right' | 'interact' | 'baby' | 'clean' | 'drink';
+    pressed: boolean;
+  };
+  'ui:actions': {
+    primaryLabel: string | null;
+    secondaryLabel: string | null;
+    canClean: boolean;
+    canDrink: boolean;
+  };
+
   'game:over': GameOutcome;
 }

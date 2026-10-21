@@ -157,6 +157,15 @@ export class ApartmentScene extends Phaser.Scene {
   private keyM!: Phaser.Input.Keyboard.Key;
   private keyV!: Phaser.Input.Keyboard.Key;
 
+  private virtualLeft = false;
+  private virtualRight = false;
+  private lastEmittedActions: {
+    primaryLabel: string | null;
+    secondaryLabel: string | null;
+    canClean: boolean;
+    canDrink: boolean;
+  } | null = null;
+
   private bedImage!: Phaser.GameObjects.Image;
   private cribBackGraphics!: Phaser.GameObjects.Graphics;
   private cribImage!: Phaser.GameObjects.Image;
@@ -1396,6 +1405,23 @@ export class ApartmentScene extends Phaser.Scene {
         this.cryText.setVisible(false);
         this.cryText.setText('WAHH!\n  ♫');
       }),
+      this.session.events.on('input:virtual', ({ key, pressed }) => {
+        if (key === 'left') {
+          this.virtualLeft = pressed;
+        } else if (key === 'right') {
+          this.virtualRight = pressed;
+        } else if (pressed) {
+          if (key === 'interact') {
+            this.triggerPrimaryInteract();
+          } else if (key === 'baby') {
+            this.triggerBabyInteract();
+          } else if (key === 'clean') {
+            this.triggerClean();
+          } else if (key === 'drink') {
+            this.triggerDrink();
+          }
+        }
+      }),
     ];
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -1403,6 +1429,181 @@ export class ApartmentScene extends Phaser.Scene {
         unsub();
       }
     });
+  }
+
+  private isMobile(): boolean {
+    return (
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(max-width: 768px)').matches ||
+        window.matchMedia('(pointer: coarse)').matches)
+    );
+  }
+
+  private formatPromptText(text: string): string {
+    if (this.isMobile()) {
+      return text
+        .replace(/\[[A-Za-z0-9/ ]+\]\s*(·\s*)?/g, '')
+        .replace(/PRESS\s+\[[A-Za-z0-9/ ]+\]\s+TO\s+/gi, '')
+        .trim();
+    }
+    return text;
+  }
+
+  private getActiveZone(): InteractiveZone | null {
+    if (!this.session.state.player.isIdle) return null;
+    const baby = this.session.state.baby;
+    for (const zone of this.zones) {
+      if (zone.name === 'kitchen' && !baby.kitchenFire) continue;
+      if (zone.name === 'modem' && !baby.modemUnplugged) continue;
+      if (zone.name === 'clean-bathroom' && this.session.state.getZoneFilthLevel('bathroom') < 2) {
+        continue;
+      }
+      if (zone.name === 'clean-kitchen' && this.session.state.getZoneFilthLevel('kitchen') < 2) {
+        continue;
+      }
+      if (zone.name === 'clean-bedroom' && this.session.state.getZoneFilthLevel('bedroom') < 2) {
+        continue;
+      }
+      if (Math.abs(this.player.x - zone.x) <= zone.width) {
+        return zone;
+      }
+    }
+    return null;
+  }
+
+  private triggerPrimaryInteract(): void {
+    if (!this.session.state.player.isIdle) return;
+    const baby = this.session.state.baby;
+    const nearLooseBaby = baby.location === 'loose' && Math.abs(this.player.x - this.babyX) <= 46;
+    if (nearLooseBaby) {
+      this.pickUpBaby();
+      return;
+    }
+    const activeZone = this.getActiveZone();
+    if (activeZone) {
+      activeZone.onInteract();
+    }
+  }
+
+  private triggerBabyInteract(): void {
+    if (!this.session.state.player.isIdle) return;
+    const baby = this.session.state.baby;
+    const nearCrib = Math.abs(this.player.x - this.layout.cribX) <= 48;
+    const nearBed = Math.abs(this.player.x - this.layout.bedX) <= 48;
+    const nearLooseBaby = baby.location === 'loose' && Math.abs(this.player.x - this.babyX) <= 48;
+
+    if (baby.location === 'carried') {
+      if (nearCrib) {
+        this.putBabyToSleepIn('crib');
+      } else if (nearBed) {
+        this.putBabyToSleepIn('bed');
+      } else {
+        this.releaseBabyLoose(this.player.x + (this.facing === 'east' ? 18 : -18));
+      }
+    } else if (baby.location === 'crib' && nearCrib) {
+      if (baby.demand === 'crawl') {
+        this.releaseBabyLoose(this.layout.cribX + 22);
+      } else {
+        this.pickUpBaby();
+      }
+    } else if (baby.location === 'bed' && nearBed) {
+      if (baby.demand === 'crawl') {
+        this.releaseBabyLoose(this.layout.bedX + 22);
+      } else {
+        this.pickUpBaby();
+      }
+    } else if (nearLooseBaby) {
+      this.pickUpBaby();
+    }
+  }
+
+  private triggerClean(): void {
+    if (!this.session.state.player.isIdle) return;
+    this.startCleanZone(this.getZoneForX(this.player.x));
+  }
+
+  private triggerDrink(): void {
+    if (this.session.state.player.isIdle && Math.abs(this.player.x - this.layout.fridgeX) <= 42) {
+      this.session.activities.start('drink');
+    }
+  }
+
+  private updateAndEmitActions(activeZone: InteractiveZone | null, nearLooseBaby: boolean): void {
+    const isPlayerIdle = this.session.state.player.isIdle;
+    const baby = this.session.state.baby;
+    let primaryLabel: string | null = null;
+    let secondaryLabel: string | null = null;
+
+    if (nearLooseBaby && isPlayerIdle) {
+      primaryLabel = '👶 PICK UP BABY';
+    } else if (activeZone && isPlayerIdle) {
+      if (activeZone.name === 'desk') {
+        primaryLabel = baby.pcUnplugged ? '🔌 PLUG PC' : '💻 OPEN PC';
+      } else if (activeZone.name === 'fridge') {
+        primaryLabel = '🧊 FRIDGE';
+      } else if (activeZone.name === 'bed') {
+        if (baby.location === 'carried') {
+          primaryLabel = '🛏️ SLEEP TOGETHER';
+          secondaryLabel = '🛏️ PUT IN BED';
+        } else if (baby.location === 'bed') {
+          if (baby.demand === 'crawl') primaryLabel = '🏃 LET CRAWL';
+          else if (baby.demand === 'sleep') primaryLabel = '😴 CARRY TO SLEEP';
+          else if (baby.demand === 'feed') primaryLabel = '🍼 FEED BOTTLE';
+          else primaryLabel = '🛏️ REST / NAP';
+          secondaryLabel = '👶 CARRY BABY';
+        } else {
+          primaryLabel = '🛏️ REST / NAP';
+        }
+      } else if (activeZone.name === 'crib') {
+        if (baby.location === 'carried') {
+          primaryLabel = '🛏️ PUT IN CRIB';
+        } else if (baby.location === 'crib') {
+          if (baby.demand === 'crawl') primaryLabel = '🏃 LET CRAWL';
+          else if (baby.demand === 'sleep') primaryLabel = '😴 CARRY TO SLEEP';
+          else primaryLabel = '🍼 FEED BOTTLE';
+          secondaryLabel = '👶 CARRY BABY';
+        }
+      } else if (activeZone.name === 'kitchen' && baby.kitchenFire) {
+        primaryLabel = '🔥 EXTINGUISH';
+      } else if (activeZone.name === 'modem' && baby.modemUnplugged) {
+        primaryLabel = '📡 RECONNECT';
+      } else if (activeZone.name === 'toilet') {
+        primaryLabel = '🚽 TOILET';
+      } else if (activeZone.name === 'shower') {
+        primaryLabel = '🚿 SHOWER';
+      } else if (activeZone.name === 'sink') {
+        primaryLabel = '🧼 WASH';
+      } else if (activeZone.name === 'tv') {
+        primaryLabel = '📺 WATCH TV';
+      } else if (activeZone.name.startsWith('clean-')) {
+        primaryLabel = '🧹 CLEAN';
+      }
+    }
+
+    if (!secondaryLabel && baby.location === 'carried' && isPlayerIdle) {
+      const nearCribOrBed =
+        Math.abs(this.player.x - this.layout.cribX) <= 48 ||
+        Math.abs(this.player.x - this.layout.bedX) <= 48;
+      if (!nearCribOrBed) {
+        secondaryLabel = baby.carriedAsleep ? '🛏️ CRIB / BED' : '👶 PUT ON FLOOR';
+      }
+    }
+
+    const currentZoneFilth = this.session.state.getZoneFilthLevel(this.getZoneForX(this.player.x));
+    const canClean = isPlayerIdle && currentZoneFilth >= 2;
+    const canDrink = isPlayerIdle && Math.abs(this.player.x - this.layout.fridgeX) <= 42;
+
+    const changed =
+      !this.lastEmittedActions ||
+      this.lastEmittedActions.primaryLabel !== primaryLabel ||
+      this.lastEmittedActions.secondaryLabel !== secondaryLabel ||
+      this.lastEmittedActions.canClean !== canClean ||
+      this.lastEmittedActions.canDrink !== canDrink;
+
+    if (changed) {
+      this.lastEmittedActions = { primaryLabel, secondaryLabel, canClean, canDrink };
+      this.session.events.emit('ui:actions', this.lastEmittedActions);
+    }
   }
 
   private pickUpBaby(): void {
@@ -2340,7 +2541,7 @@ export class ApartmentScene extends Phaser.Scene {
 
     // [C] to clean the current room (bedroom/living, bathroom, or kitchen)
     if (Phaser.Input.Keyboard.JustDown(this.keyC) && isPlayerIdle) {
-      this.startCleanZone(this.getZoneForX(this.player.x));
+      this.triggerClean();
     }
 
     // [R] at the refrigerator to DRINK WATER (uses the water bottle animation)
@@ -2349,38 +2550,12 @@ export class ApartmentScene extends Phaser.Scene {
       isPlayerIdle &&
       Math.abs(this.player.x - this.layout.fridgeX) <= 42
     ) {
-      this.session.activities.start('drink');
+      this.triggerDrink();
     }
 
     // [F] to Carry baby / Put sleeping baby in Crib or Bed / Let baby down to crawl
     if (Phaser.Input.Keyboard.JustDown(this.keyF) && isPlayerIdle) {
-      const nearCrib = Math.abs(this.player.x - this.layout.cribX) <= 48;
-      const nearBed = Math.abs(this.player.x - this.layout.bedX) <= 48;
-      const nearLooseBaby = baby.location === 'loose' && Math.abs(this.player.x - this.babyX) <= 48;
-
-      if (baby.location === 'carried') {
-        if (nearCrib) {
-          this.putBabyToSleepIn('crib');
-        } else if (nearBed) {
-          this.putBabyToSleepIn('bed');
-        } else {
-          this.releaseBabyLoose(this.player.x + (this.facing === 'east' ? 18 : -18));
-        }
-      } else if (baby.location === 'crib' && nearCrib) {
-        if (baby.demand === 'crawl') {
-          this.releaseBabyLoose(this.layout.cribX + 22);
-        } else {
-          this.pickUpBaby();
-        }
-      } else if (baby.location === 'bed' && nearBed) {
-        if (baby.demand === 'crawl') {
-          this.releaseBabyLoose(this.layout.bedX + 22);
-        } else {
-          this.pickUpBaby();
-        }
-      } else if (nearLooseBaby) {
-        this.pickUpBaby();
-      }
+      this.triggerBabyInteract();
     }
 
     // Update Day / Afternoon / Night ambient overlay
@@ -2390,8 +2565,8 @@ export class ApartmentScene extends Phaser.Scene {
     let dx = 0;
 
     if (isPlayerIdle) {
-      if (this.cursors.left?.isDown || this.keyA?.isDown) dx = -1;
-      if (this.cursors.right?.isDown || this.keyD?.isDown) dx = 1;
+      if (this.cursors.left?.isDown || this.keyA?.isDown || this.virtualLeft) dx = -1;
+      if (this.cursors.right?.isDown || this.keyD?.isDown || this.virtualRight) dx = 1;
     }
 
     if (dx !== 0) {
@@ -2521,7 +2696,7 @@ export class ApartmentScene extends Phaser.Scene {
         .setVisible(true);
     } else if (this.session.state.maxFilthLevel >= 3 && isPlayerIdle) {
       this.urgencyText
-        .setText('🧹 FILTHY! PRESS [C] TO CLEAN')
+        .setText(this.formatPromptText('🧹 FILTHY! PRESS [C] TO CLEAN'))
         .setPosition(this.player.x, headY - 28)
         .setVisible(true);
     } else {
@@ -2529,42 +2704,20 @@ export class ApartmentScene extends Phaser.Scene {
     }
 
     // 5. Check proximity to interactive zones
-    let activeZone: InteractiveZone | null = null;
-    if (isPlayerIdle) {
-      for (const zone of this.zones) {
-        if (zone.name === 'kitchen' && !baby.kitchenFire) continue;
-        if (zone.name === 'modem' && !baby.modemUnplugged) continue;
-        if (
-          zone.name === 'clean-bathroom' &&
-          this.session.state.getZoneFilthLevel('bathroom') < 2
-        ) {
-          continue;
-        }
-        if (zone.name === 'clean-kitchen' && this.session.state.getZoneFilthLevel('kitchen') < 2) {
-          continue;
-        }
-        if (zone.name === 'clean-bedroom' && this.session.state.getZoneFilthLevel('bedroom') < 2) {
-          continue;
-        }
-        if (Math.abs(this.player.x - zone.x) <= zone.width) {
-          activeZone = zone;
-          break;
-        }
-      }
-    }
+    const activeZone = this.getActiveZone();
 
     // 6. Update prompt text & baby carry prompt
     const nearLooseBaby = baby.location === 'loose' && Math.abs(this.player.x - this.babyX) <= 46;
 
     if (nearLooseBaby && isPlayerIdle) {
       this.promptText
-        .setText('[F] / [E] 👶 PICK UP BABY')
+        .setText(this.formatPromptText('[F] / [E] 👶 PICK UP BABY'))
         .setPosition(this.player.x, headY - 14)
         .setVisible(true);
       this.secondaryPromptText.setVisible(false);
 
       if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
-        this.pickUpBaby();
+        this.triggerPrimaryInteract();
       }
     } else if (activeZone && isPlayerIdle) {
       let promptLabel = activeZone.actionText;
@@ -2599,12 +2752,12 @@ export class ApartmentScene extends Phaser.Scene {
       }
 
       this.promptText
-        .setText(promptLabel)
+        .setText(this.formatPromptText(promptLabel))
         .setPosition(this.player.x, headY - 14)
         .setVisible(true);
 
       if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
-        activeZone.onInteract();
+        this.triggerPrimaryInteract();
       }
     } else {
       this.promptText.setVisible(false);
@@ -2617,14 +2770,21 @@ export class ApartmentScene extends Phaser.Scene {
 
     if (baby.location === 'carried' && isPlayerIdle && !nearCribOrBed) {
       this.secondaryPromptText
-        .setText(baby.carriedAsleep ? '🛏️ TAKE TO CRIB OR BED [F]' : '[F] PUT BABY ON FLOOR')
+        .setText(
+          this.formatPromptText(
+            baby.carriedAsleep ? '🛏️ TAKE TO CRIB OR BED [F]' : '[F] PUT BABY ON FLOOR',
+          ),
+        )
         .setPosition(this.player.x, headY - 28)
         .setVisible(true);
     } else {
       this.secondaryPromptText.setVisible(false);
     }
 
-    // 7. Show status badge when performing activity
+    // 7. Update UI actions for mobile controls
+    this.updateAndEmitActions(activeZone, nearLooseBaby);
+
+    // 8. Show status badge when performing activity
     if (!isPlayerIdle && mode !== 'computer') {
       const label = mode.toUpperCase() + '...';
       this.statusText
