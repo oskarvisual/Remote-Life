@@ -21,6 +21,25 @@ let currentComputer: Computer | null = null;
 let currentFridgeModal: FridgeModal | null = null;
 let currentGameOverModal: GameOverModal | null = null;
 
+function getGameDimensions(): { width: number; height: number } {
+  if (typeof window === 'undefined') {
+    return { width: 480, height: 270 };
+  }
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (!isMobile) {
+    return { width: 480, height: 270 };
+  }
+
+  const appWidth = window.innerWidth || document.documentElement.clientWidth;
+  const appHeight = window.innerHeight || document.documentElement.clientHeight;
+  const availableHeight = Math.max(200, appHeight - 138);
+  const aspect = appWidth / availableHeight;
+  // Fits height cleanly to 270 and adapts width so apartment fills middle view (characters appear 2.5x larger!)
+  const mobileWidth = Math.round(Math.max(160, Math.min(480, 270 * aspect)));
+
+  return { width: mobileWidth, height: 270 };
+}
+
 function startGame(difficulty: DifficultyId): void {
   // 1. Cleanup previous session and UI if exists
   if (currentSession) {
@@ -80,12 +99,14 @@ function startGame(difficulty: DifficultyId): void {
   });
 
   // 4. Initialize or update Phaser Game
+  const dims = getGameDimensions();
+
   if (!phaserGame) {
     phaserGame = new Phaser.Game({
       type: Phaser.AUTO,
       parent: 'game',
-      width: 480,
-      height: 270,
+      width: dims.width,
+      height: dims.height,
       pixelArt: true,
       backgroundColor: '#573d42',
       scene: [ApartmentScene],
@@ -94,6 +115,22 @@ function startGame(difficulty: DifficultyId): void {
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
     });
+
+    window.addEventListener('resize', () => {
+      if (phaserGame?.scale) {
+        const nextDims = getGameDimensions();
+        if (
+          phaserGame.scale.width !== nextDims.width ||
+          phaserGame.scale.height !== nextDims.height
+        ) {
+          phaserGame.scale.resize(nextDims.width, nextDims.height);
+        }
+      }
+    });
+  } else {
+    if (phaserGame.scale.width !== dims.width || phaserGame.scale.height !== dims.height) {
+      phaserGame.scale.resize(dims.width, dims.height);
+    }
   }
 
   phaserGame.registry.set('session', currentSession);

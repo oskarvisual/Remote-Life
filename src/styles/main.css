@@ -1011,31 +1011,38 @@ dialog.game-dialog::backdrop {
   color: #f6d58b;
 }
 
-.mobile-controls-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 4px;
-}
-
 .mobile-github-link {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-family: 'Press Start 2P', monospace;
   font-size: 7px;
-  color: #84d68c;
-  background: #14151b;
-  border: 1px solid #4a4458;
-  padding: 4px 6px;
+  color: #ffdc74 !important;
+  background: #191624 !important;
+  border: 1px solid #f6d58b !important;
+  padding: 3px 8px;
   text-decoration: none;
   border-radius: 2px;
+  z-index: 30;
+  box-shadow: 1px 1px 0 #000;
+  white-space: nowrap;
+}
+
+.mobile-github-link svg {
+  fill: #ffdc74 !important;
 }
 
 .mobile-github-link:hover,
-.mobile-github-link:active {
-  background: #24212b;
-  border-color: #84d68c;
+.mobile-github-link:active,
+.mobile-github-link:focus,
+.mobile-github-link:visited {
+  color: #ffdc74 !important;
+  background: #191624 !important;
+  border-color: #f6d58b !important;
 }
 
 .mobile-controls-actions {
@@ -1256,12 +1263,13 @@ dialog.game-dialog::backdrop {
     display: none !important;
   }
 
-  /* 2. Game view: ~80% */
+  /* 2. Game view: fills the middle area between top HUD and controls */
   #game {
     flex: 1;
     width: 100vw;
-    height: 80vh;
-    max-height: 80vh;
+    height: 100%;
+    min-height: 0;
+    max-height: unset;
     aspect-ratio: unset;
     box-shadow: none;
     display: flex;
@@ -1273,12 +1281,13 @@ dialog.game-dialog::backdrop {
 
   #game canvas {
     max-width: 100vw !important;
-    max-height: 80vh !important;
+    max-height: 100% !important;
     object-fit: contain;
   }
 
   /* 3. Controls bar: ~15% */
   #mobile-controls {
+    position: relative;
     display: flex !important;
     height: 15vh;
     min-height: 86px;

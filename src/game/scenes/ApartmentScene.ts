@@ -1047,7 +1047,7 @@ export class ApartmentScene extends Phaser.Scene {
 
     // Day / Afternoon / Night ambient overlay (fixed to apartment camera, never affects popup modals)
     this.ambientOverlay = this.add
-      .rectangle(0, 0, 480, 270, 0x000000, 0)
+      .rectangle(0, 0, Math.max(1200, this.scale.width), 270, 0x000000, 0)
       .setOrigin(0, 0)
       .setScrollFactor(0)
       .setDepth(12);
@@ -1382,6 +1382,14 @@ export class ApartmentScene extends Phaser.Scene {
   private setupCamera(): void {
     this.cameras.main.setBounds(0, 0, this.layout.worldWidth, 270);
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12);
+
+    this.scale.on('resize', (gameSize: Phaser.Structs.Size) => {
+      this.cameras.main.setSize(gameSize.width, gameSize.height);
+      this.cameras.main.setBounds(0, 0, this.layout.worldWidth, 270);
+      if (this.ambientOverlay) {
+        this.ambientOverlay.setSize(Math.max(1200, gameSize.width), 270);
+      }
+    });
   }
 
   private setupEventListeners(): void {
